@@ -1,0 +1,36 @@
+package #WorkSpace#.controller;
+
+
+import #WorkSpace#.biz.#TableClass#Biz;
+import #WorkSpace#.models.#TableClass#Model;
+import #WorkSpace#.utils.mybatis.ResponseData;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+@RestController
+@RequestMapping(value = "/users")
+public class #TableClass#Controller {
+
+    @Autowired
+    #TableClass#Biz usersBiz;
+
+
+    @RequestMapping(value = "/getPageList")
+    public ResponseData<List<#TableClass#Model>> getPageList(@RequestParam(value = "pageIndex", required = true) int pageIndex, @RequestParam(value = "pageSize", required = true) int pageSize) {
+
+
+        ResponseData<List<#TableClass#Model>> responseData = new ResponseData<>();
+
+        responseData.setCode(0);
+        responseData.setMsg("success");
+        responseData.setData(usersBiz.getPageList(pageIndex, pageSize));
+
+        return responseData;
+    }
+
+
+}

@@ -1,6 +1,6 @@
-/Users/wolf/Root/project/javastar/javastar-repository/src/main/java/com/wangke/javastar/repository/dao/internal/DefaultUserDao.java
 /Users/wolf/Root/project/javastar/javastar-repository/src/main/java/com/wangke/javastar/repository/persistence/mybatis/provider/lotus/autogenerate/read/UsersMapper.java
 /Users/wolf/Root/project/javastar/javastar-repository/src/main/java/com/wangke/javastar/repository/persistence/mybatis/provider/lotus/autogenerate/write/UsersMapper.java
+/Users/wolf/Root/project/javastar/javastar-repository/src/main/java/com/wangke/javastar/repository/dao/internal/DefaultUsersDao.java
 /Users/wolf/Root/project/javastar/javastar-repository/src/main/java/com/wangke/javastar/repository/persistence/mybatis/entity/lotus/handwrite/UsersExtend.java
 /Users/wolf/Root/project/javastar/javastar-repository/src/main/java/com/wangke/javastar/repository/persistence/mybatis/entity/lotus/handwrite/originEntityBuilder/UsersOriginBuilder.java
 /Users/wolf/Root/project/javastar/javastar-repository/src/main/java/com/wangke/javastar/repository/persistence/mybatis/entity/lotus/Users.java

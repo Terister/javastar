@@ -1,0 +1,20 @@
+package #WorkSpace#.repository.dao;
+
+import #WorkSpace#.models.#TableClass#Model;
+
+import java.util.List;
+
+public interface #TableClass#Dao {
+
+    long add(#TableClass#Model item);
+
+    #TableClass#Model update(#TableClass#Model item);
+
+    #TableClass#Model getModelById(long id);
+
+    List<#TableClass#Model> getAllList();
+
+    List<#TableClass#Model> getPageList(int pageIndex, int pageSize);
+
+    int getCount();
+}

@@ -1,0 +1,20 @@
+package #WorkSpace#.biz;
+
+import #WorkSpace#.models.#TableClass#Model;
+
+import java.util.List;
+
+public interface #TableClass#Biz {
+
+    long add(#TableClass#Model item);
+
+    #TableClass#Model update(#TableClass#Model item);
+
+    #TableClass#Model getModelById(long id);
+
+    List<#TableClass#Model> getAllList();
+
+    List<#TableClass#Model> getPageList(int pageIndex, int pageSize);
+
+    int getCount();
+}

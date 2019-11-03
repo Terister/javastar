@@ -1,0 +1,178 @@
+package #WorkSpace#.repository.dao.internal;
+
+import #WorkSpace#.models.#TableClass#Model;
+import #WorkSpace#.repository.dao.#TableClass#Dao;
+import #WorkSpace#.repository.persistence.mybatis.entity.lotus.#TableClass#;
+import #WorkSpace#.repository.persistence.mybatis.entity.lotus.#TableClass#Example;
+import #WorkSpace#.repository.persistence.mybatis.provider.lotus.autogenerate.read.#TableClass#Mapper;
+import #WorkSpace#.repository.persistence.mybatis.provider.lotus.handwrite.read.#TableClass#ReadMapper;
+import #WorkSpace#.repository.persistence.mybatis.provider.lotus.handwrite.write.#TableClass#WriteMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Component
+
+public class Default#TableClass#Dao implements #TableClass#Dao {
+
+
+    private static final String class_name = Default#TableClass#Dao.class.getName();
+
+    private static final String order_desc_where = " id desc";
+
+
+    @Autowired
+    private #TableClass#Mapper #TableClassInStance#Mapper;
+
+    @Autowired
+    private #TableClass#WriteMapper #TableClassInStance#WriteMapper;
+
+    @Autowired
+    private #TableClass#ReadMapper #TableClassInStance#ReadMapper;
+
+    /**
+     * add
+     *
+     * @param item
+     * @return
+     */
+    @Override
+    public long add(#TableClass#Model item) {
+
+        #TableClass# #TableClassInStance# = modelConvert(item);
+        int id = #TableClassInStance#WriteMapper.insertSelective(#TableClassInStance#);
+        return #TableClassInStance#.getId();
+    }
+
+    /**
+     * update
+     *
+     * @param item
+     * @return
+     */
+    @Override
+    public #TableClass#Model update(#TableClass#Model item) {
+
+        #TableClass# #TableClassInStance# = modelConvert(item);
+        int id = #TableClassInStance#WriteMapper.updateByPrimaryKey(#TableClassInStance#);
+        return id > 0 ? item : null;
+    }
+
+    /**
+     * get model
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public #TableClass#Model getModelById(long id) {
+
+        #TableClass# item = #TableClassInStance#ReadMapper.selectByPrimaryKey((long) id);
+        if (null == item)
+            return null;
+        return modelConvert(item);
+    }
+
+    /**
+     * get list
+     *
+     * @return
+     */
+    @Override
+    public List<#TableClass#Model> getAllList() {
+
+        #TableClass#Example #TableClassInStance#Example = new #TableClass#Example();
+        #TableClass#Example.Criteria criteria = #TableClass#Example.createCriteria();
+        //add any condition*/
+        criteria.andIdIsNotNull();
+        List<#TableClass#> items = #TableClassInStance#ReadMapper.selectByExample(#TableClassInStance#Example);
+        return modelListConvert(items);
+    }
+
+    /**
+     * get pagelist
+     *
+     * @return
+     */
+    @Override
+    public List<#TableClass#Model> getPageList(int pageIndex, int pageSize) {
+
+        #TableClass#Example #TableClassInStance#Example = new #TableClass#Example();
+        #TableClass#Example.Criteria criteria = #TableClassInStance#Example.createCriteria();
+        //add any condition*/
+        criteria.andIdIsNotNull();
+        #TableClassInStance#Example.setPageIndex(pageIndex);
+        #TableClassInStance#Example.setPageCount(pageSize);
+        #TableClassInStance#Example.setOrderByClause(order_desc_where);
+        List<#TableClass#> items = #TableClassInStance#ReadMapper.selectByExample(#TableClassInStance#Example);
+        return modelListConvert(items);
+    }
+
+    /**
+     * get count
+     *
+     * @return
+     */
+    @Override
+    public int getCount() {
+
+        #TableClass#Example #TableClassInStance#Example = new #TableClass#Example();
+        #TableClass#Example.Criteria criteria = #TableClassInStance#Example.createCriteria();
+        //add any condition*/
+        criteria.andIdIsNotNull();
+        return #TableClassInStance#ReadMapper.countByExample(#TableClassInStance#Example);
+
+    }
+
+    /**
+     * private method:change model
+     *
+     * @param item
+     * @return
+     */
+
+    private #TableClass# modelConvert(#TableClass#Model item) {
+
+        #TableClass# result = new #TableClass#();
+
+        #Columns#
+
+        return result;
+
+    }
+
+    private #TableClass#Model modelConvert(#TableClass# item) {
+
+        #TableClass#Model result = new #TableClass#Model();
+
+        #Columns#
+
+        return result;
+
+    }
+
+    private List<#TableClass#Model> modelListConvert(List<#TableClass#> items) {
+
+        List<#TableClass#Model> result = new ArrayList<#TableClass#Model>() {
+        };
+        for (#TableClass# item : items) {
+            result.add(modelConvert(item));
+        }
+        return result;
+
+    }
+
+    private List<#TableClass#> modelListConvert2(List<#TableClass#Model> items) {
+
+        List<#TableClass#> result = new ArrayList<#TableClass#>() {
+        };
+        for (#TableClass#Model item : items) {
+            result.add(modelConvert(item));
+        }
+        return result;
+
+    }
+
+}

@@ -1,9 +1,9 @@
-package com.wangke.javastar.controller;
+package #WorkSpace#.controller;
 
 
-import com.wangke.javastar.biz.UsersBiz;
-import com.wangke.javastar.models.UsersModel;
-import com.wangke.javastar.utils.mybatis.ResponseData;
+import #WorkSpace#.biz.#TableClass#Biz;
+import #WorkSpace#.models.#TableClass#Model;
+import #WorkSpace#.utils.mybatis.ResponseData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,17 +13,17 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/users")
-public class UsersController {
+public class #TableClass#Controller {
 
     @Autowired
-    UsersBiz usersBiz;
+    #TableClass#Biz usersBiz;
 
 
     @RequestMapping(value = "/getPageList")
-    public ResponseData<List<UsersModel>> getPageList(@RequestParam(value = "pageIndex", required = true) int pageIndex, @RequestParam(value = "pageSize", required = true) int pageSize) {
+    public ResponseData<List<#TableClass#Model>> getPageList(@RequestParam(value = "pageIndex", required = true) int pageIndex, @RequestParam(value = "pageSize", required = true) int pageSize) {
 
 
-        ResponseData<List<UsersModel>> responseData = new ResponseData<>();
+        ResponseData<List<#TableClass#Model>> responseData = new ResponseData<>();
 
         responseData.setCode(0);
         responseData.setMsg("success");

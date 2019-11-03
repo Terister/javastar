@@ -1,47 +1,48 @@
-package com.wangke.javastar.biz.internal;
+package #WorkSpace#.biz.internal;
 
-import com.wangke.javastar.biz.UsersBiz;
-import com.wangke.javastar.models.UsersModel;
-import com.wangke.javastar.repository.dao.UsersDao;
+import #WorkSpace#.biz.#TableClass#Biz;
+import #WorkSpace#.models.#TableClass#Model;
+import #WorkSpace#.repository.dao.#TableClass#Dao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
-public class DefaultUsersBiz implements UsersBiz {
+
+public class Default#TableClass#Biz implements #TableClass#Biz {
 
     @Autowired
-    private UsersDao usersDao;
+    private #TableClass#Dao usersDao;
 
-    private static final String className = DefaultUsersBiz.class.getName();
+    private static final String className = Default#TableClass#Biz.class.getName();
 
 
     @Override
-    public long add(UsersModel item) {
+    public long add(#TableClass#Model item) {
         return usersDao.add(item);
     }
 
 
     @Override
-    public UsersModel update(UsersModel item) {
+    public #TableClass#Model update(#TableClass#Model item) {
         return usersDao.update(item);
     }
 
     @Override
-    public UsersModel getModelById(long id) {
+    public #TableClass#Model getModelById(long id) {
         return usersDao.getModelById(id);
     }
 
 
     @Override
-    public List<UsersModel> getAllList() {
+    public List<#TableClass#Model> getAllList() {
         return usersDao.getAllList();
     }
 
 
     @Override
-    public List<UsersModel> getPageList(int pageIndex, int pageSize) {
+    public List<#TableClass#Model> getPageList(int pageIndex, int pageSize) {
         return usersDao.getPageList(pageIndex, pageSize);
     }
 

@@ -1,12 +1,12 @@
-package com.wangke.javastar.repository.dao.internal;
+package #WorkSpace#.repository.dao.internal;
 
-import com.wangke.javastar.models.UsersModel;
-import com.wangke.javastar.repository.dao.UsersDao;
-import com.wangke.javastar.repository.persistence.mybatis.entity.lotus.Users;
-import com.wangke.javastar.repository.persistence.mybatis.entity.lotus.UsersExample;
-import com.wangke.javastar.repository.persistence.mybatis.provider.lotus.autogenerate.read.UsersMapper;
-import com.wangke.javastar.repository.persistence.mybatis.provider.lotus.handwrite.read.UsersReadMapper;
-import com.wangke.javastar.repository.persistence.mybatis.provider.lotus.handwrite.write.UsersWriteMapper;
+import #WorkSpace#.models.#TableClass#Model;
+import #WorkSpace#.repository.dao.#TableClass#Dao;
+import #WorkSpace#.repository.persistence.mybatis.entity.lotus.#TableClass#;
+import #WorkSpace#.repository.persistence.mybatis.entity.lotus.#TableClass#Example;
+import #WorkSpace#.repository.persistence.mybatis.provider.lotus.autogenerate.read.#TableClass#Mapper;
+import #WorkSpace#.repository.persistence.mybatis.provider.lotus.handwrite.read.#TableClass#ReadMapper;
+import #WorkSpace#.repository.persistence.mybatis.provider.lotus.handwrite.write.#TableClass#WriteMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,22 +14,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class DefaultUserDao implements UsersDao {
+
+public class Default#TableClass#Dao implements #TableClass#Dao {
 
 
-    private static final String class_name = DefaultUserDao.class.getName();
+    private static final String class_name = Default#TableClass#Dao.class.getName();
 
     private static final String order_desc_where = " id desc";
 
 
     @Autowired
-    private UsersMapper usersMapper;
+    private #TableClass#Mapper #TableClassInStance#Mapper;
 
     @Autowired
-    private UsersWriteMapper usersWriteMapper;
+    private #TableClass#WriteMapper #TableClassInStance#WriteMapper;
 
     @Autowired
-    private UsersReadMapper usersReadMapper;
+    private #TableClass#ReadMapper #TableClassInStance#ReadMapper;
 
     /**
      * add
@@ -38,11 +39,11 @@ public class DefaultUserDao implements UsersDao {
      * @return
      */
     @Override
-    public long add(UsersModel item) {
+    public long add(#TableClass#Model item) {
 
-        Users users = modelConvert(item);
-        int id = usersWriteMapper.insertSelective(users);
-        return users.getId();
+        #TableClass# #TableClassInStance# = modelConvert(item);
+        int id = #TableClassInStance#WriteMapper.insertSelective(#TableClassInStance#);
+        return #TableClassInStance#.getId();
     }
 
     /**
@@ -52,10 +53,10 @@ public class DefaultUserDao implements UsersDao {
      * @return
      */
     @Override
-    public UsersModel update(UsersModel item) {
+    public #TableClass#Model update(#TableClass#Model item) {
 
-        Users users = modelConvert(item);
-        int id = usersWriteMapper.updateByPrimaryKey(users);
+        #TableClass# #TableClassInStance# = modelConvert(item);
+        int id = #TableClassInStance#WriteMapper.updateByPrimaryKey(#TableClassInStance#);
         return id > 0 ? item : null;
     }
 
@@ -66,9 +67,9 @@ public class DefaultUserDao implements UsersDao {
      * @return
      */
     @Override
-    public UsersModel getModelById(long id) {
+    public #TableClass#Model getModelById(long id) {
 
-        Users item = usersReadMapper.selectByPrimaryKey((long) id);
+        #TableClass# item = #TableClassInStance#ReadMapper.selectByPrimaryKey((long) id);
         if (null == item)
             return null;
         return modelConvert(item);
@@ -80,13 +81,13 @@ public class DefaultUserDao implements UsersDao {
      * @return
      */
     @Override
-    public List<UsersModel> getAllList() {
+    public List<#TableClass#Model> getAllList() {
 
-        UsersExample usersExample = new UsersExample();
-        UsersExample.Criteria criteria = usersExample.createCriteria();
+        #TableClass#Example #TableClassInStance#Example = new #TableClass#Example();
+        #TableClass#Example.Criteria criteria = #TableClass#Example.createCriteria();
         //add any condition*/
         criteria.andIdIsNotNull();
-        List<Users> items = usersReadMapper.selectByExample(usersExample);
+        List<#TableClass#> items = #TableClassInStance#ReadMapper.selectByExample(#TableClassInStance#Example);
         return modelListConvert(items);
     }
 
@@ -96,16 +97,16 @@ public class DefaultUserDao implements UsersDao {
      * @return
      */
     @Override
-    public List<UsersModel> getPageList(int pageIndex, int pageSize) {
+    public List<#TableClass#Model> getPageList(int pageIndex, int pageSize) {
 
-        UsersExample usersExample = new UsersExample();
-        UsersExample.Criteria criteria = usersExample.createCriteria();
+        #TableClass#Example #TableClassInStance#Example = new #TableClass#Example();
+        #TableClass#Example.Criteria criteria = #TableClassInStance#Example.createCriteria();
         //add any condition*/
         criteria.andIdIsNotNull();
-        usersExample.setPageIndex(pageIndex);
-        usersExample.setPageCount(pageSize);
-        usersExample.setOrderByClause(order_desc_where);
-        List<Users> items = usersReadMapper.selectByExample(usersExample);
+        #TableClassInStance#Example.setPageIndex(pageIndex);
+        #TableClassInStance#Example.setPageCount(pageSize);
+        #TableClassInStance#Example.setOrderByClause(order_desc_where);
+        List<#TableClass#> items = #TableClassInStance#ReadMapper.selectByExample(#TableClassInStance#Example);
         return modelListConvert(items);
     }
 
@@ -117,11 +118,11 @@ public class DefaultUserDao implements UsersDao {
     @Override
     public int getCount() {
 
-        UsersExample usersExample = new UsersExample();
-        UsersExample.Criteria criteria = usersExample.createCriteria();
+        #TableClass#Example #TableClassInStance#Example = new #TableClass#Example();
+        #TableClass#Example.Criteria criteria = #TableClassInStance#Example.createCriteria();
         //add any condition*/
         criteria.andIdIsNotNull();
-        return usersReadMapper.countByExample(usersExample);
+        return #TableClassInStance#ReadMapper.countByExample(#TableClassInStance#Example);
 
     }
 
@@ -132,42 +133,42 @@ public class DefaultUserDao implements UsersDao {
      * @return
      */
 
-    private Users modelConvert(UsersModel item) {
+    private #TableClass# modelConvert(#TableClass#Model item) {
 
-        Users result = new Users();
+        #TableClass# result = new #TableClass#();
 
-        result.setId(item.getId());
-
-        return result;
-
-    }
-
-    private UsersModel modelConvert(Users item) {
-
-        UsersModel result = new UsersModel();
-
-        result.setId(item.getId());
+        #Columns#
 
         return result;
 
     }
 
-    private List<UsersModel> modelListConvert(List<Users> items) {
+    private #TableClass#Model modelConvert(#TableClass# item) {
 
-        List<UsersModel> result = new ArrayList<UsersModel>() {
+        #TableClass#Model result = new #TableClass#Model();
+
+        #Columns#
+
+        return result;
+
+    }
+
+    private List<#TableClass#Model> modelListConvert(List<#TableClass#> items) {
+
+        List<#TableClass#Model> result = new ArrayList<#TableClass#Model>() {
         };
-        for (Users item : items) {
+        for (#TableClass# item : items) {
             result.add(modelConvert(item));
         }
         return result;
 
     }
 
-    private List<Users> modelListConvert2(List<UsersModel> items) {
+    private List<#TableClass#> modelListConvert2(List<#TableClass#Model> items) {
 
-        List<Users> result = new ArrayList<Users>() {
+        List<#TableClass#> result = new ArrayList<#TableClass#>() {
         };
-        for (UsersModel item : items) {
+        for (#TableClass#Model item : items) {
             result.add(modelConvert(item));
         }
         return result;
