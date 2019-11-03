@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="javastar-controller:war">
+    <output-path>$PROJECT_DIR$/javastar-controller/target</output-path>
+    <root id="archive" name="javastar-controller-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="javastar-controller:war exploded" />
+    </root>
+  </artifact>
+</component>

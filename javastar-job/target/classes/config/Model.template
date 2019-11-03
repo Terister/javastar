@@ -1,0 +1,21 @@
+package #WorkSpace#.models;
+
+public class #TableClass#Model {
+
+    private static final long serialVersionUID = 1L;
+
+    #Columns1#
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        #Columns2#
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append("]");
+        return sb.toString();
+    }
+
+}

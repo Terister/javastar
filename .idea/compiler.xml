@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="javastar-biz" />
+        <module name="javastar-controller" />
+        <module name="javastar-job" />
+        <module name="javastar-models" />
+        <module name="javastar-repository" />
+        <module name="javastar-utils" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="javastar" target="1.8" />
+      <module name="javastar-biz" target="1.8" />
+      <module name="javastar-controller" target="1.8" />
+      <module name="javastar-job" target="1.8" />
+      <module name="javastar-models" target="1.8" />
+      <module name="javastar-repository" target="1.8" />
+      <module name="javastar-utils" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

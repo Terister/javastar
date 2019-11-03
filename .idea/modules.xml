@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/javastar.iml" filepath="$PROJECT_DIR$/javastar.iml" />
+      <module fileurl="file://$PROJECT_DIR$/javastar-biz/javastar-biz.iml" filepath="$PROJECT_DIR$/javastar-biz/javastar-biz.iml" />
+      <module fileurl="file://$PROJECT_DIR$/javastar-controller/javastar-controller.iml" filepath="$PROJECT_DIR$/javastar-controller/javastar-controller.iml" />
+      <module fileurl="file://$PROJECT_DIR$/javastar-job/javastar-job.iml" filepath="$PROJECT_DIR$/javastar-job/javastar-job.iml" />
+      <module fileurl="file://$PROJECT_DIR$/javastar-models/javastar-models.iml" filepath="$PROJECT_DIR$/javastar-models/javastar-models.iml" />
+      <module fileurl="file://$PROJECT_DIR$/javastar-repository/javastar-repository.iml" filepath="$PROJECT_DIR$/javastar-repository/javastar-repository.iml" />
+      <module fileurl="file://$PROJECT_DIR$/javastar-utils/javastar-utils.iml" filepath="$PROJECT_DIR$/javastar-utils/javastar-utils.iml" />
+    </modules>
+  </component>
+</project>
