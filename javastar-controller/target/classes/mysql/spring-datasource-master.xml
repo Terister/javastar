@@ -31,7 +31,7 @@
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer" id="masterScanner">
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory1"/>
-        <property name="basePackage" value="com.pab.framework.lotus.engine.repository.persistence.mybatis.provider.lotus.handwrite" />
+        <property name="basePackage" value="com.wangke.javastar.repository.persistence.mybatis.provider.lotus.handwrite" />
     </bean>
 
 
@@ -46,7 +46,7 @@
 
     <aop:config>
         <aop:pointcut id="appService"
-                      expression="execution(* com.pab.framework.lotus.engine.biz.*.*(..))"/>
+                      expression="execution(* com.wangke.javastar.biz.*.*(..))"/>
         <aop:advisor advice-ref="txAdvice1" pointcut-ref="appService"/>
     </aop:config>
 

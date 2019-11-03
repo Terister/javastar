@@ -10,4 +10,8 @@ com/wangke/javastar/repository/persistence/mybatis/entity/lotus/handwrite/UsersE
 com/wangke/javastar/repository/persistence/mybatis/entity/lotus/UsersExample.class
 com/wangke/javastar/repository/persistence/mybatis/entity/lotus/UsersExample$Criterion.class
 com/wangke/javastar/repository/persistence/mybatis/provider/lotus/autogenerate/read/UsersSqlProvider.class
+com/wangke/javastar/repository/dao/internal/DefaultUserDao.class
+com/wangke/javastar/repository/dao/UsersDao.class
 com/wangke/javastar/repository/persistence/mybatis/entity/lotus/UsersExample$Criteria.class
+com/wangke/javastar/repository/dao/internal/DefaultUserDao$2.class
+com/wangke/javastar/repository/dao/internal/DefaultUserDao$1.class

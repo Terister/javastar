@@ -1,6 +1,6 @@
 package com.wangke.javastar.repository.dao;
 
-import com.wangke.javastar.models.test.UsersModel;
+import com.wangke.javastar.models.UsersModel;
 
 import java.util.List;
 
@@ -13,6 +13,8 @@ public interface UsersDao {
     UsersModel getModelById(long id);
 
     List<UsersModel> getAllList();
+
+    List<UsersModel> getPageList(int pageIndex, int pageSize);
 
     int getCount();
 }
