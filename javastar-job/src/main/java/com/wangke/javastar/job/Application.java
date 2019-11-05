@@ -4,6 +4,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * Created by admin on 2017/11/8.
@@ -12,6 +13,7 @@ import org.springframework.context.annotation.Import;
 @Import(SpringWebMvcConfig.class)
 //@EnableMybatis
 @ComponentScan("com.wangke.javastar")
+@EnableScheduling
 public class Application {
     public static void main(String[] args) {
         new SpringApplicationBuilder(Application.class).web(true).run(args);
