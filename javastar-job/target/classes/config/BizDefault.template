@@ -10,7 +10,7 @@ import java.util.List;
 
 @Component
 
-public class Default#TableClass#Biz implements #TableClass#Biz {
+ public class Default#TableClass#Biz implements #TableClass#Biz {
 
     @Autowired
     private #TableClass#Dao usersDao;
@@ -19,7 +19,7 @@ public class Default#TableClass#Biz implements #TableClass#Biz {
 
 
     @Override
-    public long add(#TableClass#Model item) {
+    public #PrimaryKeyType# add(#TableClass#Model item) {
         return usersDao.add(item);
     }
 
@@ -30,7 +30,7 @@ public class Default#TableClass#Biz implements #TableClass#Biz {
     }
 
     @Override
-    public #TableClass#Model getModelById(long id) {
+    public #TableClass#Model getModelById(#PrimaryKeyType# id) {
         return usersDao.getModelById(id);
     }
 

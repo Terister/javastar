@@ -44,26 +44,9 @@ public class HomeController {
 
     private void mkdir() {
 
+
         /*
-         * create director
-         * */
-//        File file = new File(basePath + "/repository/dao/internal");
-//        if (!file.exists()) {
-//            file.mkdirs();
-//        }
-//
-//        File file1 = new File(basePath + "/biz/internal");
-//        if (!file1.exists()) {
-//            file1.mkdirs();
-//        }
-//
-//
-//        File file3 = new File(basePath + "/controller");
-//        if (!file3.exists()) {
-//            file3.mkdirs();
-//        }
-        /*
-         * create pom file
+         * create director and file
          * */
 
         String configPaht1 = "/config/projectfile/pom-models.template";
@@ -82,7 +65,7 @@ public class HomeController {
         files(configPath, outputpath, maps);
 
         /*models*/
-        File file2 = new File(basePath + projectPath + "/models");
+        File file2 = new File(basePath + "/javastar-models" + projectPath + "/models");
         if (!file2.exists()) {
             file2.mkdirs();
         }
@@ -160,17 +143,27 @@ public class HomeController {
             StringBuilder sb1 = new StringBuilder();
             StringBuilder sb2 = new StringBuilder();
             StringBuilder sb3 = new StringBuilder();
-
+            String pkType = "int";
+            String pk = "";
             for (DtInfo dt : dtinfo) {
 
+
                 String dtType = getDataType(dt.getType());
+
+                if ("PRI".equals(dt.getKey())) {
+                    pk = getClassName(dt.getField());
+                    if ("long".equals(dtType)) {
+                        pkType = "long";
+                    }
+
+                }
                 sb1.append("private " + dtType + " " + dt.getField() + ";");
 
-                sb1.append("public " + dtType + " get" + dt.getField() + "() {");
+                sb1.append("public " + dtType + " get" + getClassName(dt.getField()) + "() {");
                 sb1.append("return " + dt.getField() + ";");
                 sb1.append("}");
 
-                sb1.append(" public void set" + dt.getField() + "(" + dtType + " " + dt.getField() + ") {");
+                sb1.append(" public void set" + getClassName(dt.getField()) + "(" + dtType + " " + dt.getField() + ") {");
                 sb1.append("this." + dt.getField() + " = " + dt.getField() + ";");
                 sb1.append("}");
 
@@ -178,7 +171,7 @@ public class HomeController {
                 sb2.append("     sb.append(\", " + dt.getField() + "=\").append(" + dt.getField() + ");");
 
 
-                sb3.append(" result.set" + dt.getField() + "(item.get" + dt.getField() + "()); ");
+                sb3.append(" result.set" + getClassName(dt.getField()) + "(item.get" + getClassName(dt.getField()) + "()); ");
             }
             String tableClass = getClassName(dr.getTABLE_NAME());
             String tableClassInstance = getClassNameInstance(dr.getTABLE_NAME());
@@ -186,10 +179,10 @@ public class HomeController {
 
             //create file
             modelFile(tableClass, sb1.toString(), sb2.toString());
-            defaultRepoFile(tableClass, tableClassInstance, sb3.toString());
-            repoFile(tableClass);
-            bizFile(tableClass, tableClassInstance);
-            defaultBizFile(tableClass, tableClassInstance);
+            defaultRepoFile(tableClass, tableClassInstance, sb3.toString(), pkType, pk);
+            repoFile(tableClass, pkType, pk);
+            bizFile(tableClass, tableClassInstance, pkType);
+            defaultBizFile(tableClass, tableClassInstance, pkType);
             controllerFile(tableClass, tableClassInstance);
         }
 
@@ -344,7 +337,7 @@ public class HomeController {
         System.out.println("==========>use time:" + (end - begin) + " millisecond ");
     }
 
-    void defaultRepoFile(String tableClass, String tableClassInstance, String columns) {
+    void defaultRepoFile(String tableClass, String tableClassInstance, String columns, String primaryKeyType, String primaryKey) {
 
         String str = "";
 
@@ -377,6 +370,8 @@ public class HomeController {
         str = str.replaceAll("#WorkSpace#", workSpace)
                 .replaceAll("#TableClass#", tableClass)
                 .replaceAll("#Columns#", columns)
+                .replaceAll("#PrimaryKeyType#", primaryKeyType)
+                .replaceAll("#PrimaryKey#", primaryKey)
                 .replaceAll("#TableClassInStance#", tableClassInstance);
 
         //write
@@ -417,7 +412,7 @@ public class HomeController {
         System.out.println("==========>use time:" + (end - begin) + " millisecond ");
     }
 
-    void repoFile(String tableClass) {
+    void repoFile(String tableClass, String primaryKeyType, String primaryKey) {
 
         String str = "";
 
@@ -448,6 +443,8 @@ public class HomeController {
         //replace
 
         str = str.replaceAll("#WorkSpace#", workSpace)
+                .replaceAll("#PrimaryKeyType#", primaryKeyType)
+                .replaceAll("#PrimaryKey#", primaryKey)
                 .replaceAll("#TableClass#", tableClass);
 
         //write
@@ -488,7 +485,7 @@ public class HomeController {
         System.out.println("==========>use time:" + (end - begin) + " millisecond ");
     }
 
-    void bizFile(String tableClass, String tableClassInstance) {
+    void bizFile(String tableClass, String tableClassInstance, String primaryKeyType) {
 
         String str = "";
 
@@ -519,7 +516,7 @@ public class HomeController {
         //replace
 
         str = str.replaceAll("#WorkSpace#", workSpace)
-                .replaceAll("#TableClass#", tableClass)
+                .replaceAll("#TableClass#", tableClass).replaceAll("#PrimaryKeyType#", primaryKeyType)
                 .replaceAll("#TableClassInStance#", tableClassInstance);
 
         //write
@@ -560,7 +557,7 @@ public class HomeController {
         System.out.println("==========>use time:" + (end - begin) + " millisecond ");
     }
 
-    void defaultBizFile(String tableClass, String tableClassInstance) {
+    void defaultBizFile(String tableClass, String tableClassInstance, String primaryKeyType) {
 
         String str = "";
 
@@ -591,7 +588,7 @@ public class HomeController {
         //replace
 
         str = str.replaceAll("#WorkSpace#", workSpace)
-                .replaceAll("#TableClass#", tableClass)
+                .replaceAll("#TableClass#", tableClass).replaceAll("#PrimaryKeyType#", primaryKeyType)
                 .replaceAll("#TableClassInStance#", tableClassInstance);
 
         //write

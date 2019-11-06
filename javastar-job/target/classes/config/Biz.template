@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface #TableClass#Biz {
 
-    long add(#TableClass#Model item);
+    #PrimaryKeyType# add(#TableClass#Model item);
 
     #TableClass#Model update(#TableClass#Model item);
 
-    #TableClass#Model getModelById(long id);
+    #TableClass#Model getModelById(#PrimaryKeyType# id);
 
     List<#TableClass#Model> getAllList();
 

@@ -39,7 +39,7 @@
         </javaClientGenerator>
 
 
-        <table tableName="Users"
+        <table tableName="wk_%"
                catalog="DataCenter" enableCountByExample="false" enableDeleteByExample="true" enableUpdateByExample="true"
                selectByExampleQueryId="false"
                enableSelectByExample="false" enableSelectByPrimaryKey="false" delimitAllColumns="true"
@@ -86,7 +86,7 @@
         </javaClientGenerator>
 
 
-        <table tableName="Users"
+        <table tableName="wk_%"
                catalog="DataCenter" delimitIdentifiers="true" enableInsert="false" enableDeleteByPrimaryKey="false"
                enableUpdateByPrimaryKey="false" enableCountByExample="true" delimitAllColumns="true"
                enableDeleteByExample="false" enableUpdateByExample="false" selectByExampleQueryId="true"

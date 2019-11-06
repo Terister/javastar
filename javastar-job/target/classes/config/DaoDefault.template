@@ -15,7 +15,7 @@ import java.util.List;
 
 @Component
 
-public class Default#TableClass#Dao implements #TableClass#Dao {
+ public class Default#TableClass#Dao implements #TableClass#Dao {
 
 
     private static final String class_name = Default#TableClass#Dao.class.getName();
@@ -39,11 +39,11 @@ public class Default#TableClass#Dao implements #TableClass#Dao {
      * @return
      */
     @Override
-    public long add(#TableClass#Model item) {
+    public #PrimaryKeyType# add(#TableClass#Model item) {
 
         #TableClass# #TableClassInStance# = modelConvert(item);
         int id = #TableClassInStance#WriteMapper.insertSelective(#TableClassInStance#);
-        return #TableClassInStance#.getId();
+        return #TableClassInStance#.get#PrimaryKey#();
     }
 
     /**
@@ -67,9 +67,9 @@ public class Default#TableClass#Dao implements #TableClass#Dao {
      * @return
      */
     @Override
-    public #TableClass#Model getModelById(long id) {
+    public #TableClass#Model getModelById(#PrimaryKeyType# id) {
 
-        #TableClass# item = #TableClassInStance#ReadMapper.selectByPrimaryKey((long) id);
+        #TableClass# item = #TableClassInStance#ReadMapper.selectByPrimaryKey((#PrimaryKeyType#) id);
         if (null == item)
             return null;
         return modelConvert(item);
@@ -84,9 +84,9 @@ public class Default#TableClass#Dao implements #TableClass#Dao {
     public List<#TableClass#Model> getAllList() {
 
         #TableClass#Example #TableClassInStance#Example = new #TableClass#Example();
-        #TableClass#Example.Criteria criteria = #TableClass#Example.createCriteria();
-        //add any condition*/
-        criteria.andIdIsNotNull();
+        #TableClass#Example.Criteria criteria = #TableClassInStance#Example.createCriteria();
+         /*add any condition*/
+        criteria.and#PrimaryKey#IsNotNull();
         List<#TableClass#> items = #TableClassInStance#ReadMapper.selectByExample(#TableClassInStance#Example);
         return modelListConvert(items);
     }
@@ -101,8 +101,8 @@ public class Default#TableClass#Dao implements #TableClass#Dao {
 
         #TableClass#Example #TableClassInStance#Example = new #TableClass#Example();
         #TableClass#Example.Criteria criteria = #TableClassInStance#Example.createCriteria();
-        //add any condition*/
-        criteria.andIdIsNotNull();
+       /*add any condition*/
+        criteria.and#PrimaryKey#IsNotNull();
         #TableClassInStance#Example.setPageIndex(pageIndex);
         #TableClassInStance#Example.setPageCount(pageSize);
         #TableClassInStance#Example.setOrderByClause(order_desc_where);
@@ -120,8 +120,8 @@ public class Default#TableClass#Dao implements #TableClass#Dao {
 
         #TableClass#Example #TableClassInStance#Example = new #TableClass#Example();
         #TableClass#Example.Criteria criteria = #TableClassInStance#Example.createCriteria();
-        //add any condition*/
-        criteria.andIdIsNotNull();
+        /*add any condition*/
+        criteria.and#PrimaryKey#IsNotNull();
         return #TableClassInStance#ReadMapper.countByExample(#TableClassInStance#Example);
 
     }
@@ -135,31 +135,33 @@ public class Default#TableClass#Dao implements #TableClass#Dao {
 
     private #TableClass# modelConvert(#TableClass#Model item) {
 
-        #TableClass# result = new #TableClass#();
+         #TableClass# result = new #TableClass#();
 
-        #Columns#
+         #Columns#
 
-        return result;
+         return result;
 
     }
 
     private #TableClass#Model modelConvert(#TableClass# item) {
 
-        #TableClass#Model result = new #TableClass#Model();
+         #TableClass#Model result = new #TableClass#Model();
 
         #Columns#
 
-        return result;
+         return result;
 
     }
 
     private List<#TableClass#Model> modelListConvert(List<#TableClass#> items) {
 
-        List<#TableClass#Model> result = new ArrayList<#TableClass#Model>() {
-        };
-        for (#TableClass# item : items) {
+         List<#TableClass#Model> result = new ArrayList<#TableClass#Model>() {
+         };
+
+         for (#TableClass# item : items) {
             result.add(modelConvert(item));
-        }
+         }
+
         return result;
 
     }
@@ -168,9 +170,11 @@ public class Default#TableClass#Dao implements #TableClass#Dao {
 
         List<#TableClass#> result = new ArrayList<#TableClass#>() {
         };
+
         for (#TableClass#Model item : items) {
             result.add(modelConvert(item));
         }
+
         return result;
 
     }

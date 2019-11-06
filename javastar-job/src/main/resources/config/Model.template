@@ -1,5 +1,7 @@
 package #WorkSpace#.models;
 
+import java.util.Date;
+
 public class #TableClass#Model {
 
     private static final long serialVersionUID = 1L;
