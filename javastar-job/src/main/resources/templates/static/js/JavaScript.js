@@ -6,12 +6,14 @@
             var tableName = $.trim($(this).find(".t-name").text());
             tsql += "------开始导出备注：" + tableName + "\r\n";
             var tableRemark = $.trim($(this).find(".t-remark").text());
-            tsql += "EXEC dbo.sp_add_comment @table = '" + tableName + "',@column = '',@value = '" + tableRemark + "';" + "\r\n";;
+            tsql += "EXEC dbo.sp_add_comment @table = '" + tableName + "',@column = '',@value = '" + tableRemark + "';" + "\r\n";
+            ;
             $(this).find(".content").each(function () {
                 var row = $(this);
                 var columnName = $.trim(row.find(".c-name").text());
                 var columnRemark = $.trim(row.find(".c-remark").text());
-                tsql += "EXEC dbo.sp_add_comment @table = '" + tableName + "',@column = '" + columnName + "',@value = '" + columnRemark + "';" + "\r\n";;
+                tsql += "EXEC dbo.sp_add_comment @table = '" + tableName + "',@column = '" + columnName + "',@value = '" + columnRemark + "';" + "\r\n";
+                ;
             });
             tsql += "go\r\n"
         });
@@ -42,10 +44,14 @@
     $(".btnInsert").click(function () {
         var table = getInfoList($(this));
         var code = 'INSERT INTO ' + table.name + '(';
-        $.each(table.list, function (idx, item) { code += '[' + item.name + '],'; });
+        $.each(table.list, function (idx, item) {
+            code += '[' + item.name + '],';
+        });
         code = code.substring(0, code.length - 1);
         code += ')\r\nVALUES(';
-        $.each(table.list, function (idx, item) { code += '#' + item.name + '#,'; });
+        $.each(table.list, function (idx, item) {
+            code += '#' + item.name + '#,';
+        });
         code = code.substring(0, code.length - 1);
         code += ')';
         showText(code);
@@ -112,7 +118,8 @@
             if (len >= 125) {
                 code += '\r\n    '
                 len = 0;
-            };
+            }
+            ;
             code += 't.[' + item.name + '],';
         });
         code = code.substring(0, code.length - 1);
@@ -177,7 +184,8 @@
     function getQueryString(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
         var r = window.location.search.substr(1).match(reg);
-        if (r != null) return r[2]; return null;
+        if (r != null) return r[2];
+        return null;
     }
 
     function getInfoList(btn) {
@@ -190,12 +198,13 @@
             var dft = $.trim(tr.find(".c-default").text());
             var id = $.trim(tr.find(".c-id").val());
             var remark = $.trim(tr.find(".c-remark").text());
-            list.push({ name: name, type: type, dft: dft, id: id, remark: remark });
+            list.push({name: name, type: type, dft: dft, id: id, remark: remark});
         });
         var tName = tbs.find(".t-name").text();
         var tRemark = tbs.find(".t-remark").text();
-        return { name: tName, remark: tRemark, list: list };
+        return {name: tName, remark: tRemark, list: list};
     }
+
     function getType(dbType) {
         if (dbType.indexOf('decimal') >= 0 || dbType.indexOf('numeric') >= 0 || dbType.indexOf('money') >= 0) return 'decimal';
         if (dbType.indexOf('real') >= 0) return 'float';
@@ -208,6 +217,7 @@
         if (dbType.indexOf('int') >= 0) return 'int';
         return 'string';
     }
+
     function showText(text) {
         var content = '<textarea style="width:100%;height:100%;padding:10px" ondblclick="selectedMe(this)">' + text + '</textarea>';
         layer.open({
@@ -219,8 +229,8 @@
             skin: 'yourclass',
             content: content
         });
-        $(".layui-layer.layui-anim.layui-layer-page.yourclass").css({ left: '10%', top: '10%', fontSize: '12px' });
-        $(".layui-layer.layui-anim.layui-layer-page.yourclass .layui-layer-content").css({ height: '100%' })
+        $(".layui-layer.layui-anim.layui-layer-page.yourclass").css({left: '10%', top: '10%', fontSize: '12px'});
+        $(".layui-layer.layui-anim.layui-layer-page.yourclass .layui-layer-content").css({height: '100%'})
     }
 });
 

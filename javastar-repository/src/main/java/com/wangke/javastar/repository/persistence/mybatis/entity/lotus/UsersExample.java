@@ -1,9 +1,10 @@
 package com.wangke.javastar.repository.persistence.mybatis.entity.lotus;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UsersExample {
@@ -21,20 +22,20 @@ public class UsersExample {
         oredCriteria = new ArrayList<Criteria>();
     }
 
-    public void setOrderByClause(String orderByClause) {
-        this.orderByClause = orderByClause;
-    }
-
     public String getOrderByClause() {
         return orderByClause;
     }
 
-    public void setDistinct(boolean distinct) {
-        this.distinct = distinct;
+    public void setOrderByClause(String orderByClause) {
+        this.orderByClause = orderByClause;
     }
 
     public boolean isDistinct() {
         return distinct;
+    }
+
+    public void setDistinct(boolean distinct) {
+        this.distinct = distinct;
     }
 
     public List<Criteria> getOredCriteria() {
@@ -70,20 +71,20 @@ public class UsersExample {
         distinct = false;
     }
 
-    public void setPageIndex(Integer pageIndex) {
-        this.pageIndex=pageIndex;
-    }
-
     public Integer getPageIndex() {
         return this.pageIndex;
     }
 
-    public void setPageCount(Integer pageCount) {
-        this.pageCount=pageCount;
+    public void setPageIndex(Integer pageIndex) {
+        this.pageIndex = pageIndex;
     }
 
     public Integer getPageCount() {
         return this.pageCount;
+    }
+
+    public void setPageCount(Integer pageCount) {
+        this.pageCount = pageCount;
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -106,6 +107,10 @@ public class UsersExample {
 
         public List<Criterion> getCriteria() {
             return criteria;
+        }
+
+        void setCriteria(List<Criterion> criteria) {
+            this.criteria = criteria;
         }
 
         protected void addCriterion(String condition) {
@@ -258,10 +263,6 @@ public class UsersExample {
             addCriterion("`nick_name` not between", value1, value2, "nickName");
             return (Criteria) this;
         }
-
-        void setCriteria(List<Criterion> criteria) {
-            this.criteria=criteria;
-        }
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -289,38 +290,6 @@ public class UsersExample {
         private boolean listValue;
 
         private String typeHandler;
-
-        public String getCondition() {
-            return condition;
-        }
-
-        public Object getValue() {
-            return value;
-        }
-
-        public Object getSecondValue() {
-            return secondValue;
-        }
-
-        public boolean isNoValue() {
-            return noValue;
-        }
-
-        public boolean isSingleValue() {
-            return singleValue;
-        }
-
-        public boolean isBetweenValue() {
-            return betweenValue;
-        }
-
-        public boolean isListValue() {
-            return listValue;
-        }
-
-        public String getTypeHandler() {
-            return typeHandler;
-        }
 
         protected Criterion(String condition) {
             super();
@@ -360,6 +329,38 @@ public class UsersExample {
 
         public Criterion() {
             super();
+        }
+
+        public String getCondition() {
+            return condition;
+        }
+
+        public Object getValue() {
+            return value;
+        }
+
+        public Object getSecondValue() {
+            return secondValue;
+        }
+
+        public boolean isNoValue() {
+            return noValue;
+        }
+
+        public boolean isSingleValue() {
+            return singleValue;
+        }
+
+        public boolean isBetweenValue() {
+            return betweenValue;
+        }
+
+        public boolean isListValue() {
+            return listValue;
+        }
+
+        public String getTypeHandler() {
+            return typeHandler;
         }
     }
 }

@@ -4,8 +4,8 @@ package com.wangke.javastar.job.tools.model;
  * Created by admin on 2017/11/10.
  */
 /*
-* 表中的字段信息
-* */
+ * 表中的字段信息
+ * */
 public class DtInfo {
 
 

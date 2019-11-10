@@ -24,16 +24,125 @@ import java.util.List;
 @Controller
 public class HomeController {
 
-    @Autowired
-    private MybatisHelper mybatisHelper;
-
     String dataBasename = "DataCenter";
     String workSpace = "com.wangke.javastar";
     String projectName = "javastar";
     String basePath = "/Users/wolf/Root/Codes";
     String projectPath = "/src/main/java/com/wangke/javastar";
     String resourcesPath = "/src/main/resources";
+    @Autowired
+    private MybatisHelper mybatisHelper;
 
+    //private method
+    private static String getDataType(String type) {
+        String str = "";
+        type = type.toLowerCase();
+
+        /* String */
+
+        List<String> strList = new ArrayList<String>() {
+        };
+        strList.add("varchar");
+        strList.add("char");
+        strList.add("blob");
+        strList.add("longblob");
+        strList.add("longtext");
+        for (String sl : strList) {
+            if (type.startsWith(sl)) {
+                return "String";
+            }
+        }
+
+        /* starWith */
+
+        if (type.startsWith("float"))
+            return "float";
+        if (type.startsWith("double"))
+            return "double";
+        if (type.startsWith("decimal"))
+            return "BigDecimal";
+        if (type.startsWith("int"))
+            return "int";
+        if (type.startsWith("tinyint"))
+            return "int";
+        if (type.startsWith("bigint"))
+            return "long";
+        if (type.startsWith("smallint"))
+            return "int";
+
+        /* switch */
+        switch (type) {
+            case "date":
+                str = "Date";
+                break;
+            case "time":
+                str = "Date";
+                break;
+            case "datetime":
+                str = "Date";
+                break;
+            case "year":
+                str = "Date";
+                break;
+            case "timestamp":
+                str = "Date";
+                break;
+            case "integer":
+                str = "Long";
+                break;
+            case "mediumint":
+                str = "int";
+                break;
+            case "boolean":
+                str = "int";
+                break;
+            case "bit":
+                str = "Noolean";
+                break;
+
+            default:
+                ;
+                break;
+
+
+        }
+
+        return str;
+
+    }
+
+    private static String getClassName(String tableName) {
+
+
+        if (!tableName.contains("_")) {
+            return tableName.substring(0, 1).toUpperCase() + tableName.substring(1);
+        }
+
+        String[] strList = tableName.split("_");
+
+        StringBuilder sb = new StringBuilder();
+
+        for (String s : strList) {
+            sb.append(s.substring(0, 1).toUpperCase() + s.substring(1));
+        }
+
+        return sb.toString();
+    }
+
+    private static String getClassNameInstance(String tableName) {
+        String[] strList = tableName.split("_");
+
+        StringBuilder sb = new StringBuilder();
+
+        for (String s : strList) {
+            sb.append(s.substring(0, 1).toLowerCase() + s.substring(1));
+        }
+
+        return sb.toString();
+    }
+
+
+    //create file
 
     @RequestMapping(value = "/index")
     public String hello(Model model) throws Exception {
@@ -301,9 +410,6 @@ public class HomeController {
         return JSON.toJSONString(list).toString();
     }
 
-
-    //create file
-
     private void files(String configPath, String outputPath, HashMap<String, String> items) {
 
 
@@ -321,7 +427,6 @@ public class HomeController {
         writeFile(file, content, outputPath);
 
     }
-
 
     private String readFile(String configPath) {
         InputStream inputStream = this.getClass().getResourceAsStream(configPath);
@@ -379,114 +484,6 @@ public class HomeController {
             e.printStackTrace();
         }
 
-    }
-
-    //private method
-    private static String getDataType(String type) {
-        String str = "";
-        type = type.toLowerCase();
-
-        /* String */
-
-        List<String> strList = new ArrayList<String>() {
-        };
-        strList.add("varchar");
-        strList.add("char");
-        strList.add("blob");
-        strList.add("longblob");
-        strList.add("longtext");
-        for (String sl : strList) {
-            if (type.startsWith(sl)) {
-                return "String";
-            }
-        }
-
-        /* starWith */
-
-        if (type.startsWith("float"))
-            return "float";
-        if (type.startsWith("double"))
-            return "double";
-        if (type.startsWith("decimal"))
-            return "BigDecimal";
-        if (type.startsWith("int"))
-            return "int";
-        if (type.startsWith("tinyint"))
-            return "int";
-        if (type.startsWith("bigint"))
-            return "long";
-        if (type.startsWith("smallint"))
-            return "int";
-
-        /* switch */
-        switch (type) {
-            case "date":
-                str = "Date";
-                break;
-            case "time":
-                str = "Date";
-                break;
-            case "datetime":
-                str = "Date";
-                break;
-            case "year":
-                str = "Date";
-                break;
-            case "timestamp":
-                str = "Date";
-                break;
-            case "integer":
-                str = "Long";
-                break;
-            case "mediumint":
-                str = "int";
-                break;
-            case "boolean":
-                str = "int";
-                break;
-            case "bit":
-                str = "Noolean";
-                break;
-
-            default:
-                ;
-                break;
-
-
-        }
-
-        return str;
-
-    }
-
-    private static String getClassName(String tableName) {
-
-
-        if (!tableName.contains("_")) {
-            return tableName.substring(0, 1).toUpperCase() + tableName.substring(1);
-        }
-
-        String[] strList = tableName.split("_");
-
-        StringBuilder sb = new StringBuilder();
-
-        for (String s : strList) {
-            sb.append(s.substring(0, 1).toUpperCase() + s.substring(1));
-        }
-
-        return sb.toString();
-    }
-
-    private static String getClassNameInstance(String tableName) {
-        String[] strList = tableName.split("_");
-
-        StringBuilder sb = new StringBuilder();
-
-        for (String s : strList) {
-            sb.append(s.substring(0, 1).toLowerCase() + s.substring(1));
-        }
-
-        return sb.toString();
     }
 
 }

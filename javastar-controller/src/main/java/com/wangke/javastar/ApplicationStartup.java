@@ -8,7 +8,7 @@ import org.springframework.context.ApplicationListener;
  */
 public class ApplicationStartup implements ApplicationListener<ApplicationPreparedEvent> {
 
-    private String LOTUS_ENV_KEY="Lotus-Env";
+    private String LOTUS_ENV_KEY = "Lotus-Env";
 
     @Override
     public void onApplicationEvent(ApplicationPreparedEvent applicationPreparedEvent) {
@@ -16,7 +16,7 @@ public class ApplicationStartup implements ApplicationListener<ApplicationPrepar
     }
 
     private String getEnv() {
-       //从服务器环境中读取对应配置信息
+        //从服务器环境中读取对应配置信息
         return "dev";
     }
 }

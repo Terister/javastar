@@ -2,11 +2,9 @@ package com.wangke.javastar.models;
 
 public class UsersModel {
 
-    private Long id;
-
-    private String nickName;
-
     private static final long serialVersionUID = 1L;
+    private Long id;
+    private String nickName;
 
     public Long getId() {
         return id;

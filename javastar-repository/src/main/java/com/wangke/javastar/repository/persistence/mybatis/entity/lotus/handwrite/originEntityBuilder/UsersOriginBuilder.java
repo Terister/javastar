@@ -6,10 +6,10 @@ import com.wangke.javastar.repository.persistence.mybatis.entity.lotus.handwrite
 public class UsersOriginBuilder extends Users {
 
     public static UsersExtend buildOrigin(Users origin) {
-        if (origin == null){
+        if (origin == null) {
             return null;
         }
-        UsersExtend returnValue=new UsersExtend();
+        UsersExtend returnValue = new UsersExtend();
         returnValue.setId(origin.getId());
         returnValue.setNickName(origin.getNickName());
         return returnValue;

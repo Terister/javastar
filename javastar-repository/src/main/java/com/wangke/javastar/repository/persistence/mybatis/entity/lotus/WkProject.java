@@ -4,23 +4,15 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class WkProject implements Serializable {
-    private Integer projectId;
-
-    private String projectKey;
-
-    private String projectName;
-
-    private String projectPath;
-
-    private String projectDesc;
-
-    private Integer projectParentKey;
-
-    private Date createTimestamp;
-
-    private Date lastUpdateTimestamp;
-
     private static final long serialVersionUID = 1L;
+    private Integer projectId;
+    private String projectKey;
+    private String projectName;
+    private String projectPath;
+    private String projectDesc;
+    private Integer projectParentKey;
+    private Date createTimestamp;
+    private Date lastUpdateTimestamp;
 
     public Integer getProjectId() {
         return projectId;

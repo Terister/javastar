@@ -4,17 +4,12 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class WkRoleProject implements Serializable {
-    private Integer id;
-
-    private String projectKey;
-
-    private Date createTimestamp;
-
-    private String roleKey;
-
-    private Date lastUpdateTimestamp;
-
     private static final long serialVersionUID = 1L;
+    private Integer id;
+    private String projectKey;
+    private Date createTimestamp;
+    private String roleKey;
+    private Date lastUpdateTimestamp;
 
     public Integer getId() {
         return id;

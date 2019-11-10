@@ -38,7 +38,8 @@
                 style="border-right: 1px solid #000000">
             <#--<iframe name="BoardTitle" style="height: 100%; visibility: inherit; width: 280px; z-index: 2"-->
             <#--scrolling="auto" frameborder="0" src="Left.aspx?c=<%=CurrentConnection %>&d=<%=CurrentDatabase %>"></iframe>-->
-                <table id="tbLeft" style="margin-top: 0;width:100%;  " class="left"  border="0" cellpadding="2" cellspacing="1">
+                <table id="tbLeft" style="margin-top: 0;width:100%;  " class="left" border="0" cellpadding="2"
+                       cellspacing="1">
                     <tr>
                         <td colspan="2">
                             <input type="text" placeholder="输入表名或备注信息" onkeyup="search(this.value)"
@@ -135,6 +136,7 @@
                     {{/for}}
                     </tbody>
                 </table>
+
                 </script>
 
                 <script type="text/js-render" id="userTemplate">
@@ -151,6 +153,7 @@
                         </td>
                     </tr>
 
+
                 </script>
                 <script type="text/javascript">
                     function search(key) {
@@ -163,15 +166,14 @@
                             }
                         });
                     }
+
                     $.get("/getTableList", {key: ''}, function (data) {
                         var obj = JSON.parse(data);
-                        for(var i=0;i<obj.length;i++)
-                        {
-                            var tableInfos=obj[i].dtInfo;
-                            for(var j=0;j<tableInfos.length;j++)
-                            {
+                        for (var i = 0; i < obj.length; i++) {
+                            var tableInfos = obj[i].dtInfo;
+                            for (var j = 0; j < tableInfos.length; j++) {
                                 /* jsrender中特殊支付无法识别 可提前转换 */
-                                obj[i].dtInfo[j].shownull=  obj[i].dtInfo[j].null;
+                                obj[i].dtInfo[j].shownull = obj[i].dtInfo[j].null;
                             }
                         }
                         $("#tbLeft").append($("#userTemplate").render(obj));

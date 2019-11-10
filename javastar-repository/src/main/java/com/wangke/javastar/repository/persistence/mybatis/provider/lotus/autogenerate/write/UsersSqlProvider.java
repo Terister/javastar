@@ -1,20 +1,14 @@
 package com.wangke.javastar.repository.persistence.mybatis.provider.lotus.autogenerate.write;
 
-import static org.apache.ibatis.jdbc.SqlBuilder.BEGIN;
-import static org.apache.ibatis.jdbc.SqlBuilder.DELETE_FROM;
-import static org.apache.ibatis.jdbc.SqlBuilder.INSERT_INTO;
-import static org.apache.ibatis.jdbc.SqlBuilder.SET;
-import static org.apache.ibatis.jdbc.SqlBuilder.SQL;
-import static org.apache.ibatis.jdbc.SqlBuilder.UPDATE;
-import static org.apache.ibatis.jdbc.SqlBuilder.VALUES;
-import static org.apache.ibatis.jdbc.SqlBuilder.WHERE;
-
 import com.wangke.javastar.repository.persistence.mybatis.entity.lotus.Users;
+import com.wangke.javastar.repository.persistence.mybatis.entity.lotus.UsersExample;
 import com.wangke.javastar.repository.persistence.mybatis.entity.lotus.UsersExample.Criteria;
 import com.wangke.javastar.repository.persistence.mybatis.entity.lotus.UsersExample.Criterion;
-import com.wangke.javastar.repository.persistence.mybatis.entity.lotus.UsersExample;
+
 import java.util.List;
 import java.util.Map;
+
+import static org.apache.ibatis.jdbc.SqlBuilder.*;
 
 public class UsersSqlProvider {
 
@@ -28,29 +22,29 @@ public class UsersSqlProvider {
     public String insertSelective(Users record) {
         BEGIN();
         INSERT_INTO("`Users`");
-        
+
         if (record.getNickName() != null) {
             VALUES("`nick_name`", "#{nickName,jdbcType=VARCHAR}");
         }
-        
+
         return SQL();
     }
 
     public String updateByExampleSelective(Map<String, Object> parameter) {
         Users record = (Users) parameter.get("record");
         UsersExample example = (UsersExample) parameter.get("example");
-        
+
         BEGIN();
         UPDATE("`Users`");
-        
+
         if (record.getId() != null) {
             SET("`id` = #{record.id,jdbcType=BIGINT}");
         }
-        
+
         if (record.getNickName() != null) {
             SET("`nick_name` = #{record.nickName,jdbcType=VARCHAR}");
         }
-        
+
         applyWhere(example, true);
         return SQL();
     }
@@ -58,10 +52,10 @@ public class UsersSqlProvider {
     public String updateByExample(Map<String, Object> parameter) {
         BEGIN();
         UPDATE("`Users`");
-        
+
         SET("`id` = #{record.id,jdbcType=BIGINT}");
         SET("`nick_name` = #{record.nickName,jdbcType=VARCHAR}");
-        
+
         UsersExample example = (UsersExample) parameter.get("example");
         applyWhere(example, true);
         return SQL();
@@ -70,13 +64,13 @@ public class UsersSqlProvider {
     public String updateByPrimaryKeySelective(Users record) {
         BEGIN();
         UPDATE("`Users`");
-        
+
         if (record.getNickName() != null) {
             SET("`nick_name` = #{nickName,jdbcType=VARCHAR}");
         }
-        
+
         WHERE("`id` = #{id,jdbcType=BIGINT}");
-        
+
         return SQL();
     }
 
@@ -84,7 +78,7 @@ public class UsersSqlProvider {
         if (example == null) {
             return;
         }
-        
+
         String parmPhrase1;
         String parmPhrase1_th;
         String parmPhrase2;
@@ -106,7 +100,7 @@ public class UsersSqlProvider {
             parmPhrase3 = "#{oredCriteria[%d].allCriteria[%d].value[%d]}";
             parmPhrase3_th = "#{oredCriteria[%d].allCriteria[%d].value[%d],typeHandler=%s}";
         }
-        
+
         StringBuilder sb = new StringBuilder();
         List<Criteria> oredCriteria = example.getOredCriteria();
         boolean firstCriteria = true;
@@ -118,7 +112,7 @@ public class UsersSqlProvider {
                 } else {
                     sb.append(" or ");
                 }
-                
+
                 sb.append('(');
                 List<Criterion> criterions = criteria.getAllCriteria();
                 boolean firstCriterion = true;
@@ -129,14 +123,14 @@ public class UsersSqlProvider {
                     } else {
                         sb.append(" and ");
                     }
-                    
+
                     if (criterion.isNoValue()) {
                         sb.append(criterion.getCondition());
                     } else if (criterion.isSingleValue()) {
                         if (criterion.getTypeHandler() == null) {
                             sb.append(String.format(parmPhrase1, criterion.getCondition(), i, j));
                         } else {
-                            sb.append(String.format(parmPhrase1_th, criterion.getCondition(), i, j,criterion.getTypeHandler()));
+                            sb.append(String.format(parmPhrase1_th, criterion.getCondition(), i, j, criterion.getTypeHandler()));
                         }
                     } else if (criterion.isBetweenValue()) {
                         if (criterion.getTypeHandler() == null) {
@@ -167,7 +161,7 @@ public class UsersSqlProvider {
                 sb.append(')');
             }
         }
-        
+
         if (sb.length() > 0) {
             WHERE(sb.toString());
         }

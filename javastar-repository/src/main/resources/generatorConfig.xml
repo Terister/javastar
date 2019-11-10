@@ -40,7 +40,8 @@
 
 
         <table tableName="wk_%"
-               catalog="DataCenter" enableCountByExample="false" enableDeleteByExample="true" enableUpdateByExample="true"
+               catalog="DataCenter" enableCountByExample="false" enableDeleteByExample="true"
+               enableUpdateByExample="true"
                selectByExampleQueryId="false"
                enableSelectByExample="false" enableSelectByPrimaryKey="false" delimitAllColumns="true"
                delimitIdentifiers="true">

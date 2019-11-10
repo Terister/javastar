@@ -1,7 +1,7 @@
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/tx
@@ -34,7 +34,8 @@
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer" id="slaveScanner">
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory2"/>
-        <property name="basePackage" value="com.pab.framework.lotus.engine.repository.persistence.mybatis.provider.lotus.handwrite.read"/>
+        <property name="basePackage"
+                  value="com.pab.framework.lotus.engine.repository.persistence.mybatis.provider.lotus.handwrite.read"/>
     </bean>
 
     <bean id="sqlSessionFactory2"

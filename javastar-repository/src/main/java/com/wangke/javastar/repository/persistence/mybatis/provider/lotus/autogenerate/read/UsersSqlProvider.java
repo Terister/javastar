@@ -1,17 +1,12 @@
 package com.wangke.javastar.repository.persistence.mybatis.provider.lotus.autogenerate.read;
 
-import static org.apache.ibatis.jdbc.SqlBuilder.BEGIN;
-import static org.apache.ibatis.jdbc.SqlBuilder.FROM;
-import static org.apache.ibatis.jdbc.SqlBuilder.ORDER_BY;
-import static org.apache.ibatis.jdbc.SqlBuilder.SELECT;
-import static org.apache.ibatis.jdbc.SqlBuilder.SELECT_DISTINCT;
-import static org.apache.ibatis.jdbc.SqlBuilder.SQL;
-import static org.apache.ibatis.jdbc.SqlBuilder.WHERE;
-
+import com.wangke.javastar.repository.persistence.mybatis.entity.lotus.UsersExample;
 import com.wangke.javastar.repository.persistence.mybatis.entity.lotus.UsersExample.Criteria;
 import com.wangke.javastar.repository.persistence.mybatis.entity.lotus.UsersExample.Criterion;
-import com.wangke.javastar.repository.persistence.mybatis.entity.lotus.UsersExample;
+
 import java.util.List;
+
+import static org.apache.ibatis.jdbc.SqlBuilder.*;
 
 public class UsersSqlProvider {
 
@@ -33,15 +28,15 @@ public class UsersSqlProvider {
         SELECT("`nick_name`");
         FROM("`Users`");
         applyWhere(example, false);
-        
+
         if (example != null && example.getOrderByClause() != null) {
             ORDER_BY(example.getOrderByClause());
         }
-        
-        String returnValue=SQL();
-        if(example != null && example.getPageIndex()!=null && example.getPageCount() != null){
+
+        String returnValue = SQL();
+        if (example != null && example.getPageIndex() != null && example.getPageCount() != null) {
             int pageCount = example.getPageCount();
-            int pageStart = (example.getPageIndex() - 1)*pageCount;
+            int pageStart = (example.getPageIndex() - 1) * pageCount;
             returnValue += String.format(" limit %1$d,%2$d", pageStart, pageCount);
         }
         return returnValue;
@@ -51,7 +46,7 @@ public class UsersSqlProvider {
         if (example == null) {
             return;
         }
-        
+
         String parmPhrase1;
         String parmPhrase1_th;
         String parmPhrase2;
@@ -73,7 +68,7 @@ public class UsersSqlProvider {
             parmPhrase3 = "#{oredCriteria[%d].allCriteria[%d].value[%d]}";
             parmPhrase3_th = "#{oredCriteria[%d].allCriteria[%d].value[%d],typeHandler=%s}";
         }
-        
+
         StringBuilder sb = new StringBuilder();
         List<Criteria> oredCriteria = example.getOredCriteria();
         boolean firstCriteria = true;
@@ -85,7 +80,7 @@ public class UsersSqlProvider {
                 } else {
                     sb.append(" or ");
                 }
-                
+
                 sb.append('(');
                 List<Criterion> criterions = criteria.getAllCriteria();
                 boolean firstCriterion = true;
@@ -96,14 +91,14 @@ public class UsersSqlProvider {
                     } else {
                         sb.append(" and ");
                     }
-                    
+
                     if (criterion.isNoValue()) {
                         sb.append(criterion.getCondition());
                     } else if (criterion.isSingleValue()) {
                         if (criterion.getTypeHandler() == null) {
                             sb.append(String.format(parmPhrase1, criterion.getCondition(), i, j));
                         } else {
-                            sb.append(String.format(parmPhrase1_th, criterion.getCondition(), i, j,criterion.getTypeHandler()));
+                            sb.append(String.format(parmPhrase1_th, criterion.getCondition(), i, j, criterion.getTypeHandler()));
                         }
                     } else if (criterion.isBetweenValue()) {
                         if (criterion.getTypeHandler() == null) {
@@ -134,7 +129,7 @@ public class UsersSqlProvider {
                 sb.append(')');
             }
         }
-        
+
         if (sb.length() > 0) {
             WHERE(sb.toString());
         }

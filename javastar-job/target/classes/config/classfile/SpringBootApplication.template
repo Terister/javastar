@@ -1,4 +1,4 @@
-package #WorkSpace#.controller;
+package #WorkSpace#;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;

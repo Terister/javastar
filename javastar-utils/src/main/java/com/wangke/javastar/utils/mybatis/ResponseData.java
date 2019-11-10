@@ -4,9 +4,24 @@ import java.io.Serializable;
 
 public class ResponseData<T> implements Serializable {
 
-    private int code=0;
+    private int code = 0;
     private String msg;
     private T data;
+
+    public ResponseData() {
+    }
+
+    public ResponseData(int code, String msg) {
+        this.code = code;
+        this.msg = msg;
+
+    }
+
+    public ResponseData(int code, String msg, T data) {
+        this.code = code;
+        this.msg = msg;
+        this.data = data;
+    }
 
     public int getCode() {
         return code;
@@ -29,21 +44,6 @@ public class ResponseData<T> implements Serializable {
     }
 
     public void setData(T data) {
-        this.data = data;
-    }
-
-    public ResponseData() {
-    }
-
-    public ResponseData(int code, String msg) {
-        this.code = code;
-        this.msg = msg;
-
-    }
-
-    public ResponseData(int code, String msg, T data) {
-        this.code = code;
-        this.msg = msg;
         this.data = data;
     }
 }

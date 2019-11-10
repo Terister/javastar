@@ -18,6 +18,7 @@ public class Application extends SpringBootServletInitializer {
         springApplication.addListeners(new ApplicationStartup());
         springApplication.run(args);
     }
+
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
         return builder.sources(Application.class);

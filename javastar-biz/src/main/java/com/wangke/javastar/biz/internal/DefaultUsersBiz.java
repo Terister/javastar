@@ -11,11 +11,9 @@ import java.util.List;
 @Component
 public class DefaultUsersBiz implements UsersBiz {
 
+    private static final String className = DefaultUsersBiz.class.getName();
     @Autowired
     private UsersDao usersDao;
-
-    private static final String className = DefaultUsersBiz.class.getName();
-
 
     @Override
     public long add(UsersModel item) {

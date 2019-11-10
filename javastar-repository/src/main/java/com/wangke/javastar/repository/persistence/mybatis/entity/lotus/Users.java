@@ -3,11 +3,9 @@ package com.wangke.javastar.repository.persistence.mybatis.entity.lotus;
 import java.io.Serializable;
 
 public class Users implements Serializable {
-    private Long id;
-
-    private String nickName;
-
     private static final long serialVersionUID = 1L;
+    private Long id;
+    private String nickName;
 
     public Long getId() {
         return id;

@@ -4,8 +4,8 @@ package com.wangke.javastar.job.tools.model;
  * Created by admin on 2017/11/10.
  */
 /*
-* 数据库中的表信息
-* */
+ * 数据库中的表信息
+ * */
 public class DtName {
 
     String TABLE_NAME;

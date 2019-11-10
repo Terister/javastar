@@ -1,7 +1,7 @@
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
@@ -31,7 +31,8 @@
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer" id="masterScanner">
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory1"/>
-        <property name="basePackage" value="com.wangke.javastar.repository.persistence.mybatis.provider.lotus.handwrite" />
+        <property name="basePackage"
+                  value="com.wangke.javastar.repository.persistence.mybatis.provider.lotus.handwrite"/>
     </bean>
 
 
@@ -40,7 +41,7 @@
         <property name="dataSource" ref="dataSourceMaster"/>
     </bean>
 
-    <bean id="sqlSessionBuyCarNewCarMaster" class="org.mybatis.spring.SqlSessionTemplate" >
+    <bean id="sqlSessionBuyCarNewCarMaster" class="org.mybatis.spring.SqlSessionTemplate">
         <constructor-arg index="0" ref="sqlSessionFactory1"/>
     </bean>
 
