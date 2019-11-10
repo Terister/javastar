@@ -29,9 +29,11 @@ public class HomeController {
 
     String dataBasename = "DataCenter";
     String workSpace = "com.wangke.javastar";
+    String projectName = "javastar";
     String basePath = "/Users/wolf/Root/Codes";
-
     String projectPath = "/src/main/java/com/wangke/javastar";
+    String resourcesPath = "/src/main/resources";
+
 
     @RequestMapping(value = "/index")
     public String hello(Model model) throws Exception {
@@ -71,7 +73,7 @@ public class HomeController {
         }
         HashMap<String, String> maps1 = new HashMap<>();
         maps1.putIfAbsent("#ModuleName#", "javastar-models");
-        maps1.putIfAbsent("#WorkSpace#", "com.wangke.javastar");
+        maps1.putIfAbsent("#WorkSpace#", workSpace);
         files(configPaht1, outputpath1, maps1);
 
         /*repository*/
@@ -85,7 +87,7 @@ public class HomeController {
 
         HashMap<String, String> maps2 = new HashMap<>();
         maps2.putIfAbsent("#ModuleName#", "javastar-repository");
-        maps2.putIfAbsent("#WorkSpace#", "com.wangke.javastar");
+        maps2.putIfAbsent("#WorkSpace#", workSpace);
         files(configPaht2, outputpath2, maps2);
 
         /*biz*/
@@ -99,7 +101,7 @@ public class HomeController {
 
         HashMap<String, String> maps3 = new HashMap<>();
         maps3.putIfAbsent("#ModuleName#", "javastar-biz");
-        maps3.putIfAbsent("#WorkSpace#", "com.wangke.javastar");
+        maps3.putIfAbsent("#WorkSpace#", workSpace);
         files(configPaht3, outputpath3, maps3);
 
         /*controller*/
@@ -112,8 +114,35 @@ public class HomeController {
 
         HashMap<String, String> maps4 = new HashMap<>();
         maps4.putIfAbsent("#ModuleName#", "javastar-controller");
-        maps4.putIfAbsent("#WorkSpace#", "com.wangke.javastar");
+        maps4.putIfAbsent("#WorkSpace#", workSpace);
         files(configPaht4, outputpath4, maps4);
+
+
+        /* controller app file */
+
+        File file8 = new File(basePath + "/javastar-controller" + projectPath + "/controller");
+        if (!file8.exists()) {
+            file8.mkdirs();
+        }
+        String configPaht5 = "/config/classfile/SpringBootApplication.template";
+        String outputpath5 = basePath + "/javastar-controller" + projectPath + "/Application.java";
+
+        HashMap<String, String> maps5 = new HashMap<>();
+        maps5.putIfAbsent("#WorkSpace#", workSpace);
+        files(configPaht5, outputpath5, maps5);
+
+
+        File file9 = new File(basePath + "/javastar-controller" + resourcesPath);
+        if (!file9.exists()) {
+            file9.mkdirs();
+        }
+        String configPath6 = "/config/classfile/ApplicationProperties.template";
+        String outputpath6 = basePath + "/javastar-controller" + resourcesPath + "/aplication.properties";
+
+        HashMap<String, String> maps6 = new HashMap<>();
+        maps6.putIfAbsent("#WorkSpace#", workSpace);
+        files(configPath6, outputpath6, maps6);
+
 
     }
 
@@ -272,91 +301,30 @@ public class HomeController {
         return JSON.toJSONString(list).toString();
     }
 
-    void files(String configPath, String outputPath, HashMap<String, String> items) {
-
-        String str = "";
-
-        String fileName = configPath;
-        String outPutPath = outputPath;
-        File file = new File(outPutPath);
-
-        //read
-        InputStream inputStream = this.getClass().getResourceAsStream(fileName);
-
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-
-        String s;
-        StringBuilder sb = new StringBuilder();
-
-        try {
-            while ((s = bufferedReader.readLine()) != null) {
-                sb.append(s);
-            }
-            bufferedReader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-        str = sb.toString();
-
-        //replace
-        str = str.replaceAll("#WorkSpace#", workSpace);
-        for (String key : items.keySet()) {
-            str = str.replaceAll(key, items.get(key));
-        }
-
-
-        //write
-        try {
-            if (!file.exists()) {
-                file.createNewFile();
-            } else {
-                file.delete();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        FileOutputStream outputStream = null;
-        BufferedOutputStream bufferedOutputStream = null;
-
-        try {
-            outputStream = new FileOutputStream(new File(outPutPath));
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        bufferedOutputStream = new BufferedOutputStream(outputStream);
-        Long begin = System.currentTimeMillis();
-
-
-        try {
-            bufferedOutputStream.write(str.getBytes());
-            bufferedOutputStream.flush();
-            bufferedOutputStream.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Long end = System.currentTimeMillis();
-
-        System.out.println("==========>use time:" + (end - begin) + " millisecond ");
-    }
 
     //create file
 
-    void modelFile(String tableClass, String columns1, String columns2) {
+    private void files(String configPath, String outputPath, HashMap<String, String> items) {
 
-        String str = "";
-
-        String fileName = "/config/Model.template";
-        String outPutPath = basePath + "/javastar-models" + projectPath + "/models/" + tableClass + "Model.java";
-        File file = new File(outPutPath);
 
         //read
-        InputStream inputStream = this.getClass().getResourceAsStream(fileName);
+        String content = readFile(configPath);
+
+        //replace
+        content = content.replaceAll("#WorkSpace#", workSpace);
+        for (String key : items.keySet()) {
+            content = content.replaceAll(key, items.get(key));
+        }
+
+        //write
+        File file = new File(outputPath);
+        writeFile(file, content, outputPath);
+
+    }
+
+
+    private String readFile(String configPath) {
+        InputStream inputStream = this.getClass().getResourceAsStream(configPath);
 
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 
@@ -373,16 +341,11 @@ public class HomeController {
         }
 
 
-        str = sb.toString();
+        return sb.toString();
 
-        //replace
+    }
 
-        str = str.replaceAll("#WorkSpace#", workSpace)
-                .replaceAll("#TableClass#", tableClass)
-                .replaceAll("#Columns1#", columns1)
-                .replaceAll("#Columns2#", columns2);
-
-        //write
+    private void writeFile(File file, String content, String outPutPath) {
         try {
             if (!file.exists()) {
                 file.createNewFile();
@@ -408,382 +371,15 @@ public class HomeController {
 
 
         try {
-            bufferedOutputStream.write(str.getBytes());
+            bufferedOutputStream.write(content.getBytes());
             bufferedOutputStream.flush();
             bufferedOutputStream.close();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Long end = System.currentTimeMillis();
 
-        System.out.println("==========>use time:" + (end - begin) + " millisecond ");
     }
-
-    void defaultRepoFile(String tableClass, String tableClassInstance, String columns, String primaryKeyType, String primaryKey) {
-
-        String str = "";
-
-        String fileName = "/config/DaoDefault.template";
-        String outPutPath = basePath + "/javastar-repository" + projectPath + "/repository/dao/internal/Default" + tableClass + "Dao.java";
-        File file = new File(outPutPath);
-
-        //read
-        InputStream inputStream = this.getClass().getResourceAsStream(fileName);
-
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-
-        String s;
-        StringBuilder sb = new StringBuilder();
-
-        try {
-            while ((s = bufferedReader.readLine()) != null) {
-                sb.append(s);
-            }
-            bufferedReader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-        str = sb.toString();
-
-        //replace
-
-        str = str.replaceAll("#WorkSpace#", workSpace)
-                .replaceAll("#TableClass#", tableClass)
-                .replaceAll("#Columns#", columns)
-                .replaceAll("#PrimaryKeyType#", primaryKeyType)
-                .replaceAll("#PrimaryKey#", primaryKey)
-                .replaceAll("#TableClassInStance#", tableClassInstance);
-
-        //write
-        try {
-            if (!file.exists()) {
-                file.createNewFile();
-            } else {
-                file.delete();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        FileOutputStream outputStream = null;
-        BufferedOutputStream bufferedOutputStream = null;
-
-        try {
-            outputStream = new FileOutputStream(new File(outPutPath));
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        bufferedOutputStream = new BufferedOutputStream(outputStream);
-        Long begin = System.currentTimeMillis();
-
-
-        try {
-            bufferedOutputStream.write(str.getBytes());
-            bufferedOutputStream.flush();
-            bufferedOutputStream.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Long end = System.currentTimeMillis();
-
-        System.out.println("==========>use time:" + (end - begin) + " millisecond ");
-    }
-
-    void repoFile(String tableClass, String primaryKeyType, String primaryKey) {
-
-        String str = "";
-
-        String fileName = "/config/Dao.template";
-        String outPutPath = basePath + "/javastar-repository" + projectPath + "/repository/dao/" + tableClass + "Dao.java";
-        File file = new File(outPutPath);
-
-        //read
-        InputStream inputStream = this.getClass().getResourceAsStream(fileName);
-
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-
-        String s;
-        StringBuilder sb = new StringBuilder();
-
-        try {
-            while ((s = bufferedReader.readLine()) != null) {
-                sb.append(s);
-            }
-            bufferedReader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-        str = sb.toString();
-
-        //replace
-
-        str = str.replaceAll("#WorkSpace#", workSpace)
-                .replaceAll("#PrimaryKeyType#", primaryKeyType)
-                .replaceAll("#PrimaryKey#", primaryKey)
-                .replaceAll("#TableClass#", tableClass);
-
-        //write
-        try {
-            if (!file.exists()) {
-                file.createNewFile();
-            } else {
-                file.delete();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        FileOutputStream outputStream = null;
-        BufferedOutputStream bufferedOutputStream = null;
-
-        try {
-            outputStream = new FileOutputStream(new File(outPutPath));
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        bufferedOutputStream = new BufferedOutputStream(outputStream);
-        Long begin = System.currentTimeMillis();
-
-
-        try {
-            bufferedOutputStream.write(str.getBytes());
-            bufferedOutputStream.flush();
-            bufferedOutputStream.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Long end = System.currentTimeMillis();
-
-        System.out.println("==========>use time:" + (end - begin) + " millisecond ");
-    }
-
-    void bizFile(String tableClass, String tableClassInstance, String primaryKeyType) {
-
-        String str = "";
-
-        String fileName = "/config/Biz.template";
-        String outPutPath = basePath + "/javastar-biz" + projectPath + "/biz/" + tableClass + "Biz.java";
-        File file = new File(outPutPath);
-
-        //read
-        InputStream inputStream = this.getClass().getResourceAsStream(fileName);
-
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-
-        String s;
-        StringBuilder sb = new StringBuilder();
-
-        try {
-            while ((s = bufferedReader.readLine()) != null) {
-                sb.append(s);
-            }
-            bufferedReader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-        str = sb.toString();
-
-        //replace
-
-        str = str.replaceAll("#WorkSpace#", workSpace)
-                .replaceAll("#TableClass#", tableClass).replaceAll("#PrimaryKeyType#", primaryKeyType)
-                .replaceAll("#TableClassInStance#", tableClassInstance);
-
-        //write
-        try {
-            if (!file.exists()) {
-                file.createNewFile();
-            } else {
-                file.delete();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        FileOutputStream outputStream = null;
-        BufferedOutputStream bufferedOutputStream = null;
-
-        try {
-            outputStream = new FileOutputStream(new File(outPutPath));
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        bufferedOutputStream = new BufferedOutputStream(outputStream);
-        Long begin = System.currentTimeMillis();
-
-
-        try {
-            bufferedOutputStream.write(str.getBytes());
-            bufferedOutputStream.flush();
-            bufferedOutputStream.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Long end = System.currentTimeMillis();
-
-        System.out.println("==========>use time:" + (end - begin) + " millisecond ");
-    }
-
-    void defaultBizFile(String tableClass, String tableClassInstance, String primaryKeyType) {
-
-        String str = "";
-
-        String fileName = "/config/BizDefault.template";
-        String outPutPath = basePath + "/javastar-biz" + projectPath + "/biz/internal/Default" + tableClass + "Biz.java";
-        File file = new File(outPutPath);
-
-        //read
-        InputStream inputStream = this.getClass().getResourceAsStream(fileName);
-
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-
-        String s;
-        StringBuilder sb = new StringBuilder();
-
-        try {
-            while ((s = bufferedReader.readLine()) != null) {
-                sb.append(s);
-            }
-            bufferedReader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-        str = sb.toString();
-
-        //replace
-
-        str = str.replaceAll("#WorkSpace#", workSpace)
-                .replaceAll("#TableClass#", tableClass).replaceAll("#PrimaryKeyType#", primaryKeyType)
-                .replaceAll("#TableClassInStance#", tableClassInstance);
-
-        //write
-        try {
-            if (!file.exists()) {
-                file.createNewFile();
-            } else {
-                file.delete();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        FileOutputStream outputStream = null;
-        BufferedOutputStream bufferedOutputStream = null;
-
-        try {
-            outputStream = new FileOutputStream(new File(outPutPath));
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        bufferedOutputStream = new BufferedOutputStream(outputStream);
-        Long begin = System.currentTimeMillis();
-
-
-        try {
-            bufferedOutputStream.write(str.getBytes());
-            bufferedOutputStream.flush();
-            bufferedOutputStream.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Long end = System.currentTimeMillis();
-
-        System.out.println("==========>use time:" + (end - begin) + " millisecond ");
-    }
-
-    void controllerFile(String tableClass, String tableClassInstance) {
-
-        String str = "";
-
-        String fileName = "/config/Controller.template";
-        String outPutPath = basePath + "/javastar-controller" + projectPath + "/controller/" + tableClass + "Controller.java";
-        File file = new File(outPutPath);
-
-        //read
-        InputStream inputStream = this.getClass().getResourceAsStream(fileName);
-
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-
-        String s;
-        StringBuilder sb = new StringBuilder();
-
-        try {
-            while ((s = bufferedReader.readLine()) != null) {
-                sb.append(s);
-            }
-            bufferedReader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-        str = sb.toString();
-
-        //replace
-
-        str = str.replaceAll("#WorkSpace#", workSpace)
-                .replaceAll("#TableClass#", tableClass)
-                .replaceAll("#TableClassInStance#", tableClassInstance);
-
-        //write
-        try {
-            if (!file.exists()) {
-                file.createNewFile();
-            } else {
-                file.delete();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        FileOutputStream outputStream = null;
-        BufferedOutputStream bufferedOutputStream = null;
-
-        try {
-            outputStream = new FileOutputStream(new File(outPutPath));
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        bufferedOutputStream = new BufferedOutputStream(outputStream);
-        Long begin = System.currentTimeMillis();
-
-
-        try {
-            bufferedOutputStream.write(str.getBytes());
-            bufferedOutputStream.flush();
-            bufferedOutputStream.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Long end = System.currentTimeMillis();
-
-        System.out.println("==========>use time:" + (end - begin) + " millisecond ");
-    }
-
 
     //private method
     private static String getDataType(String type) {
