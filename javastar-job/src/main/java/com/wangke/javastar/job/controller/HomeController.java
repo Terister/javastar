@@ -30,8 +30,303 @@ public class HomeController {
     String basePath = "/Users/wolf/Root/Codes";
     String projectPath = "/src/main/java/com/wangke/javastar";
     String resourcesPath = "/src/main/resources";
+
+
     @Autowired
     private MybatisHelper mybatisHelper;
+
+
+    //create file
+
+    @RequestMapping(value = "/index")
+    public String hello(Model model) throws Exception {
+
+        String str = null;
+        model.addAttribute("name", "this is a test!");
+        return "home";
+        //return "redirect:http://www.baidu.com";
+    }
+
+    private void mkdir() {
+
+
+        /*
+         * create director and file
+         * */
+
+        String configPaht1 = "/config/projectfile/pom-models.template";
+        String outputpath1 = basePath + "/" + projectName + "-models/pom.xml";
+        File file4 = new File(basePath + "/" + projectName + "-models" + projectPath + "/models");
+        if (!file4.exists()) {
+            file4.mkdirs();
+        }
+
+        /*parent*/
+        String configPath = "/config/projectfile/pom-parent.template";
+        String outputpath = basePath + "/pom.xml";
+        HashMap<String, String> maps = new HashMap<>();
+        maps.putIfAbsent("#Modules#", projectName + "-models");
+        maps.putIfAbsent("#WorkSpace#", workSpace);
+        files(configPath, outputpath, maps);
+
+        /*models*/
+        File file2 = new File(basePath + "/" + projectName + "-models" + projectPath + "/models");
+        if (!file2.exists()) {
+            file2.mkdirs();
+        }
+        HashMap<String, String> maps1 = new HashMap<>();
+        maps1.putIfAbsent("#ModuleName#", projectName + "-models");
+        maps1.putIfAbsent("#WorkSpace#", workSpace);
+        files(configPaht1, outputpath1, maps1);
+
+        /*repository*/
+        File file5 = new File(basePath + "/" + projectName + "-repository" + projectPath + "/repository/dao/internal");
+        if (!file5.exists()) {
+            file5.mkdirs();
+        }
+
+        String configPaht2 = "/config/projectfile/pom-repository.template";
+        String outputpath2 = basePath + "/" + projectName + "-repository/pom.xml";
+
+        HashMap<String, String> maps2 = new HashMap<>();
+        maps2.putIfAbsent("#ModuleName#", projectName + "-repository");
+        maps2.putIfAbsent("#WorkSpace#", workSpace);
+        files(configPaht2, outputpath2, maps2);
+
+        /*biz*/
+        File file6 = new File(basePath + "/" + projectName + "-biz" + projectPath + "/biz/internal");
+        if (!file6.exists()) {
+            file6.mkdirs();
+        }
+
+        String configPaht3 = "/config/projectfile/pom-biz.template";
+        String outputpath3 = basePath + "/" + projectName + "-biz/pom.xml";
+
+        HashMap<String, String> maps3 = new HashMap<>();
+        maps3.putIfAbsent("#ModuleName#", projectName + "-biz");
+        maps3.putIfAbsent("#WorkSpace#", workSpace);
+        files(configPaht3, outputpath3, maps3);
+
+        /*controller*/
+        File file7 = new File(basePath + "/" + projectName + "-controller" + projectPath + "/controller");
+        if (!file7.exists()) {
+            file7.mkdirs();
+        }
+        String configPaht4 = "/config/projectfile/pom-controller.template";
+        String outputpath4 = basePath + "/" + projectName + "-controller/pom.xml";
+
+        HashMap<String, String> maps4 = new HashMap<>();
+        maps4.putIfAbsent("#ModuleName#", projectName + "-controller");
+        maps4.putIfAbsent("#WorkSpace#", workSpace);
+        files(configPaht4, outputpath4, maps4);
+
+
+        /* controller app file */
+
+        File file8 = new File(basePath + "/" + projectName + "-controller" + projectPath + "/controller");
+        if (!file8.exists()) {
+            file8.mkdirs();
+        }
+        String configPaht5 = "/config/classfile/SpringBootApplication.template";
+        String outputpath5 = basePath + "/" + projectName + "-controller" + projectPath + "/Application.java";
+
+        HashMap<String, String> maps5 = new HashMap<>();
+        maps5.putIfAbsent("#WorkSpace#", workSpace);
+        files(configPaht5, outputpath5, maps5);
+
+
+        File file9 = new File(basePath + "/" + projectName + "-controller" + resourcesPath);
+        if (!file9.exists()) {
+            file9.mkdirs();
+        }
+        String configPath6 = "/config/classfile/ApplicationProperties.template";
+        String outputpath6 = basePath + "/" + projectName + "-controller" + resourcesPath + "/application.properties";
+
+        HashMap<String, String> maps6 = new HashMap<>();
+        maps6.putIfAbsent("#WorkSpace#", workSpace);
+        files(configPath6, outputpath6, maps6);
+
+
+        /**
+         * controller config
+         */
+        File file12 = new File(basePath + "/" + projectName + "-controller" + resourcesPath + "/mysql");
+        if (!file12.exists()) {
+            file12.mkdirs();
+        }
+        String configPath12 = "/config/classfile/mysql/mybatis.template";
+        String outputpath12 = basePath + "/" + projectName + "-controller" + resourcesPath + "/mysql/spring-mybatis.xml";
+
+        HashMap<String, String> maps12 = new HashMap<>();
+        maps12.putIfAbsent("#WorkSpace#", workSpace);
+        files(configPath12, outputpath12, maps12);
+
+
+        String configPath13 = "/config/classfile/mysql/datasource.template";
+        String outputpath13 = basePath + "/" + projectName + "-controller" + resourcesPath + "/mysql/spring-datasource-master.xml";
+
+        HashMap<String, String> maps13 = new HashMap<>();
+        maps13.putIfAbsent("#WorkSpace#", workSpace);
+        files(configPath13, outputpath13, maps13);
+
+
+        String configPath14 = "/config/classfile/applicationContext.template";
+        String outputpath14 = basePath + "/" + projectName + "-controller" + resourcesPath + "/applicationContext.xml";
+
+        HashMap<String, String> maps14 = new HashMap<>();
+        maps14.putIfAbsent("#WorkSpace#", workSpace);
+
+        files(configPath14, outputpath14, maps14);
+
+        /*
+         * repository config
+         * */
+
+
+        File file10 = new File(basePath + "/" + projectName + "-repository" + resourcesPath);
+        if (!file10.exists()) {
+            file10.mkdirs();
+        }
+        String configPath7 = "/config/mybatisfile/application.properties";
+        String outputpath7 = basePath + "/" + projectName + "-repository" + resourcesPath + "/application.properties";
+
+        HashMap<String, String> maps7 = new HashMap<>();
+        maps7.putIfAbsent("#WorkSpace#", workSpace);
+        files(configPath7, outputpath7, maps7);
+
+
+        File file11 = new File(basePath + "/" + projectName + "-repository" + resourcesPath);
+        if (!file11.exists()) {
+            file11.mkdirs();
+        }
+        String configPath8 = "/config/mybatisfile/generator.template";
+        String outputpath8 = basePath + "/" + projectName + "-repository" + resourcesPath + "/generatorConfig.xml";
+
+        HashMap<String, String> maps8 = new HashMap<>();
+        maps8.putIfAbsent("#WorkSpace#", workSpace);
+        files(configPath8, outputpath8, maps8);
+
+
+    }
+
+    @GetMapping(value = "/getTableList")
+    @ResponseBody
+    public String getTableList() throws Exception {
+
+        mkdir();
+
+        List<DtList> list = new ArrayList<DtList>();
+
+        String dbName = dataBasename;
+        List<DtName> items = mybatisHelper.getTableName(dbName);
+
+
+        int columns = 0;
+
+        for (DtName dr : items) {
+            columns++;
+            DtList tmp = new DtList();
+            tmp.setDtName(dr);
+            List<DtInfo> dtinfo = mybatisHelper.getTableInfo(dr.getTABLE_NAME());
+            tmp.setDtInfo(dtinfo);
+            list.add(tmp);
+
+            //
+            StringBuilder sb1 = new StringBuilder();
+            StringBuilder sb2 = new StringBuilder();
+            StringBuilder sb3 = new StringBuilder();
+            String pkType = "int";
+            String pk = "";
+            for (DtInfo dt : dtinfo) {
+
+
+                String dtType = getDataType(dt.getType());
+
+                if ("PRI".equals(dt.getKey())) {
+                    pk = getClassName(dt.getField());
+                    if ("long".equals(dtType)) {
+                        pkType = "long";
+                    }
+
+                }
+                sb1.append("private " + dtType + " " + dt.getField() + ";");
+
+                sb1.append("public " + dtType + " get" + getClassName(dt.getField()) + "() {");
+                sb1.append("return " + dt.getField() + ";");
+                sb1.append("}");
+
+                sb1.append(" public void set" + getClassName(dt.getField()) + "(" + dtType + " " + dt.getField() + ") {");
+                sb1.append("this." + dt.getField() + " = " + dt.getField() + ";");
+                sb1.append("}");
+
+
+                sb2.append("     sb.append(\", " + dt.getField() + "=\").append(" + dt.getField() + ");");
+
+
+                sb3.append(" result.set" + getClassName(dt.getField()) + "(item.get" + getClassName(dt.getField()) + "()); ");
+            }
+            String tableClass = getClassName(dr.getTABLE_NAME());
+            String tableClassInstance = getClassNameInstance(dr.getTABLE_NAME());
+
+
+            //create file
+
+            HashMap<String, String> maps = new HashMap<>();
+            maps.putIfAbsent("#WorkSpace#", workSpace);
+            maps.putIfAbsent("#TableClass#", tableClass);
+            maps.putIfAbsent("#Columns1#", sb1.toString());
+            maps.putIfAbsent("#Columns2#", sb2.toString());
+            maps.putIfAbsent("#Columns#", sb3.toString());
+            maps.putIfAbsent("#PrimaryKeyType#", pkType);
+            maps.putIfAbsent("#PrimaryKey#", pk);
+            maps.putIfAbsent("#TableClassInStance#", tableClassInstance);
+
+
+            /**
+             * model
+             */
+            String configPaht1 = "/config/Model.template";
+            String outputpath1 = basePath + "/" + projectName + "-models" + projectPath + "/models/" + tableClass + "Model.java";
+            files(configPaht1, outputpath1, maps);
+
+
+            /**
+             * dao
+             * repository
+             */
+
+            String configPaht2 = "/config/DaoDefault.template";
+            String outputpath2 = basePath + "/" + projectName + "-repository" + projectPath + "/repository/dao/internal/Default" + tableClass + "Dao.java";
+            files(configPaht2, outputpath2, maps);
+
+            String configPaht3 = "/config/Dao.template";
+            String outputpath3 = basePath + "/" + projectName + "-repository" + projectPath + "/repository/dao/" + tableClass + "Dao.java";
+            files(configPaht3, outputpath3, maps);
+
+            /**
+             * biz
+             */
+            String configPaht4 = "/config/Biz.template";
+            String outputpath4 = basePath + "/" + projectName + "-biz" + projectPath + "/biz/" + tableClass + "Biz.java";
+            files(configPaht4, outputpath4, maps);
+
+
+            String configPaht5 = "/config/BizDefault.template";
+            String outputpath5 = basePath + "/" + projectName + "-biz" + projectPath + "/biz/internal/Default" + tableClass + "Biz.java";
+            files(configPaht5, outputpath5, maps);
+
+            /**
+             * controller
+             */
+            String configPaht6 = "/config/Controller.template";
+            String outputpath6 = basePath + "/" + projectName + "-controller" + projectPath + "/controller/" + tableClass + "Controller.java";
+            files(configPaht6, outputpath6, maps);
+
+        }
+
+        return JSON.toJSONString(list).toString();
+    }
+
 
     //private method
     private static String getDataType(String type) {
@@ -139,275 +434,6 @@ public class HomeController {
         }
 
         return sb.toString();
-    }
-
-
-    //create file
-
-    @RequestMapping(value = "/index")
-    public String hello(Model model) throws Exception {
-
-        String str = null;
-        model.addAttribute("name", "this is a test!");
-        return "home";
-        //return "redirect:http://www.baidu.com";
-    }
-
-    private void mkdir() {
-
-
-        /*
-         * create director and file
-         * */
-
-        String configPaht1 = "/config/projectfile/pom-models.template";
-        String outputpath1 = basePath + "/javastar-models/pom.xml";
-        File file4 = new File(basePath + "/javastar-models" + projectPath + "/models");
-        if (!file4.exists()) {
-            file4.mkdirs();
-        }
-
-        /*parent*/
-        String configPath = "/config/projectfile/pom-parent.template";
-        String outputpath = basePath + "/pom.xml";
-        HashMap<String, String> maps = new HashMap<>();
-        maps.putIfAbsent("#Modules#", "javastar-models");
-        maps.putIfAbsent("#WorkSpace#", "com.wangke.javastar");
-        files(configPath, outputpath, maps);
-
-        /*models*/
-        File file2 = new File(basePath + "/javastar-models" + projectPath + "/models");
-        if (!file2.exists()) {
-            file2.mkdirs();
-        }
-        HashMap<String, String> maps1 = new HashMap<>();
-        maps1.putIfAbsent("#ModuleName#", "javastar-models");
-        maps1.putIfAbsent("#WorkSpace#", workSpace);
-        files(configPaht1, outputpath1, maps1);
-
-        /*repository*/
-        File file5 = new File(basePath + "/javastar-repository" + projectPath + "/repository/dao/internal");
-        if (!file5.exists()) {
-            file5.mkdirs();
-        }
-
-        String configPaht2 = "/config/projectfile/pom-repository.template";
-        String outputpath2 = basePath + "/javastar-repository/pom.xml";
-
-        HashMap<String, String> maps2 = new HashMap<>();
-        maps2.putIfAbsent("#ModuleName#", "javastar-repository");
-        maps2.putIfAbsent("#WorkSpace#", workSpace);
-        files(configPaht2, outputpath2, maps2);
-
-        /*biz*/
-        File file6 = new File(basePath + "/javastar-biz" + projectPath + "/biz/internal");
-        if (!file6.exists()) {
-            file6.mkdirs();
-        }
-
-        String configPaht3 = "/config/projectfile/pom-biz.template";
-        String outputpath3 = basePath + "/javastar-biz/pom.xml";
-
-        HashMap<String, String> maps3 = new HashMap<>();
-        maps3.putIfAbsent("#ModuleName#", "javastar-biz");
-        maps3.putIfAbsent("#WorkSpace#", workSpace);
-        files(configPaht3, outputpath3, maps3);
-
-        /*controller*/
-        File file7 = new File(basePath + "/javastar-controller" + projectPath + "/controller");
-        if (!file7.exists()) {
-            file7.mkdirs();
-        }
-        String configPaht4 = "/config/projectfile/pom-controller.template";
-        String outputpath4 = basePath + "/javastar-controller/pom.xml";
-
-        HashMap<String, String> maps4 = new HashMap<>();
-        maps4.putIfAbsent("#ModuleName#", "javastar-controller");
-        maps4.putIfAbsent("#WorkSpace#", workSpace);
-        files(configPaht4, outputpath4, maps4);
-
-
-        /* controller app file */
-
-        File file8 = new File(basePath + "/javastar-controller" + projectPath + "/controller");
-        if (!file8.exists()) {
-            file8.mkdirs();
-        }
-        String configPaht5 = "/config/classfile/SpringBootApplication.template";
-        String outputpath5 = basePath + "/javastar-controller" + projectPath + "/Application.java";
-
-        HashMap<String, String> maps5 = new HashMap<>();
-        maps5.putIfAbsent("#WorkSpace#", workSpace);
-        files(configPaht5, outputpath5, maps5);
-
-
-        File file9 = new File(basePath + "/javastar-controller" + resourcesPath);
-        if (!file9.exists()) {
-            file9.mkdirs();
-        }
-        String configPath6 = "/config/classfile/ApplicationProperties.template";
-        String outputpath6 = basePath + "/javastar-controller" + resourcesPath + "/aplication.properties";
-
-        HashMap<String, String> maps6 = new HashMap<>();
-        maps6.putIfAbsent("#WorkSpace#", workSpace);
-        files(configPath6, outputpath6, maps6);
-
-
-    }
-
-    @GetMapping(value = "/getTableList")
-    @ResponseBody
-    public String getTableList() throws Exception {
-
-        mkdir();
-
-        List<DtList> list = new ArrayList<DtList>();
-
-        String dbName = dataBasename;
-        List<DtName> items = mybatisHelper.getTableName(dbName);
-
-
-        int columns = 0;
-
-        for (DtName dr : items) {
-            columns++;
-            DtList tmp = new DtList();
-            tmp.setDtName(dr);
-            List<DtInfo> dtinfo = mybatisHelper.getTableInfo(dr.getTABLE_NAME());
-            tmp.setDtInfo(dtinfo);
-            list.add(tmp);
-
-            //
-            StringBuilder sb1 = new StringBuilder();
-            StringBuilder sb2 = new StringBuilder();
-            StringBuilder sb3 = new StringBuilder();
-            String pkType = "int";
-            String pk = "";
-            for (DtInfo dt : dtinfo) {
-
-
-                String dtType = getDataType(dt.getType());
-
-                if ("PRI".equals(dt.getKey())) {
-                    pk = getClassName(dt.getField());
-                    if ("long".equals(dtType)) {
-                        pkType = "long";
-                    }
-
-                }
-                sb1.append("private " + dtType + " " + dt.getField() + ";");
-
-                sb1.append("public " + dtType + " get" + getClassName(dt.getField()) + "() {");
-                sb1.append("return " + dt.getField() + ";");
-                sb1.append("}");
-
-                sb1.append(" public void set" + getClassName(dt.getField()) + "(" + dtType + " " + dt.getField() + ") {");
-                sb1.append("this." + dt.getField() + " = " + dt.getField() + ";");
-                sb1.append("}");
-
-
-                sb2.append("     sb.append(\", " + dt.getField() + "=\").append(" + dt.getField() + ");");
-
-
-                sb3.append(" result.set" + getClassName(dt.getField()) + "(item.get" + getClassName(dt.getField()) + "()); ");
-            }
-            String tableClass = getClassName(dr.getTABLE_NAME());
-            String tableClassInstance = getClassNameInstance(dr.getTABLE_NAME());
-
-
-            //create file
-
-            //modelFile(tableClass, sb1.toString(), sb2.toString());
-
-            String configPaht1 = "/config/Model.template";
-            String outputpath1 = basePath + "/javastar-models" + projectPath + "/models/" + tableClass + "Model.java";
-            ;
-
-            HashMap<String, String> maps1 = new HashMap<>();
-            maps1.putIfAbsent("#WorkSpace#", workSpace);
-            maps1.putIfAbsent("#TableClass#", tableClass);
-            maps1.putIfAbsent("#Columns1#", sb1.toString());
-            maps1.putIfAbsent("#Columns2#", sb2.toString());
-
-            files(configPaht1, outputpath1, maps1);
-
-
-            //  defaultRepoFile(tableClass, tableClassInstance, sb3.toString(), pkType, pk);
-
-            String configPaht2 = "/config/DaoDefault.template";
-            String outputpath2 = basePath + "/javastar-repository" + projectPath + "/repository/dao/internal/Default" + tableClass + "Dao.java";
-
-            HashMap<String, String> maps2 = new HashMap<>();
-            maps2.putIfAbsent("#WorkSpace#", workSpace);
-            maps2.putIfAbsent("#TableClass#", tableClass);
-            maps2.putIfAbsent("#Columns#", sb3.toString());
-            maps2.putIfAbsent("#PrimaryKeyType#", pkType);
-            maps2.putIfAbsent("#PrimaryKey#", pk);
-            maps2.putIfAbsent("#TableClassInStance#", tableClassInstance);
-
-            files(configPaht2, outputpath2, maps2);
-
-
-            //repoFile(tableClass, pkType, pk);
-
-
-            String configPaht3 = "/config/Dao.template";
-            String outputpath3 = basePath + "/javastar-repository" + projectPath + "/repository/dao/" + tableClass + "Dao.java";
-            HashMap<String, String> maps3 = new HashMap<>();
-            maps3.putIfAbsent("#WorkSpace#", workSpace);
-            maps3.putIfAbsent("#TableClass#", tableClass);
-            maps3.putIfAbsent("#PrimaryKeyType#", pkType);
-            maps3.putIfAbsent("#PrimaryKey#", pk);
-            maps3.putIfAbsent("#TableClassInStance#", tableClassInstance);
-
-            files(configPaht3, outputpath3, maps3);
-
-
-            // bizFile(tableClass, tableClassInstance, pkType);
-
-            String configPaht4 = "/config/Biz.template";
-            String outputpath4 = basePath + "/javastar-biz" + projectPath + "/biz/" + tableClass + "Biz.java";
-            HashMap<String, String> maps4 = new HashMap<>();
-            maps4.putIfAbsent("#WorkSpace#", workSpace);
-            maps4.putIfAbsent("#TableClass#", tableClass);
-            maps4.putIfAbsent("#PrimaryKeyType#", pkType);
-            maps4.putIfAbsent("#PrimaryKey#", pk);
-            maps4.putIfAbsent("#TableClassInStance#", tableClassInstance);
-
-            files(configPaht4, outputpath4, maps4);
-
-
-            //  defaultBizFile(tableClass, tableClassInstance, pkType);
-
-
-            String configPaht5 = "/config/BizDefault.template";
-            String outputpath5 = basePath + "/javastar-biz" + projectPath + "/biz/internal/Default" + tableClass + "Biz.java";
-            HashMap<String, String> maps5 = new HashMap<>();
-            maps5.putIfAbsent("#WorkSpace#", workSpace);
-            maps5.putIfAbsent("#TableClass#", tableClass);
-            maps5.putIfAbsent("#PrimaryKeyType#", pkType);
-            maps5.putIfAbsent("#PrimaryKey#", pk);
-            maps5.putIfAbsent("#TableClassInStance#", tableClassInstance);
-
-            files(configPaht5, outputpath5, maps5);
-
-
-            // controllerFile(tableClass, tableClassInstance);
-
-            String configPaht6 = "/config/Controller.template";
-            String outputpath6 = basePath + "/javastar-controller" + projectPath + "/controller/" + tableClass + "Controller.java";
-            HashMap<String, String> maps6 = new HashMap<>();
-            maps6.putIfAbsent("#WorkSpace#", workSpace);
-            maps6.putIfAbsent("#TableClass#", tableClass);
-            maps6.putIfAbsent("#PrimaryKeyType#", pkType);
-            maps6.putIfAbsent("#PrimaryKey#", pk);
-            maps6.putIfAbsent("#TableClassInStance#", tableClassInstance);
-
-            files(configPaht6, outputpath6, maps6);
-
-        }
-
-        return JSON.toJSONString(list).toString();
     }
 
     private void files(String configPath, String outputPath, HashMap<String, String> items) {

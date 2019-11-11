@@ -137,6 +137,7 @@
                     </tbody>
                 </table>
 
+
                 </script>
 
                 <script type="text/js-render" id="userTemplate">
@@ -152,6 +153,7 @@
                             </a>
                         </td>
                     </tr>
+
 
 
                 </script>
