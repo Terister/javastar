@@ -6,10 +6,10 @@ import com.wangke.javastar.repository.persistence.mybatis.entity.lotus.handwrite
 public class WkProjectOriginBuilder extends WkProject {
 
     public static WkProjectExtend buildOrigin(WkProject origin) {
-        if (origin == null) {
+        if (origin == null){
             return null;
         }
-        WkProjectExtend returnValue = new WkProjectExtend();
+        WkProjectExtend returnValue=new WkProjectExtend();
         returnValue.setProjectId(origin.getProjectId());
         returnValue.setProjectKey(origin.getProjectKey());
         returnValue.setProjectName(origin.getProjectName());

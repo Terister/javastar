@@ -3,10 +3,13 @@ package com.wangke.javastar.repository.persistence.mybatis.entity.lotus;
 import java.io.Serializable;
 
 public class WkRole implements Serializable {
-    private static final long serialVersionUID = 1L;
     private Integer roleId;
+
     private String roleKey;
+
     private String roleName;
+
+    private static final long serialVersionUID = 1L;
 
     public Integer getRoleId() {
         return roleId;

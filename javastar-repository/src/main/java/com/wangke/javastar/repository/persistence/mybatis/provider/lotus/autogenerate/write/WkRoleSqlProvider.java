@@ -1,14 +1,20 @@
 package com.wangke.javastar.repository.persistence.mybatis.provider.lotus.autogenerate.write;
 
+import static org.apache.ibatis.jdbc.SqlBuilder.BEGIN;
+import static org.apache.ibatis.jdbc.SqlBuilder.DELETE_FROM;
+import static org.apache.ibatis.jdbc.SqlBuilder.INSERT_INTO;
+import static org.apache.ibatis.jdbc.SqlBuilder.SET;
+import static org.apache.ibatis.jdbc.SqlBuilder.SQL;
+import static org.apache.ibatis.jdbc.SqlBuilder.UPDATE;
+import static org.apache.ibatis.jdbc.SqlBuilder.VALUES;
+import static org.apache.ibatis.jdbc.SqlBuilder.WHERE;
+
 import com.wangke.javastar.repository.persistence.mybatis.entity.lotus.WkRole;
-import com.wangke.javastar.repository.persistence.mybatis.entity.lotus.WkRoleExample;
 import com.wangke.javastar.repository.persistence.mybatis.entity.lotus.WkRoleExample.Criteria;
 import com.wangke.javastar.repository.persistence.mybatis.entity.lotus.WkRoleExample.Criterion;
-
+import com.wangke.javastar.repository.persistence.mybatis.entity.lotus.WkRoleExample;
 import java.util.List;
 import java.util.Map;
-
-import static org.apache.ibatis.jdbc.SqlBuilder.*;
 
 public class WkRoleSqlProvider {
 
@@ -22,41 +28,41 @@ public class WkRoleSqlProvider {
     public String insertSelective(WkRole record) {
         BEGIN();
         INSERT_INTO("`wk_role`");
-
+        
         if (record.getRoleId() != null) {
             VALUES("`role_id`", "#{roleId,jdbcType=INTEGER}");
         }
-
+        
         if (record.getRoleKey() != null) {
             VALUES("`role_key`", "#{roleKey,jdbcType=VARCHAR}");
         }
-
+        
         if (record.getRoleName() != null) {
             VALUES("`role_name`", "#{roleName,jdbcType=VARCHAR}");
         }
-
+        
         return SQL();
     }
 
     public String updateByExampleSelective(Map<String, Object> parameter) {
         WkRole record = (WkRole) parameter.get("record");
         WkRoleExample example = (WkRoleExample) parameter.get("example");
-
+        
         BEGIN();
         UPDATE("`wk_role`");
-
+        
         if (record.getRoleId() != null) {
             SET("`role_id` = #{record.roleId,jdbcType=INTEGER}");
         }
-
+        
         if (record.getRoleKey() != null) {
             SET("`role_key` = #{record.roleKey,jdbcType=VARCHAR}");
         }
-
+        
         if (record.getRoleName() != null) {
             SET("`role_name` = #{record.roleName,jdbcType=VARCHAR}");
         }
-
+        
         applyWhere(example, true);
         return SQL();
     }
@@ -64,11 +70,11 @@ public class WkRoleSqlProvider {
     public String updateByExample(Map<String, Object> parameter) {
         BEGIN();
         UPDATE("`wk_role`");
-
+        
         SET("`role_id` = #{record.roleId,jdbcType=INTEGER}");
         SET("`role_key` = #{record.roleKey,jdbcType=VARCHAR}");
         SET("`role_name` = #{record.roleName,jdbcType=VARCHAR}");
-
+        
         WkRoleExample example = (WkRoleExample) parameter.get("example");
         applyWhere(example, true);
         return SQL();
@@ -77,17 +83,17 @@ public class WkRoleSqlProvider {
     public String updateByPrimaryKeySelective(WkRole record) {
         BEGIN();
         UPDATE("`wk_role`");
-
+        
         if (record.getRoleKey() != null) {
             SET("`role_key` = #{roleKey,jdbcType=VARCHAR}");
         }
-
+        
         if (record.getRoleName() != null) {
             SET("`role_name` = #{roleName,jdbcType=VARCHAR}");
         }
-
+        
         WHERE("`role_id` = #{roleId,jdbcType=INTEGER}");
-
+        
         return SQL();
     }
 
@@ -95,7 +101,7 @@ public class WkRoleSqlProvider {
         if (example == null) {
             return;
         }
-
+        
         String parmPhrase1;
         String parmPhrase1_th;
         String parmPhrase2;
@@ -117,7 +123,7 @@ public class WkRoleSqlProvider {
             parmPhrase3 = "#{oredCriteria[%d].allCriteria[%d].value[%d]}";
             parmPhrase3_th = "#{oredCriteria[%d].allCriteria[%d].value[%d],typeHandler=%s}";
         }
-
+        
         StringBuilder sb = new StringBuilder();
         List<Criteria> oredCriteria = example.getOredCriteria();
         boolean firstCriteria = true;
@@ -129,7 +135,7 @@ public class WkRoleSqlProvider {
                 } else {
                     sb.append(" or ");
                 }
-
+                
                 sb.append('(');
                 List<Criterion> criterions = criteria.getAllCriteria();
                 boolean firstCriterion = true;
@@ -140,14 +146,14 @@ public class WkRoleSqlProvider {
                     } else {
                         sb.append(" and ");
                     }
-
+                    
                     if (criterion.isNoValue()) {
                         sb.append(criterion.getCondition());
                     } else if (criterion.isSingleValue()) {
                         if (criterion.getTypeHandler() == null) {
                             sb.append(String.format(parmPhrase1, criterion.getCondition(), i, j));
                         } else {
-                            sb.append(String.format(parmPhrase1_th, criterion.getCondition(), i, j, criterion.getTypeHandler()));
+                            sb.append(String.format(parmPhrase1_th, criterion.getCondition(), i, j,criterion.getTypeHandler()));
                         }
                     } else if (criterion.isBetweenValue()) {
                         if (criterion.getTypeHandler() == null) {
@@ -178,7 +184,7 @@ public class WkRoleSqlProvider {
                 sb.append(')');
             }
         }
-
+        
         if (sb.length() > 0) {
             WHERE(sb.toString());
         }

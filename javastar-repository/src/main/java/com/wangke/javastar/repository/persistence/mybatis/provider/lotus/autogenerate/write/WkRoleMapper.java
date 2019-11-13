@@ -2,43 +2,49 @@ package com.wangke.javastar.repository.persistence.mybatis.provider.lotus.autoge
 
 import com.wangke.javastar.repository.persistence.mybatis.entity.lotus.WkRole;
 import com.wangke.javastar.repository.persistence.mybatis.entity.lotus.WkRoleExample;
-import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.DeleteProvider;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.InsertProvider;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.UpdateProvider;
 
 public interface WkRoleMapper {
-    @DeleteProvider(type = WkRoleSqlProvider.class, method = "deleteByExample")
+    @DeleteProvider(type=WkRoleSqlProvider.class, method="deleteByExample")
     int deleteByExample(WkRoleExample example);
 
     @Delete({
-            "delete from `wk_role`",
-            "where `role_id` = #{roleId,jdbcType=INTEGER}"
+        "delete from `wk_role`",
+        "where `role_id` = #{roleId,jdbcType=INTEGER}"
     })
     int deleteByPrimaryKey(Integer roleId);
 
     @Insert({
-            "insert into `wk_role` (`role_id`, `role_key`, ",
-            "`role_name`)",
-            "values (#{roleId,jdbcType=INTEGER}, #{roleKey,jdbcType=VARCHAR}, ",
-            "#{roleName,jdbcType=VARCHAR})"
+        "insert into `wk_role` (`role_id`, `role_key`, ",
+        "`role_name`)",
+        "values (#{roleId,jdbcType=INTEGER}, #{roleKey,jdbcType=VARCHAR}, ",
+        "#{roleName,jdbcType=VARCHAR})"
     })
     int insert(WkRole record);
 
-    @InsertProvider(type = WkRoleSqlProvider.class, method = "insertSelective")
+    @InsertProvider(type=WkRoleSqlProvider.class, method="insertSelective")
     int insertSelective(WkRole record);
 
-    @UpdateProvider(type = WkRoleSqlProvider.class, method = "updateByExampleSelective")
+    @UpdateProvider(type=WkRoleSqlProvider.class, method="updateByExampleSelective")
     int updateByExampleSelective(@Param("record") WkRole record, @Param("example") WkRoleExample example);
 
-    @UpdateProvider(type = WkRoleSqlProvider.class, method = "updateByExample")
+    @UpdateProvider(type=WkRoleSqlProvider.class, method="updateByExample")
     int updateByExample(@Param("record") WkRole record, @Param("example") WkRoleExample example);
 
-    @UpdateProvider(type = WkRoleSqlProvider.class, method = "updateByPrimaryKeySelective")
+    @UpdateProvider(type=WkRoleSqlProvider.class, method="updateByPrimaryKeySelective")
     int updateByPrimaryKeySelective(WkRole record);
 
     @Update({
-            "update `wk_role`",
-            "set `role_key` = #{roleKey,jdbcType=VARCHAR},",
-            "`role_name` = #{roleName,jdbcType=VARCHAR}",
-            "where `role_id` = #{roleId,jdbcType=INTEGER}"
+        "update `wk_role`",
+        "set `role_key` = #{roleKey,jdbcType=VARCHAR},",
+          "`role_name` = #{roleName,jdbcType=VARCHAR}",
+        "where `role_id` = #{roleId,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(WkRole record);
 }

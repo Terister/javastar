@@ -6,10 +6,10 @@ import com.wangke.javastar.repository.persistence.mybatis.entity.lotus.handwrite
 public class WkRoleOriginBuilder extends WkRole {
 
     public static WkRoleExtend buildOrigin(WkRole origin) {
-        if (origin == null) {
+        if (origin == null){
             return null;
         }
-        WkRoleExtend returnValue = new WkRoleExtend();
+        WkRoleExtend returnValue=new WkRoleExtend();
         returnValue.setRoleId(origin.getRoleId());
         returnValue.setRoleKey(origin.getRoleKey());
         returnValue.setRoleName(origin.getRoleName());

@@ -1,14 +1,20 @@
 package com.wangke.javastar.repository.persistence.mybatis.provider.lotus.autogenerate.write;
 
+import static org.apache.ibatis.jdbc.SqlBuilder.BEGIN;
+import static org.apache.ibatis.jdbc.SqlBuilder.DELETE_FROM;
+import static org.apache.ibatis.jdbc.SqlBuilder.INSERT_INTO;
+import static org.apache.ibatis.jdbc.SqlBuilder.SET;
+import static org.apache.ibatis.jdbc.SqlBuilder.SQL;
+import static org.apache.ibatis.jdbc.SqlBuilder.UPDATE;
+import static org.apache.ibatis.jdbc.SqlBuilder.VALUES;
+import static org.apache.ibatis.jdbc.SqlBuilder.WHERE;
+
 import com.wangke.javastar.repository.persistence.mybatis.entity.lotus.WkProject;
-import com.wangke.javastar.repository.persistence.mybatis.entity.lotus.WkProjectExample;
 import com.wangke.javastar.repository.persistence.mybatis.entity.lotus.WkProjectExample.Criteria;
 import com.wangke.javastar.repository.persistence.mybatis.entity.lotus.WkProjectExample.Criterion;
-
+import com.wangke.javastar.repository.persistence.mybatis.entity.lotus.WkProjectExample;
 import java.util.List;
 import java.util.Map;
-
-import static org.apache.ibatis.jdbc.SqlBuilder.*;
 
 public class WkProjectSqlProvider {
 
@@ -22,65 +28,65 @@ public class WkProjectSqlProvider {
     public String insertSelective(WkProject record) {
         BEGIN();
         INSERT_INTO("`wk_project`");
-
+        
         if (record.getProjectId() != null) {
             VALUES("`project_id`", "#{projectId,jdbcType=INTEGER}");
         }
-
+        
         if (record.getProjectKey() != null) {
             VALUES("`project_key`", "#{projectKey,jdbcType=VARCHAR}");
         }
-
+        
         if (record.getProjectName() != null) {
             VALUES("`project_name`", "#{projectName,jdbcType=VARCHAR}");
         }
-
+        
         if (record.getProjectPath() != null) {
             VALUES("`project_path`", "#{projectPath,jdbcType=VARCHAR}");
         }
-
+        
         if (record.getProjectDesc() != null) {
             VALUES("`project_desc`", "#{projectDesc,jdbcType=VARCHAR}");
         }
-
+        
         if (record.getProjectParentKey() != null) {
             VALUES("`project_parent_key`", "#{projectParentKey,jdbcType=INTEGER}");
         }
-
+        
         return SQL();
     }
 
     public String updateByExampleSelective(Map<String, Object> parameter) {
         WkProject record = (WkProject) parameter.get("record");
         WkProjectExample example = (WkProjectExample) parameter.get("example");
-
+        
         BEGIN();
         UPDATE("`wk_project`");
-
+        
         if (record.getProjectId() != null) {
             SET("`project_id` = #{record.projectId,jdbcType=INTEGER}");
         }
-
+        
         if (record.getProjectKey() != null) {
             SET("`project_key` = #{record.projectKey,jdbcType=VARCHAR}");
         }
-
+        
         if (record.getProjectName() != null) {
             SET("`project_name` = #{record.projectName,jdbcType=VARCHAR}");
         }
-
+        
         if (record.getProjectPath() != null) {
             SET("`project_path` = #{record.projectPath,jdbcType=VARCHAR}");
         }
-
+        
         if (record.getProjectDesc() != null) {
             SET("`project_desc` = #{record.projectDesc,jdbcType=VARCHAR}");
         }
-
+        
         if (record.getProjectParentKey() != null) {
             SET("`project_parent_key` = #{record.projectParentKey,jdbcType=INTEGER}");
         }
-
+        
         applyWhere(example, true);
         return SQL();
     }
@@ -88,14 +94,14 @@ public class WkProjectSqlProvider {
     public String updateByExample(Map<String, Object> parameter) {
         BEGIN();
         UPDATE("`wk_project`");
-
+        
         SET("`project_id` = #{record.projectId,jdbcType=INTEGER}");
         SET("`project_key` = #{record.projectKey,jdbcType=VARCHAR}");
         SET("`project_name` = #{record.projectName,jdbcType=VARCHAR}");
         SET("`project_path` = #{record.projectPath,jdbcType=VARCHAR}");
         SET("`project_desc` = #{record.projectDesc,jdbcType=VARCHAR}");
         SET("`project_parent_key` = #{record.projectParentKey,jdbcType=INTEGER}");
-
+        
         WkProjectExample example = (WkProjectExample) parameter.get("example");
         applyWhere(example, true);
         return SQL();
@@ -104,29 +110,29 @@ public class WkProjectSqlProvider {
     public String updateByPrimaryKeySelective(WkProject record) {
         BEGIN();
         UPDATE("`wk_project`");
-
+        
         if (record.getProjectKey() != null) {
             SET("`project_key` = #{projectKey,jdbcType=VARCHAR}");
         }
-
+        
         if (record.getProjectName() != null) {
             SET("`project_name` = #{projectName,jdbcType=VARCHAR}");
         }
-
+        
         if (record.getProjectPath() != null) {
             SET("`project_path` = #{projectPath,jdbcType=VARCHAR}");
         }
-
+        
         if (record.getProjectDesc() != null) {
             SET("`project_desc` = #{projectDesc,jdbcType=VARCHAR}");
         }
-
+        
         if (record.getProjectParentKey() != null) {
             SET("`project_parent_key` = #{projectParentKey,jdbcType=INTEGER}");
         }
-
+        
         WHERE("`project_id` = #{projectId,jdbcType=INTEGER}");
-
+        
         return SQL();
     }
 
@@ -134,7 +140,7 @@ public class WkProjectSqlProvider {
         if (example == null) {
             return;
         }
-
+        
         String parmPhrase1;
         String parmPhrase1_th;
         String parmPhrase2;
@@ -156,7 +162,7 @@ public class WkProjectSqlProvider {
             parmPhrase3 = "#{oredCriteria[%d].allCriteria[%d].value[%d]}";
             parmPhrase3_th = "#{oredCriteria[%d].allCriteria[%d].value[%d],typeHandler=%s}";
         }
-
+        
         StringBuilder sb = new StringBuilder();
         List<Criteria> oredCriteria = example.getOredCriteria();
         boolean firstCriteria = true;
@@ -168,7 +174,7 @@ public class WkProjectSqlProvider {
                 } else {
                     sb.append(" or ");
                 }
-
+                
                 sb.append('(');
                 List<Criterion> criterions = criteria.getAllCriteria();
                 boolean firstCriterion = true;
@@ -179,14 +185,14 @@ public class WkProjectSqlProvider {
                     } else {
                         sb.append(" and ");
                     }
-
+                    
                     if (criterion.isNoValue()) {
                         sb.append(criterion.getCondition());
                     } else if (criterion.isSingleValue()) {
                         if (criterion.getTypeHandler() == null) {
                             sb.append(String.format(parmPhrase1, criterion.getCondition(), i, j));
                         } else {
-                            sb.append(String.format(parmPhrase1_th, criterion.getCondition(), i, j, criterion.getTypeHandler()));
+                            sb.append(String.format(parmPhrase1_th, criterion.getCondition(), i, j,criterion.getTypeHandler()));
                         }
                     } else if (criterion.isBetweenValue()) {
                         if (criterion.getTypeHandler() == null) {
@@ -217,7 +223,7 @@ public class WkProjectSqlProvider {
                 sb.append(')');
             }
         }
-
+        
         if (sb.length() > 0) {
             WHERE(sb.toString());
         }

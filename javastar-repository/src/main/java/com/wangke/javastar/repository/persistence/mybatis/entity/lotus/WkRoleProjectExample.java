@@ -1,11 +1,10 @@
 package com.wangke.javastar.repository.persistence.mybatis.entity.lotus;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class WkRoleProjectExample {
@@ -23,20 +22,20 @@ public class WkRoleProjectExample {
         oredCriteria = new ArrayList<Criteria>();
     }
 
-    public String getOrderByClause() {
-        return orderByClause;
-    }
-
     public void setOrderByClause(String orderByClause) {
         this.orderByClause = orderByClause;
     }
 
-    public boolean isDistinct() {
-        return distinct;
+    public String getOrderByClause() {
+        return orderByClause;
     }
 
     public void setDistinct(boolean distinct) {
         this.distinct = distinct;
+    }
+
+    public boolean isDistinct() {
+        return distinct;
     }
 
     public List<Criteria> getOredCriteria() {
@@ -72,20 +71,20 @@ public class WkRoleProjectExample {
         distinct = false;
     }
 
+    public void setPageIndex(Integer pageIndex) {
+        this.pageIndex=pageIndex;
+    }
+
     public Integer getPageIndex() {
         return this.pageIndex;
     }
 
-    public void setPageIndex(Integer pageIndex) {
-        this.pageIndex = pageIndex;
+    public void setPageCount(Integer pageCount) {
+        this.pageCount=pageCount;
     }
 
     public Integer getPageCount() {
         return this.pageCount;
-    }
-
-    public void setPageCount(Integer pageCount) {
-        this.pageCount = pageCount;
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -108,10 +107,6 @@ public class WkRoleProjectExample {
 
         public List<Criterion> getCriteria() {
             return criteria;
-        }
-
-        void setCriteria(List<Criterion> criteria) {
-            this.criteria = criteria;
         }
 
         protected void addCriterion(String condition) {
@@ -454,6 +449,10 @@ public class WkRoleProjectExample {
             addCriterion("`last_update_timestamp` not between", value1, value2, "lastUpdateTimestamp");
             return (Criteria) this;
         }
+
+        void setCriteria(List<Criterion> criteria) {
+            this.criteria=criteria;
+        }
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -481,6 +480,38 @@ public class WkRoleProjectExample {
         private boolean listValue;
 
         private String typeHandler;
+
+        public String getCondition() {
+            return condition;
+        }
+
+        public Object getValue() {
+            return value;
+        }
+
+        public Object getSecondValue() {
+            return secondValue;
+        }
+
+        public boolean isNoValue() {
+            return noValue;
+        }
+
+        public boolean isSingleValue() {
+            return singleValue;
+        }
+
+        public boolean isBetweenValue() {
+            return betweenValue;
+        }
+
+        public boolean isListValue() {
+            return listValue;
+        }
+
+        public String getTypeHandler() {
+            return typeHandler;
+        }
 
         protected Criterion(String condition) {
             super();
@@ -520,38 +551,6 @@ public class WkRoleProjectExample {
 
         public Criterion() {
             super();
-        }
-
-        public String getCondition() {
-            return condition;
-        }
-
-        public Object getValue() {
-            return value;
-        }
-
-        public Object getSecondValue() {
-            return secondValue;
-        }
-
-        public boolean isNoValue() {
-            return noValue;
-        }
-
-        public boolean isSingleValue() {
-            return singleValue;
-        }
-
-        public boolean isBetweenValue() {
-            return betweenValue;
-        }
-
-        public boolean isListValue() {
-            return listValue;
-        }
-
-        public String getTypeHandler() {
-            return typeHandler;
         }
     }
 }
