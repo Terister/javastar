@@ -1,0 +1,22 @@
+package    #WorkSpace#.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping; 
+
+@SuppressWarnings("SpringJavaAutowiringInspection")
+@Controller
+public class HomeController {
+
+
+    @RequestMapping(value = "/#TableClass#")
+    public String hello(Model model) throws Exception {
+
+        String str = null;
+        model.addAttribute("name", "this is a test!");
+        return "#TableClass#";
+    }
+
+
+
+}

@@ -10,6 +10,6 @@ public class ScheduleService {
 
     @Scheduled(initialDelay = 10 * 1000, fixedDelay = 2 * 1000)
     public void job() {
-        System.out.println("=====>time:" + System.currentTimeMillis());
+        // System.out.println("=====>time:" + System.currentTimeMillis());
     }
 }

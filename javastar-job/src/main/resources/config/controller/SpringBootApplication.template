@@ -1,8 +1,10 @@
 package #WorkSpace#;
 
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
+
 
 /**
  * Created by admin on 2017/11/8.
@@ -11,8 +13,8 @@ import org.springframework.context.annotation.ImportResource;
 @ImportResource("classpath:applicationContext.xml")
 public class Application {
     public static void main(String[] args) {
-        SpringApplication springApplication = new SpringApplication(Application.class);
-        springApplication.run(args);
+         new SpringApplicationBuilder(Application.class).web(true).run(args);
+
     }
 
 }

@@ -1,6 +1,7 @@
 package com.wangke.javastar.job.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.wangke.javastar.job.tools.Unzip;
 import com.wangke.javastar.job.tools.mapper.MybatisHelper;
 import com.wangke.javastar.job.tools.model.DtInfo;
 import com.wangke.javastar.job.tools.model.DtList;
@@ -30,8 +31,6 @@ public class HomeController {
     String basePath = "/Users/wolf/Root/Codes";
     String projectPath = "/src/main/java/com/wangke/sagittar";
     String resourcesPath = "/src/main/resources";
-
-
     @Autowired
     private MybatisHelper mybatisHelper;
 
@@ -44,10 +43,13 @@ public class HomeController {
         String str = null;
         model.addAttribute("name", "this is a test!");
         return "home";
+
+
         //return "redirect:http://www.baidu.com";
     }
 
     private void mkdir() {
+
 
 
         /*
@@ -244,6 +246,43 @@ public class HomeController {
         maps17.putIfAbsent("#WorkSpace#", workSpace);
         files(configPaht17, outputpath17, maps17);
 
+        /**
+         * unzip static files
+         */
+        unzipStaticResource();
+
+        //TODO
+
+        /**
+         * controller   web  swagger
+         */
+        String configPaht18 = "/config/controller/SpringWebMvc.template";
+        String outputpath18 = basePath + "/" + projectName + "-controller" + projectPath + "/controller/SpringWebMvcConfig.java";
+
+        HashMap<String, String> maps18 = new HashMap<>();
+        maps18.putIfAbsent("#ProjectName#", projectName);
+        maps18.putIfAbsent("#WorkSpace#", workSpace);
+        files(configPaht18, outputpath18, maps18);
+
+        String configPaht19 = "/config/controller/SwaggerConfig.template";
+        String outputpath19 = basePath + "/" + projectName + "-controller" + projectPath + "/controller/SwaggerConfig.java";
+
+        HashMap<String, String> maps19 = new HashMap<>();
+        maps19.putIfAbsent("#ProjectName#", projectName);
+        maps19.putIfAbsent("#WorkSpace#", workSpace);
+        files(configPaht19, outputpath19, maps19);
+        /**
+         * sql
+         */
+
+        /**
+         *  static detail
+         */
+
+        /**
+         * static list
+         */
+
     }
 
     @GetMapping(value = "/getTableList")
@@ -365,10 +404,30 @@ public class HomeController {
     }
 
 
+    private void unzipStaticResource() {
+
+        try {
+            //copy
+            InputStream inputStream = this.getClass().getResourceAsStream("/config/staticfile/static.zip");
+            FileOutputStream fs = new FileOutputStream(basePath + "/123.zip");
+            Unzip.write2Out(inputStream, fs);
+            inputStream.close();
+            String outputpath = basePath + "/" + projectName + "-controller" + resourcesPath + "/templates";
+            //un zip
+            Unzip.unZip(new File(basePath + "/123.zip"), outputpath);
+            //delete
+            Unzip.deleteFile(basePath + "/123.zip");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     //private method
     private static String getDataType(String type) {
         String str = "";
         type = type.toLowerCase();
+
 
         /* String */
 
