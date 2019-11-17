@@ -48,6 +48,7 @@ public class HomeController {
         //return "redirect:http://www.baidu.com";
     }
 
+
     private void mkdir() {
 
 
@@ -130,7 +131,7 @@ public class HomeController {
             file8.mkdirs();
         }
         String configPaht5 = "/config/controller/SpringBootApplication.template";
-        String outputpath5 = basePath + "/" + projectName + "-controller" + projectPath + "/SpringBootApplication.java";
+        String outputpath5 = basePath + "/" + projectName + "-controller" + projectPath + "/SpringApplication.java";
 
         HashMap<String, String> maps5 = new HashMap<>();
         maps5.putIfAbsent("#WorkSpace#", workSpace);
