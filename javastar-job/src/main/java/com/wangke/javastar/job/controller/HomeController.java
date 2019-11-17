@@ -130,7 +130,7 @@ public class HomeController {
             file8.mkdirs();
         }
         String configPaht5 = "/config/controller/SpringBootApplication.template";
-        String outputpath5 = basePath + "/" + projectName + "-controller" + projectPath + "/Application.java";
+        String outputpath5 = basePath + "/" + projectName + "-controller" + projectPath + "/SpringBootApplication.java";
 
         HashMap<String, String> maps5 = new HashMap<>();
         maps5.putIfAbsent("#WorkSpace#", workSpace);
@@ -256,32 +256,26 @@ public class HomeController {
         /**
          * controller   web  swagger
          */
+        File file21 = new File(basePath + "/" + projectName + "-controller" + projectPath + "/config");
+        if (!file21.exists()) {
+            file21.mkdirs();
+        }
         String configPaht18 = "/config/controller/SpringWebMvc.template";
-        String outputpath18 = basePath + "/" + projectName + "-controller" + projectPath + "/controller/SpringWebMvcConfig.java";
+        String outputpath18 = basePath + "/" + projectName + "-controller" + projectPath + "/config/SpringWebMvcConfig.java";
 
         HashMap<String, String> maps18 = new HashMap<>();
         maps18.putIfAbsent("#ProjectName#", projectName);
         maps18.putIfAbsent("#WorkSpace#", workSpace);
         files(configPaht18, outputpath18, maps18);
 
-        String configPaht19 = "/config/controller/SwaggerConfig.template";
-        String outputpath19 = basePath + "/" + projectName + "-controller" + projectPath + "/controller/SwaggerConfig.java";
+//        String configPaht19 = "/config/controller/SwaggerConfig.template";
+//        String outputpath19 = basePath + "/" + projectName + "-controller" + projectPath + "/config/SwaggerConfig.java";
+//
+//        HashMap<String, String> maps19 = new HashMap<>();
+//        maps19.putIfAbsent("#ProjectName#", projectName);
+//        maps19.putIfAbsent("#WorkSpace#", workSpace);
+//        files(configPaht19, outputpath19, maps19);
 
-        HashMap<String, String> maps19 = new HashMap<>();
-        maps19.putIfAbsent("#ProjectName#", projectName);
-        maps19.putIfAbsent("#WorkSpace#", workSpace);
-        files(configPaht19, outputpath19, maps19);
-        /**
-         * sql
-         */
-
-        /**
-         *  static detail
-         */
-
-        /**
-         * static list
-         */
 
     }
 
@@ -299,6 +293,7 @@ public class HomeController {
 
         int columns = 0;
 
+        StringBuilder sbModel = new StringBuilder();
         for (DtName dr : items) {
             columns++;
             DtList tmp = new DtList();
@@ -398,7 +393,50 @@ public class HomeController {
             String outputpath6 = basePath + "/" + projectName + "-controller" + projectPath + "/controller/" + tableClass + "Controller.java";
             files(configPaht6, outputpath6, maps);
 
+            /**
+             *  static detail
+             */
+
+            String configPaht7 = "/config/staticfile/common/Detail.ftl";
+            String outputpath7 = basePath + "/" + projectName + "-controller" + resourcesPath + "/templates/views/" + tableClass + "Detail.ftl";
+            files(configPaht7, outputpath7, maps);
+
+
+            /**
+             * static list
+             */
+            String configPaht8 = "/config/staticfile/common/List.ftl";
+            String outputpath8 = basePath + "/" + projectName + "-controller" + resourcesPath + "/templates/views/" + tableClass + "List.ftl";
+            files(configPaht8, outputpath8, maps);
+
+
+            /**
+             * home model
+             */
+
+
+            sbModel.append("@RequestMapping(value = \"/" + tableClass + "Detail\")\n");
+            sbModel.append(" public String " + tableClass + "Detail(Model model) throws Exception {\n");
+            sbModel.append("                String str = null;\n");
+            sbModel.append("                model.addAttribute(\"name\", \"this is a test!\");\n");
+            sbModel.append("                return \"" + tableClass + "Detail\";\n");
+            sbModel.append("}");
+            sbModel.append("@RequestMapping(value = \"/" + tableClass + "List\")\n");
+            sbModel.append(" public String " + tableClass + "List(Model model) throws Exception {\n");
+            sbModel.append("                String str = null;\n");
+            sbModel.append("                model.addAttribute(\"name\", \"this is a test!\");\n");
+            sbModel.append("                return \"" + tableClass + "List\";\n");
+            sbModel.append("}");
         }
+        /**
+         * homecontroller
+         * */
+        HashMap<String, String> maps = new HashMap<>();
+        String configPaht9 = "/config/controller/HomeController.template";
+        String outputpath9 = basePath + "/" + projectName + "-controller" + projectPath + "/controller/HomeController.java";
+        maps.put("#ModelContent#", sbModel.toString());
+        maps.putIfAbsent("#WorkSpace#", workSpace);
+        files(configPaht9, outputpath9, maps);
 
         return JSON.toJSONString(list).toString();
     }

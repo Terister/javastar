@@ -1,0 +1,7 @@
+#
+spring.application.name=abc
+server.port=8889
+jdbc.driver=com.mysql.jdbc.Driver
+jdbc.url=jdbc:mysql://localhost:3306/DataCenter?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false
+jdbc.username=root
+jdbc.password=850123

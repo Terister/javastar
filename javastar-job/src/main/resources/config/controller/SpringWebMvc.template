@@ -1,4 +1,4 @@
-package    #WorkSpace#.job;
+package    #WorkSpace#.config;
 
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
@@ -8,11 +8,11 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
-
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import javax.servlet.ServletContext;
 
 /**
- * @author wang.zeyan
+ * @author wang.ke
  * @date 2017年10月25日
  */
 @Configuration
@@ -20,12 +20,6 @@ import javax.servlet.ServletContext;
 @ServletComponentScan("#WorkSpace#")
 public class SpringWebMvcConfig extends WebMvcConfigurerAdapter {
 
-    public static final String platform_server_port = "server.port";
-    public static final String platform_server_contextPath = "server.contextPath";
-    public static final String default_server_port = "8080";
-    public static final String default_server_contextPath = "/";
-
- 
 
     /*  *
      * undertow web容器注册
@@ -45,7 +39,6 @@ public class SpringWebMvcConfig extends WebMvcConfigurerAdapter {
     public FreeMarkerConfigurer viewResolver(ServletContext servletContext) {
         FreeMarkerConfigurer fm;
         fm = new FreeMarkerConfigurer();
-        //  fm.setTemplateLoaderPath("classpath:templates/views/");
         fm.setTemplateLoaderPath("classpath:templates/views/");
         fm.setDefaultEncoding("UTF-8");
         return fm;
@@ -53,7 +46,10 @@ public class SpringWebMvcConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-
+        registry.addResourceHandler("swagger-ui.html")
+                .addResourceLocations("classpath:/META-INF/resources/");
+        registry.addResourceHandler("/webjars/**")
+                .addResourceLocations("classpath:/META-INF/resources/webjars/");
         registry.addResourceHandler("/static/**").addResourceLocations("/WEB-INF/static/");
         registry.addResourceHandler("/static/**").addResourceLocations("classpath:templates/static/");
     }

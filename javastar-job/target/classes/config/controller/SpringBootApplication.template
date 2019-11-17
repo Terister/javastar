@@ -1,0 +1,22 @@
+package #WorkSpace#;
+
+import com.wangke.sagittar.config.SpringWebMvcConfig;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.ImportResource;
+
+
+/**
+ * Created by admin on 2017/11/8.
+ */
+@SpringBootApplication
+@Import(SpringWebMvcConfig.class)
+@ImportResource("classpath:applicationContext.xml")
+public class Application {
+    public static void main(String[] args) {
+         new SpringApplicationBuilder(Application.class).web(true).run(args);
+
+    }
+
+}
