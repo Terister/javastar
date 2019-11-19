@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>#ProjectName#-parent</artifactId>
-        <groupId>#WorkSpace#</groupId>
+        <groupId>#GroupId#</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -15,19 +15,19 @@
     <dependencies>
 
         <dependency>
-            <groupId>#WorkSpace#</groupId>
+            <groupId>#GroupId#</groupId>
             <artifactId>#ProjectName#-utils</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
-            <groupId>#WorkSpace#</groupId>
+            <groupId>#GroupId#</groupId>
             <artifactId>#ProjectName#-biz</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
-            <groupId>#WorkSpace#</groupId>
+            <groupId>#GroupId#</groupId>
             <artifactId>#ProjectName#-models</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>

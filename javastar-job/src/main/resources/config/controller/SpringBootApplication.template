@@ -1,6 +1,6 @@
 package #WorkSpace#;
 
-import com.wangke.sagittar.config.SpringWebMvcConfig;
+import #WorkSpace#.config.SpringWebMvcConfig;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Import;

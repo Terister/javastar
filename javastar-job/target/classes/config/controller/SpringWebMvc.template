@@ -16,7 +16,7 @@ import javax.servlet.ServletContext;
  * @date 2017年10月25日
  */
 @Configuration
-@EnableWebMvc 
+@EnableWebMvc
 @ServletComponentScan("#WorkSpace#")
 public class SpringWebMvcConfig extends WebMvcConfigurerAdapter {
 

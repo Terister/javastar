@@ -1,6 +1,4 @@
-﻿@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+﻿<#include 'tags/header.ftl'/>
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span12">
@@ -46,7 +44,7 @@
     <!--/span-->
 </div>
 
-@section scripts{
+<#include 'tags/footer.ftl'/>
     <script type="text/js-render" id="roleTemplate">
         <tr>
             <td style="background-color:{{:ColorInfo}};"></td>
@@ -154,4 +152,3 @@
             categoryObject.loadData();
         });
     </script>
-}

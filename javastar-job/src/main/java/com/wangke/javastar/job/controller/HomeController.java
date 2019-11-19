@@ -6,6 +6,7 @@ import com.wangke.javastar.job.tools.mapper.MybatisHelper;
 import com.wangke.javastar.job.tools.model.DtInfo;
 import com.wangke.javastar.job.tools.model.DtList;
 import com.wangke.javastar.job.tools.model.DtName;
+import com.wangke.javastar.job.tools.ppUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,11 +27,13 @@ import java.util.List;
 public class HomeController {
 
     String dataBasename = "DataCenter";
-    String workSpace = "com.wangke.sagittar";
-    String projectName = "sagittar";
+    String groupId = "com.pab.framework";
+    String workSpace = "com.pab.framework.protal";
+    String projectName = "protal";
     String basePath = "/Users/wolf/Root/Codes";
-    String projectPath = "/src/main/java/com/wangke/sagittar";
+    String projectPath = "/src/main/java/com/pab/framework/protal";
     String resourcesPath = "/src/main/resources";
+    boolean createStaticResource = false;
     @Autowired
     private MybatisHelper mybatisHelper;
 
@@ -39,15 +42,10 @@ public class HomeController {
 
     @RequestMapping(value = "/index")
     public String hello(Model model) throws Exception {
-
-        String str = null;
         model.addAttribute("name", "this is a test!");
         return "home";
-
-
         //return "redirect:http://www.baidu.com";
     }
-
 
     private void mkdir() {
 
@@ -63,13 +61,14 @@ public class HomeController {
         if (!file4.exists()) {
             file4.mkdirs();
         }
-
-        /*parent*/
-        String configPath = "/config/pom/pom-parent.template";
-        String outputpath = basePath + "/pom.xml";
         HashMap<String, String> maps = new HashMap<>();
         maps.putIfAbsent("#ProjectName#", projectName);
         maps.putIfAbsent("#WorkSpace#", workSpace);
+        maps.putIfAbsent("#GroupId#", groupId);
+        /*parent*/
+        String configPath = "/config/pom/pom-parent.template";
+        String outputpath = basePath + "/pom.xml";
+
         files(configPath, outputpath, maps);
 
         /*models*/
@@ -80,7 +79,7 @@ public class HomeController {
         HashMap<String, String> maps1 = new HashMap<>();
         maps1.putIfAbsent("#ProjectName#", projectName);
         maps1.putIfAbsent("#WorkSpace#", workSpace);
-        files(configPaht1, outputpath1, maps1);
+        files(configPaht1, outputpath1, maps);
 
         /*repository*/
         File file5 = new File(basePath + "/" + projectName + "-repository" + projectPath + "/repository/dao/internal");
@@ -91,10 +90,10 @@ public class HomeController {
         String configPaht2 = "/config/pom/pom-repository.template";
         String outputpath2 = basePath + "/" + projectName + "-repository/pom.xml";
 
-        HashMap<String, String> maps2 = new HashMap<>();
-        maps2.putIfAbsent("#ProjectName#", projectName);
-        maps2.putIfAbsent("#WorkSpace#", workSpace);
-        files(configPaht2, outputpath2, maps2);
+//        HashMap<String, String> maps2 = new HashMap<>();
+//        maps2.putIfAbsent("#ProjectName#", projectName);
+//        maps2.putIfAbsent("#WorkSpace#", workSpace);
+        files(configPaht2, outputpath2, maps);
 
         /*biz*/
         File file6 = new File(basePath + "/" + projectName + "-biz" + projectPath + "/biz/internal");
@@ -105,10 +104,10 @@ public class HomeController {
         String configPaht3 = "/config/pom/pom-biz.template";
         String outputpath3 = basePath + "/" + projectName + "-biz/pom.xml";
 
-        HashMap<String, String> maps3 = new HashMap<>();
-        maps3.putIfAbsent("#ProjectName#", projectName);
-        maps3.putIfAbsent("#WorkSpace#", workSpace);
-        files(configPaht3, outputpath3, maps3);
+//        HashMap<String, String> maps3 = new HashMap<>();
+//        maps3.putIfAbsent("#ProjectName#", projectName);
+//        maps3.putIfAbsent("#WorkSpace#", workSpace);
+        files(configPaht3, outputpath3, maps);
 
         /*controller*/
         File file7 = new File(basePath + "/" + projectName + "-controller" + projectPath + "/controller");
@@ -117,11 +116,11 @@ public class HomeController {
         }
         String configPaht4 = "/config/pom/pom-controller.template";
         String outputpath4 = basePath + "/" + projectName + "-controller/pom.xml";
-
-        HashMap<String, String> maps4 = new HashMap<>();
-        maps4.putIfAbsent("#ProjectName#", projectName);
-        maps4.putIfAbsent("#WorkSpace#", workSpace);
-        files(configPaht4, outputpath4, maps4);
+//
+//        HashMap<String, String> maps4 = new HashMap<>();
+//        maps4.putIfAbsent("#ProjectName#", projectName);
+//        maps4.putIfAbsent("#WorkSpace#", workSpace);
+        files(configPaht4, outputpath4, maps);
 
 
         /* controller app file */
@@ -132,10 +131,10 @@ public class HomeController {
         }
         String configPaht5 = "/config/controller/SpringBootApplication.template";
         String outputpath5 = basePath + "/" + projectName + "-controller" + projectPath + "/SpringApplication.java";
-
-        HashMap<String, String> maps5 = new HashMap<>();
-        maps5.putIfAbsent("#WorkSpace#", workSpace);
-        files(configPaht5, outputpath5, maps5);
+//
+//        HashMap<String, String> maps5 = new HashMap<>();
+//        maps5.putIfAbsent("#WorkSpace#", workSpace);
+        files(configPaht5, outputpath5, maps);
 
 
         File file9 = new File(basePath + "/" + projectName + "-controller" + resourcesPath);
@@ -145,9 +144,9 @@ public class HomeController {
         String configPath6 = "/config/controller/ApplicationProperties.template";
         String outputpath6 = basePath + "/" + projectName + "-controller" + resourcesPath + "/application.properties";
 
-        HashMap<String, String> maps6 = new HashMap<>();
-        maps6.putIfAbsent("#WorkSpace#", workSpace);
-        files(configPath6, outputpath6, maps6);
+//        HashMap<String, String> maps6 = new HashMap<>();
+//        maps6.putIfAbsent("#WorkSpace#", workSpace);
+        files(configPath6, outputpath6, maps);
 
 
         /**
@@ -160,27 +159,28 @@ public class HomeController {
         String configPath12 = "/config/controller/mysql/mybatis.template";
         String outputpath12 = basePath + "/" + projectName + "-controller" + resourcesPath + "/mysql/spring-mybatis.xml";
 
-        HashMap<String, String> maps12 = new HashMap<>();
-        maps12.putIfAbsent("#WorkSpace#", workSpace);
+//        HashMap<String, String> maps12 = new HashMap<>();
+//        maps12.putIfAbsent("#WorkSpace#", workSpace);
+//        maps12.putIfAbsent("#GroupId#", groupId);
 
-        files(configPath12, outputpath12, maps12);
+        files(configPath12, outputpath12, maps);
 
 
         String configPath13 = "/config/controller/mysql/datasource.template";
         String outputpath13 = basePath + "/" + projectName + "-controller" + resourcesPath + "/mysql/spring-datasource-master.xml";
 
-        HashMap<String, String> maps13 = new HashMap<>();
-        maps13.putIfAbsent("#WorkSpace#", workSpace);
-        files(configPath13, outputpath13, maps13);
+//        HashMap<String, String> maps13 = new HashMap<>();
+//        maps13.putIfAbsent("#WorkSpace#", workSpace);
+        files(configPath13, outputpath13, maps);
 
 
         String configPath14 = "/config/controller/applicationContext.template";
         String outputpath14 = basePath + "/" + projectName + "-controller" + resourcesPath + "/applicationContext.xml";
+//
+//        HashMap<String, String> maps14 = new HashMap<>();
+//        maps14.putIfAbsent("#WorkSpace#", workSpace);
 
-        HashMap<String, String> maps14 = new HashMap<>();
-        maps14.putIfAbsent("#WorkSpace#", workSpace);
-
-        files(configPath14, outputpath14, maps14);
+        files(configPath14, outputpath14, maps);
 
         /*
          * repository config
@@ -194,9 +194,9 @@ public class HomeController {
         String configPath7 = "/config/repository/application.properties";
         String outputpath7 = basePath + "/" + projectName + "-repository" + resourcesPath + "/application.properties";
 
-        HashMap<String, String> maps7 = new HashMap<>();
-        maps7.putIfAbsent("#WorkSpace#", workSpace);
-        files(configPath7, outputpath7, maps7);
+//        HashMap<String, String> maps7 = new HashMap<>();
+//        maps7.putIfAbsent("#WorkSpace#", workSpace);
+        files(configPath7, outputpath7, maps);
 
 
         File file11 = new File(basePath + "/" + projectName + "-repository" + resourcesPath);
@@ -206,9 +206,9 @@ public class HomeController {
         String configPath8 = "/config/repository/generator.template";
         String outputpath8 = basePath + "/" + projectName + "-repository" + resourcesPath + "/generatorConfig.xml";
 
-        HashMap<String, String> maps8 = new HashMap<>();
-        maps8.putIfAbsent("#WorkSpace#", workSpace);
-        files(configPath8, outputpath8, maps8);
+//        HashMap<String, String> maps8 = new HashMap<>();
+//        maps8.putIfAbsent("#WorkSpace#", workSpace);
+        files(configPath8, outputpath8, maps);
 
 
         /**
@@ -223,17 +223,17 @@ public class HomeController {
         String configPath15 = "/config/utils/generatorplugin.template";
         String outputpath15 = basePath + "/" + projectName + "-utils" + projectPath + "/utils/mybatis/ExtendJavaGeneratorPlugin.java";
 
-        HashMap<String, String> maps15 = new HashMap<>();
-        maps15.putIfAbsent("#WorkSpace#", workSpace);
-        files(configPath15, outputpath15, maps15);
+//        HashMap<String, String> maps15 = new HashMap<>();
+//        maps15.putIfAbsent("#WorkSpace#", workSpace);
+        files(configPath15, outputpath15, maps);
 
 
         String configPath16 = "/config/utils/response.template";
         String outputpath16 = basePath + "/" + projectName + "-utils" + projectPath + "/utils/mybatis/ResponseData.java";
 
-        HashMap<String, String> maps16 = new HashMap<>();
-        maps16.putIfAbsent("#WorkSpace#", workSpace);
-        files(configPath16, outputpath16, maps16);
+//        HashMap<String, String> maps16 = new HashMap<>();
+//        maps16.putIfAbsent("#WorkSpace#", workSpace);
+        files(configPath16, outputpath16, maps);
 
         File file17 = new File(basePath + "/" + projectName + "-controller" + projectPath + "/controller");
         if (!file17.exists()) {
@@ -242,16 +242,17 @@ public class HomeController {
         String configPaht17 = "/config/pom/pom-utils.template";
         String outputpath17 = basePath + "/" + projectName + "-utils/pom.xml";
 
-        HashMap<String, String> maps17 = new HashMap<>();
-        maps17.putIfAbsent("#ProjectName#", projectName);
-        maps17.putIfAbsent("#WorkSpace#", workSpace);
-        files(configPaht17, outputpath17, maps17);
+//        HashMap<String, String> maps17 = new HashMap<>();
+//        maps17.putIfAbsent("#ProjectName#", projectName);
+//        maps17.putIfAbsent("#WorkSpace#", workSpace);
+        files(configPaht17, outputpath17, maps);
 
         /**
          * unzip static files
          */
-        unzipStaticResource();
-
+        if (createStaticResource) {
+            unzipStaticResource();
+        }
         //TODO
 
         /**
@@ -319,7 +320,9 @@ public class HomeController {
                     if ("long".equals(dtType)) {
                         pkType = "long";
                     }
-
+                    if ("String".equals(dtType)) {
+                        pkType = "String";
+                    }
                 }
                 sb1.append("private " + dtType + " " + dt.getField() + ";");
 
@@ -394,50 +397,56 @@ public class HomeController {
             String outputpath6 = basePath + "/" + projectName + "-controller" + projectPath + "/controller/" + tableClass + "Controller.java";
             files(configPaht6, outputpath6, maps);
 
-            /**
-             *  static detail
-             */
+            if (createStaticResource) {
 
-            String configPaht7 = "/config/staticfile/common/Detail.ftl";
-            String outputpath7 = basePath + "/" + projectName + "-controller" + resourcesPath + "/templates/views/" + tableClass + "Detail.ftl";
-            files(configPaht7, outputpath7, maps);
+                /**
+                 *  static detail
+                 */
 
-
-            /**
-             * static list
-             */
-            String configPaht8 = "/config/staticfile/common/List.ftl";
-            String outputpath8 = basePath + "/" + projectName + "-controller" + resourcesPath + "/templates/views/" + tableClass + "List.ftl";
-            files(configPaht8, outputpath8, maps);
+                String configPaht7 = "/config/staticfile/common/Detail.ftl";
+                String outputpath7 = basePath + "/" + projectName + "-controller" + resourcesPath + "/templates/views/" + tableClass + "Detail.ftl";
+                files(configPaht7, outputpath7, maps);
 
 
-            /**
-             * home model
-             */
+                /**
+                 * static list
+                 */
+                String configPaht8 = "/config/staticfile/common/List.ftl";
+                String outputpath8 = basePath + "/" + projectName + "-controller" + resourcesPath + "/templates/views/" + tableClass + "List.ftl";
+                files(configPaht8, outputpath8, maps);
 
 
-            sbModel.append("@RequestMapping(value = \"/" + tableClass + "Detail\")\n");
-            sbModel.append(" public String " + tableClass + "Detail(Model model) throws Exception {\n");
-            sbModel.append("                String str = null;\n");
-            sbModel.append("                model.addAttribute(\"name\", \"this is a test!\");\n");
-            sbModel.append("                return \"" + tableClass + "Detail\";\n");
-            sbModel.append("}");
-            sbModel.append("@RequestMapping(value = \"/" + tableClass + "List\")\n");
-            sbModel.append(" public String " + tableClass + "List(Model model) throws Exception {\n");
-            sbModel.append("                String str = null;\n");
-            sbModel.append("                model.addAttribute(\"name\", \"this is a test!\");\n");
-            sbModel.append("                return \"" + tableClass + "List\";\n");
-            sbModel.append("}");
+                /**
+                 * home model
+                 */
+
+
+                sbModel.append("@RequestMapping(value = \"/" + tableClass + "Detail\")\n");
+                sbModel.append(" public String " + tableClass + "Detail(Model model) throws Exception {\n");
+                sbModel.append("                String str = null;\n");
+                sbModel.append("                model.addAttribute(\"name\", \"this is a test!\");\n");
+                sbModel.append("                return \"" + tableClass + "Detail\";\n");
+                sbModel.append("}");
+                sbModel.append("@RequestMapping(value = \"/" + tableClass + "List\")\n");
+                sbModel.append(" public String " + tableClass + "List(Model model) throws Exception {\n");
+                sbModel.append("                String str = null;\n");
+                sbModel.append("                model.addAttribute(\"name\", \"this is a test!\");\n");
+                sbModel.append("                return \"" + tableClass + "List\";\n");
+                sbModel.append("}");
+            }
         }
         /**
          * homecontroller
          * */
-        HashMap<String, String> maps = new HashMap<>();
-        String configPaht9 = "/config/controller/HomeController.template";
-        String outputpath9 = basePath + "/" + projectName + "-controller" + projectPath + "/controller/HomeController.java";
-        maps.put("#ModelContent#", sbModel.toString());
-        maps.putIfAbsent("#WorkSpace#", workSpace);
-        files(configPaht9, outputpath9, maps);
+        if (createStaticResource) {
+
+            HashMap<String, String> maps = new HashMap<>();
+            String configPaht9 = "/config/controller/HomeController.template";
+            String outputpath9 = basePath + "/" + projectName + "-controller" + projectPath + "/controller/HomeController.java";
+            maps.put("#ModelContent#", sbModel.toString());
+            maps.putIfAbsent("#WorkSpace#", workSpace);
+            files(configPaht9, outputpath9, maps);
+        }
 
         return JSON.toJSONString(list).toString();
     }
@@ -502,6 +511,9 @@ public class HomeController {
 
         /* switch */
         switch (type) {
+            case "text":
+                str = "String";
+                break;
             case "date":
                 str = "Date";
                 break;
@@ -545,7 +557,9 @@ public class HomeController {
 
 
         if (!tableName.contains("_")) {
-            return tableName.substring(0, 1).toUpperCase() + tableName.substring(1);
+
+
+            return tableName.substring(0, 1).toUpperCase() + tableName.substring(1).toLowerCase();
         }
 
         String[] strList = tableName.split("_");
@@ -553,7 +567,11 @@ public class HomeController {
         StringBuilder sb = new StringBuilder();
 
         for (String s : strList) {
-            sb.append(s.substring(0, 1).toUpperCase() + s.substring(1));
+            if (s.length() > 1) {
+                sb.append(s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase());
+            } else {
+                sb.append(s);
+            }
         }
 
         return sb.toString();
@@ -645,6 +663,25 @@ public class HomeController {
             e.printStackTrace();
         }
 
+    }
+
+    private void propertiesFile() {
+        try {
+
+
+            ppUtils p = new ppUtils();
+            //生成文件
+            OutputStream os = new FileOutputStream("模板文件路径");
+            p.put("jdbc.name", "a啊啊啊", "jdbc名称");
+            p.orderStore(new OutputStreamWriter(os, "utf-8"), null);
+            //读取文件
+            FileInputStream fs = new FileInputStream("模板文件路径");
+            p.load(new InputStreamReader(fs, "utf-8"));
+            //System.out.println(p.get(key));
+
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
 }

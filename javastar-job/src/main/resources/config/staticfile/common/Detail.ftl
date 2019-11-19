@@ -1,8 +1,4 @@
-﻿@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-@model Aaf.Store.Models.Category
+﻿<#include 'tags/header.ftl'/>
 <div id="bodyContaner"></div>
 <div class="container-fluid">
     <div class="row-fluid">
@@ -130,7 +126,7 @@
     </form>
 </div>
 
-@section scripts{
+<#include 'tags/footer.ftl'/>
 
     <script type="text/javascript">
         var parentId = '@(Model!=null?Model.ParentId:0)';
@@ -228,4 +224,3 @@
 
         });
     </script>
-}
