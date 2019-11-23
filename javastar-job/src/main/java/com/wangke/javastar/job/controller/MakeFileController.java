@@ -272,7 +272,7 @@ public class MakeFileController {
         maps.putIfAbsent("#TableClassInStance#", tableClassInstance);
 
 
-        return "";
+        return "this is a test : "+workSpace;
     }
 
     //private method

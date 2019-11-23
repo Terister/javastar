@@ -38,6 +38,11 @@ public class HomeController {
         return "home";
     }
 
+    @RequestMapping(value = "/fm")
+    public String fm(Model model) throws Exception {
+        model.addAttribute("name", "this is a test!");
+        return "sfm";
+    }
 
     @GetMapping(value = "/getTableList")
     @ResponseBody
@@ -58,6 +63,28 @@ public class HomeController {
             tmp.setDtInfo(dtinfo);
             list.add(tmp);
 
+        }
+        return JSON.toJSONString(list).toString();
+    }
+
+    @GetMapping(value = "/getTable")
+    @ResponseBody
+    public String getTable(String key) throws Exception {
+
+        List<DtList> list = new ArrayList<DtList>();
+
+        String dbName = dataBasename;
+        List<DtName> items = mybatisHelper.getTableName(dbName);
+
+        for (DtName dr : items) {
+            if (dr.getTABLE_NAME().equals(key)) {
+                System.out.println("====>" + dr.getTABLE_NAME());
+                DtList tmp = new DtList();
+                tmp.setDtName(dr);
+                List<DtInfo> dtinfo = mybatisHelper.getTableInfo(dr.getTABLE_NAME());
+                tmp.setDtInfo(dtinfo);
+                list.add(tmp);
+            }
         }
         return JSON.toJSONString(list).toString();
     }

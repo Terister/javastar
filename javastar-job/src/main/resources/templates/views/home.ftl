@@ -66,12 +66,13 @@
                 <div style="margin: 10px;display:inline-block"><a href="javascript:void(0)"
                                                                   id="dynamicModel">创建JAVA项目</a>
                 </div>
-            <#--<div style="margin: 10px;display:inline-block"><a href="javascript:void(0)" id="exportComment">导出备注</a>-->
-            <#--</div>-->
+                <div style="margin: 10px;display:inline-block"><a href="/fm"
+                                                                  id="exportComment">创建静态资源</a>
+                </div>
                 <div id="divDynamicModel" style="display: none; margin: 10px">
                     <textarea id="txtSql" placeholder="输入您的查询语句，根据语句的返回结果产生实体类型"></textarea>
                     <input value="生成" type="button" id="btnCreateDynamicModel" style="margin-top: 5px;"/>
-                    <input value="生成" type="button" id="btnCreateDynamicModel" style="margin-top: 5px; margin-left: 10px;"/>
+                    <input value="取消" type="button" id="btnCancel" style="margin-top: 5px; margin-left: 10px;"/>
                 </div>
                 <script type="text/js-render" id="tableTemplate">
                      <a name="{{:dtName.tABLE_NAME}}"></a>
@@ -138,16 +139,7 @@
                     {{/for}}
                     </tbody>
                 </table>
-
-
-
-
-
-
-
-
                 </script>
-
                 <script type="text/js-render" id="userTemplate">
                     <tr>
                         <td width="1px" valign="top">
@@ -161,15 +153,6 @@
                             </a>
                         </td>
                     </tr>
-
-
-
-
-
-
-
-
-
                 </script>
                 <script type="text/javascript">
                     function search(key) {
@@ -201,6 +184,9 @@
                         $("#divDynamicModel").show();
                     });
 
+                    $("#btnCancel").bind("click", {}, function () {
+                        $("#divDynamicModel").hide();
+                    });
 
                     $("#btnCreateDynamicModel").bind("click", {}, function () {
                         $.get("/create", {key: ''}, function (data) {
