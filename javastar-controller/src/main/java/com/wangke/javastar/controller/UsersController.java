@@ -25,12 +25,45 @@ public class UsersController {
 
         ResponseData<List<UsersModel>> responseData = new ResponseData<>();
 
-        responseData.setCode(0);
-        responseData.setMsg("success");
-        responseData.setData(usersBiz.getPageList(pageIndex, pageSize));
+        try {
+            responseData.setCode(0);
+            responseData.setMsg("success");
+            responseData.setData(usersBiz.getPageList(pageIndex, pageSize));
+        } catch (Exception e) {
+            e.printStackTrace();
+            responseData.setCode(1);
+            responseData.setMsg(e.getMessage());
+        }
 
         return responseData;
     }
+
+    @RequestMapping(value = "/save")
+    public ResponseData<UsersModel> save(int id) {
+
+        UsersModel item = new UsersModel();
+        ResponseData<UsersModel> responseData = new ResponseData<>();
+
+
+        try {
+            responseData.setCode(0);
+            responseData.setMsg("success");
+            if (id > 0) {
+                usersBiz.update(item);
+            } else {
+                usersBiz.add(item);
+            }
+            responseData.setData(item);
+        } catch (Exception e) {
+            e.printStackTrace();
+            responseData.setCode(1);
+            responseData.setMsg(e.getMessage());
+        }
+
+        return responseData;
+    }
+
+
 
 
 }

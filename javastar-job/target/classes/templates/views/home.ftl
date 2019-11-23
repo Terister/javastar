@@ -21,16 +21,16 @@
             <td width="100%" height="63" colspan="3" class="TitleColor">
                 <asp:LinkButton ID="btnClear" runat="server" Text="清空当前缓存" OnClick="btnClear_Click"
                                 style="float:right"/>
-                <div>
-                    选择服务器：
-                    <asp:Literal ID="litConnectionList" runat="server">
-                    </asp:Literal>
-                </div>
-                <div>
-                    选择数据库：
-                    <asp:Literal ID="ltimap" runat="server">
-                    </asp:Literal>
-                </div>
+            <#--<div>-->
+            <#--选择服务器：-->
+            <#--<asp:Literal ID="litConnectionList" runat="server">-->
+            <#--</asp:Literal>-->
+            <#--</div>-->
+            <#--<div>-->
+            <#--选择数据库：-->
+            <#--<asp:Literal ID="ltimap" runat="server">-->
+            <#--</asp:Literal>-->
+            <#--</div>-->
             </td>
         </tr>
         <tr>
@@ -63,13 +63,15 @@
             </td>
             <td style="width: 90%" id="tbRight">
                 <a name="TOP"></a>
-                <div style="margin: 10px;display:inline-block"><a href="javascript:void(0)" id="dynamicModel">CreateDynamicModel</a>
+                <div style="margin: 10px;display:inline-block"><a href="javascript:void(0)"
+                                                                  id="dynamicModel">创建JAVA项目</a>
                 </div>
-                <div style="margin: 10px;display:inline-block"><a href="javascript:void(0)" id="exportComment">导出备注</a>
-                </div>
+            <#--<div style="margin: 10px;display:inline-block"><a href="javascript:void(0)" id="exportComment">导出备注</a>-->
+            <#--</div>-->
                 <div id="divDynamicModel" style="display: none; margin: 10px">
                     <textarea id="txtSql" placeholder="输入您的查询语句，根据语句的返回结果产生实体类型"></textarea>
-                    <input value="生成" type="button" id="btnCreateDynamicModel"/>
+                    <input value="生成" type="button" id="btnCreateDynamicModel" style="margin-top: 5px;"/>
+                    <input value="生成" type="button" id="btnCreateDynamicModel" style="margin-top: 5px; margin-left: 10px;"/>
                 </div>
                 <script type="text/js-render" id="tableTemplate">
                      <a name="{{:dtName.tABLE_NAME}}"></a>
@@ -78,11 +80,11 @@
                     <tr>
                         <td class="td-00" colspan="9">
                             <div class="buttons">
-                                <a class="btnSelect">[Select]</a>
-                                <a class="btnInsert">[insert]</a>
-                                <a class="btnUpdate">[update]</a>
-                                <a class="btnModelCalss">[model class]</a>
-                                <a class="btnModelSet">[model set]</a>
+                                <#--<a class="btnSelect">[Select]</a>-->
+                                <#--<a class="btnInsert">[insert]</a>-->
+                                <#--<a class="btnUpdate">[update]</a>-->
+                                <#--<a class="btnModelCalss">[model class]</a>-->
+                                <#--<a class="btnModelSet">[model set]</a>-->
                             </div>
                             <div style="float: left">
                                 <span class="t-name">{{:dtName.tABLE_NAME}}</span>
@@ -138,6 +140,12 @@
                 </table>
 
 
+
+
+
+
+
+
                 </script>
 
                 <script type="text/js-render" id="userTemplate">
@@ -153,6 +161,12 @@
                             </a>
                         </td>
                     </tr>
+
+
+
+
+
+
 
 
 
@@ -182,6 +196,23 @@
                         $("#tbRight").append($("#tableTemplate").render(obj));
 
                     });
+
+                    $("#dynamicModel").bind("click", {}, function () {
+                        $("#divDynamicModel").show();
+                    });
+
+
+                    $("#btnCreateDynamicModel").bind("click", {}, function () {
+                        $.get("/create", {key: ''}, function (data) {
+                            if (data === "0") {
+                                alert('创建成功！');
+
+                            } else {
+                                alert('操作失败！');
+                            }
+                        });
+                    });
+
 
                 </script>
 
