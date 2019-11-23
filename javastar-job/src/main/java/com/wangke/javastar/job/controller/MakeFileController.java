@@ -1,11 +1,11 @@
 package com.wangke.javastar.job.controller;
 
-import com.wangke.javastar.job.tools.Unzip;
+import com.wangke.javastar.job.tools.FileUtils;
+import com.wangke.javastar.job.tools.PropertiesUtils;
 import com.wangke.javastar.job.tools.mapper.MybatisHelper;
 import com.wangke.javastar.job.tools.model.DtInfo;
 import com.wangke.javastar.job.tools.model.DtList;
 import com.wangke.javastar.job.tools.model.DtName;
-import com.wangke.javastar.job.tools.ppUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -213,6 +213,66 @@ public class MakeFileController {
         }
 
         return "0";
+    }
+
+    @GetMapping(value = "/html")
+    public String html(String table) throws Exception {
+
+
+        List<DtInfo> dtinfo = mybatisHelper.getTableInfo(table);
+
+        StringBuilder sb1 = new StringBuilder();
+        StringBuilder sb2 = new StringBuilder();
+        StringBuilder sb3 = new StringBuilder();
+        String pkType = "int";
+        String pk = "";
+        for (DtInfo dt : dtinfo) {
+
+
+            String dtType = getDataType(dt.getType());
+
+            if ("PRI".equals(dt.getKey())) {
+                pk = getClassName(dt.getField());
+                if ("long".equals(dtType)) {
+                    pkType = "long";
+                }
+                if ("String".equals(dtType)) {
+                    pkType = "String";
+                }
+            }
+            sb1.append("private " + dtType + " " + dt.getField() + ";");
+
+            sb1.append("public " + dtType + " get" + getClassName(dt.getField()) + "() {");
+            sb1.append("return " + dt.getField() + ";");
+            sb1.append("}");
+
+            sb1.append(" public void set" + getClassName(dt.getField()) + "(" + dtType + " " + dt.getField() + ") {");
+            sb1.append("this." + dt.getField() + " = " + dt.getField() + ";");
+            sb1.append("}");
+
+
+            sb2.append("     sb.append(\", " + dt.getField() + "=\").append(" + dt.getField() + ");");
+
+
+            sb3.append(" result.set" + getClassName(dt.getField()) + "(item.get" + getClassName(dt.getField()) + "()); ");
+        }
+        String tableClass = getClassName(table);
+        String tableClassInstance = getClassNameInstance(table);
+
+        //create file
+
+        HashMap<String, String> maps = new HashMap<>();
+        maps.putIfAbsent("#WorkSpace#", workSpace);
+        maps.putIfAbsent("#TableClass#", tableClass);
+        maps.putIfAbsent("#Columns1#", sb1.toString());
+        maps.putIfAbsent("#Columns2#", sb2.toString());
+        maps.putIfAbsent("#Columns#", sb3.toString());
+        maps.putIfAbsent("#PrimaryKeyType#", pkType);
+        maps.putIfAbsent("#PrimaryKey#", pk);
+        maps.putIfAbsent("#TableClassInStance#", tableClassInstance);
+
+
+        return "";
     }
 
     //private method
@@ -426,13 +486,13 @@ public class MakeFileController {
             //copy
             InputStream inputStream = this.getClass().getResourceAsStream("/config/staticfile/static.zip");
             FileOutputStream fs = new FileOutputStream(basePath + "/123.zip");
-            Unzip.write2Out(inputStream, fs);
+            FileUtils.write2Out(inputStream, fs);
             inputStream.close();
             String outputpath = basePath + "/" + projectName + "-controller" + resourcesPath + "/templates";
             //un zip
-            Unzip.unZip(new File(basePath + "/123.zip"), outputpath);
+            FileUtils.unZip(new File(basePath + "/123.zip"), outputpath);
             //delete
-            Unzip.deleteFile(basePath + "/123.zip");
+            FileUtils.deleteFile(basePath + "/123.zip");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -633,7 +693,7 @@ public class MakeFileController {
         try {
 
 
-            ppUtils p = new ppUtils();
+            PropertiesUtils p = new PropertiesUtils();
             //生成文件
             OutputStream os = new FileOutputStream(outputPath);
             p.put("jdbc.driver", jdbcDriver, "mysql config");

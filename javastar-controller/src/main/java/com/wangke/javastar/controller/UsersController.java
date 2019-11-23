@@ -19,6 +19,50 @@ public class UsersController {
     UsersBiz usersBiz;
 
 
+    @RequestMapping(value = "/get")
+    public ResponseData<UsersModel> get(long id) {
+
+        ResponseData<UsersModel> responseData = new ResponseData<>();
+
+        try {
+            responseData.setCode(0);
+            responseData.setMsg("success");
+            responseData.setData(usersBiz.getModelById(id));
+        } catch (Exception e) {
+            e.printStackTrace();
+            responseData.setCode(1);
+            responseData.setMsg(e.getMessage());
+        }
+
+        return responseData;
+    }
+
+    @RequestMapping(value = "/save")
+    public ResponseData<UsersModel> save(UsersModel model) {
+
+        UsersModel item = new UsersModel();
+        ResponseData<UsersModel> responseData = new ResponseData<>();
+
+
+        try {
+            responseData.setCode(0);
+            responseData.setMsg("success");
+            if (model.getId() > 0) {
+                usersBiz.update(item);
+            } else {
+                usersBiz.add(item);
+            }
+            responseData.setData(item);
+        } catch (Exception e) {
+            e.printStackTrace();
+            responseData.setCode(1);
+            responseData.setMsg(e.getMessage());
+        }
+
+        return responseData;
+    }
+
+
     @RequestMapping(value = "/getPageList")
     public ResponseData<List<UsersModel>> getPageList(@RequestParam(value = "pageIndex", required = true) int pageIndex, @RequestParam(value = "pageSize", required = true) int pageSize) {
 
@@ -37,33 +81,5 @@ public class UsersController {
 
         return responseData;
     }
-
-    @RequestMapping(value = "/save")
-    public ResponseData<UsersModel> save(int id) {
-
-        UsersModel item = new UsersModel();
-        ResponseData<UsersModel> responseData = new ResponseData<>();
-
-
-        try {
-            responseData.setCode(0);
-            responseData.setMsg("success");
-            if (id > 0) {
-                usersBiz.update(item);
-            } else {
-                usersBiz.add(item);
-            }
-            responseData.setData(item);
-        } catch (Exception e) {
-            e.printStackTrace();
-            responseData.setCode(1);
-            responseData.setMsg(e.getMessage());
-        }
-
-        return responseData;
-    }
-
-
-
 
 }
