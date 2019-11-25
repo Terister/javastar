@@ -20,20 +20,20 @@ public class MakeFileController {
 
 
     /**
-     * 、project config
+     * project config
      */
     private String groupId = "com.pab.framework";
-    private String workSpace = "com.pab.framework.protal";
-    private String projectName = "protal";
+    private String workSpace = "com.pab.framework.sagittar";
+    private String projectName = "sagittar";
     private String basePath = "/Users/wolf/Root/Codes";
-    private String projectPath = "/src/main/java/com/pab/framework/protal";
+    private String projectPath = "/src/main/java/com/pab/framework/sagittar";
     private String resourcesPath = "/src/main/resources";
 
     /**
      * static resource switch
      * ture: create false:none
      */
-    private boolean createStaticResource = true;
+    private boolean createStaticResource = false;
 
     /**
      * db config
@@ -466,13 +466,13 @@ public class MakeFileController {
 
         files(configPaht18, outputpath18, maps);
 
-//        String configPaht19 = "/config/controller/SwaggerConfig.template";
-//        String outputpath19 = basePath + "/" + projectName + "-controller" + projectPath + "/config/SwaggerConfig.java";
-//
-//        HashMap<String, String> maps19 = new HashMap<>();
-//        maps19.putIfAbsent("#ProjectName#", projectName);
-//        maps19.putIfAbsent("#WorkSpace#", workSpace);
-//        files(configPaht19, outputpath19, maps19);
+        String configPaht19 = "/config/controller/SwaggerConfig.template";
+        String outputpath19 = basePath + "/" + projectName + "-controller" + projectPath + "/config/SwaggerConfig.java";
+
+        HashMap<String, String> maps19 = new HashMap<>();
+        maps19.putIfAbsent("#ProjectName#", projectName);
+        maps19.putIfAbsent("#WorkSpace#", workSpace);
+        files(configPaht19, outputpath19, maps19);
 
         String configPaht20 = "/config/controller/ApplicationStartup.template";
         String outputpath20 = basePath + "/" + projectName + "-controller" + projectPath + "/config/ApplicationStartup.java";

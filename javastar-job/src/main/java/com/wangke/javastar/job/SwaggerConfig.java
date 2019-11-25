@@ -23,7 +23,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.wangke.javastar"))
+                .apis(RequestHandlerSelectors.basePackage("com.wangke.javastar.comtroller"))
                 .paths(PathSelectors.any())
                 .build();
     }
