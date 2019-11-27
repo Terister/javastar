@@ -40,7 +40,7 @@
 
 
         <table tableName="%"
-               catalog="DataCenter" enableCountByExample="false" enableDeleteByExample="true"
+               catalog="#Database#" enableCountByExample="false" enableDeleteByExample="true"
                enableUpdateByExample="true"
                selectByExampleQueryId="false"
                enableSelectByExample="false" enableSelectByPrimaryKey="false" delimitAllColumns="true"
@@ -88,7 +88,7 @@
 
 
         <table tableName="%"
-               catalog="DataCenter" delimitIdentifiers="true" enableInsert="false" enableDeleteByPrimaryKey="false"
+               catalog="#Database#" delimitIdentifiers="true" enableInsert="false" enableDeleteByPrimaryKey="false"
                enableUpdateByPrimaryKey="false" enableCountByExample="true" delimitAllColumns="true"
                enableDeleteByExample="false" enableUpdateByExample="false" selectByExampleQueryId="true"
                enableSelectByExample="true">

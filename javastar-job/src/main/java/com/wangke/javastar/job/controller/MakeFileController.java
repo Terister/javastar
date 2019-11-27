@@ -1,8 +1,10 @@
 package com.wangke.javastar.job.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.wangke.javastar.job.tools.FileUtils;
 import com.wangke.javastar.job.tools.PropertiesUtils;
 import com.wangke.javastar.job.tools.mapper.MybatisHelper;
+import com.wangke.javastar.job.tools.model.ColumnsInfo;
 import com.wangke.javastar.job.tools.model.DtInfo;
 import com.wangke.javastar.job.tools.model.DtList;
 import com.wangke.javastar.job.tools.model.DtName;
@@ -29,11 +31,12 @@ public class MakeFileController {
     private String projectPath = "/src/main/java/com/pab/framework/sagittar";
     private String resourcesPath = "/src/main/resources";
 
+
     /**
      * static resource switch
      * ture: create false:none
      */
-    private boolean createStaticResource = false;
+    private boolean createStaticResource = true;
 
     /**
      * db config
@@ -161,63 +164,48 @@ public class MakeFileController {
             String outputpath6 = basePath + "/" + projectName + "-controller" + projectPath + "/controller/" + tableClass + "Controller.java";
             files(configPaht6, outputpath6, maps);
 
-            if (createStaticResource) {
 
-                /**
-                 *  static detail
-                 */
+            /**
+             * home model
+             */
 
-                String configPaht7 = "/config/staticfile/common/Detail.ftl";
-                String outputpath7 = basePath + "/" + projectName + "-controller" + resourcesPath + "/templates/views/" + tableClass + "Detail.ftl";
-                files(configPaht7, outputpath7, maps);
+            sbModel.append("@RequestMapping(value = \"/" + tableClass + "/Detail\")\n");
+            sbModel.append(" public String " + tableClass + "Detail(Model model) throws Exception {\n");
+            sbModel.append("                String str = null;\n");
+            sbModel.append("                model.addAttribute(\"name\", \"this is a test!\");\n");
+            sbModel.append("                return \"" + tableClass + "/Detail\";\n");
+            sbModel.append("}");
+            sbModel.append("@RequestMapping(value = \"/" + tableClass + "/List\")\n");
+            sbModel.append(" public String " + tableClass + "List(Model model) throws Exception {\n");
+            sbModel.append("                String str = null;\n");
+            sbModel.append("                model.addAttribute(\"name\", \"this is a test!\");\n");
+            sbModel.append("                return \"" + tableClass + "/List\";\n");
+            sbModel.append("}");
 
-
-                /**
-                 * static list
-                 */
-                String configPaht8 = "/config/staticfile/common/List.ftl";
-                String outputpath8 = basePath + "/" + projectName + "-controller" + resourcesPath + "/templates/views/" + tableClass + "List.ftl";
-                files(configPaht8, outputpath8, maps);
-
-
-                /**
-                 * home model
-                 */
-
-
-                sbModel.append("@RequestMapping(value = \"/" + tableClass + "Detail\")\n");
-                sbModel.append(" public String " + tableClass + "Detail(Model model) throws Exception {\n");
-                sbModel.append("                String str = null;\n");
-                sbModel.append("                model.addAttribute(\"name\", \"this is a test!\");\n");
-                sbModel.append("                return \"" + tableClass + "Detail\";\n");
-                sbModel.append("}");
-                sbModel.append("@RequestMapping(value = \"/" + tableClass + "List\")\n");
-                sbModel.append(" public String " + tableClass + "List(Model model) throws Exception {\n");
-                sbModel.append("                String str = null;\n");
-                sbModel.append("                model.addAttribute(\"name\", \"this is a test!\");\n");
-                sbModel.append("                return \"" + tableClass + "List\";\n");
-                sbModel.append("}");
-            }
         }
         /**
          * homecontroller
          * */
-        if (createStaticResource) {
 
-            HashMap<String, String> maps = new HashMap<>();
-            String configPaht9 = "/config/controller/HomeController.template";
-            String outputpath9 = basePath + "/" + projectName + "-controller" + projectPath + "/controller/HomeController.java";
-            maps.put("#ModelContent#", sbModel.toString());
-            maps.putIfAbsent("#WorkSpace#", workSpace);
-            files(configPaht9, outputpath9, maps);
-        }
+        HashMap<String, String> maps = new HashMap<>();
+        String configPaht9 = "/config/controller/HomeController.template";
+        String outputpath9 = basePath + "/" + projectName + "-controller" + projectPath + "/controller/HomeController.java";
+        maps.put("#ModelContent#", sbModel.toString());
+        maps.putIfAbsent("#WorkSpace#", workSpace);
+        files(configPaht9, outputpath9, maps);
+
 
         return "0";
     }
 
     @GetMapping(value = "/html")
-    public String html(String table) throws Exception {
+    public String html(String table, String datas) throws Exception {
 
+
+
+        List<ColumnsInfo> ccList = JSON.parseArray(datas, ColumnsInfo.class);
+
+        System.out.println("cc:" + JSON.toJSONString(ccList));
 
         List<DtInfo> dtinfo = mybatisHelper.getTableInfo(table);
 
@@ -240,21 +228,7 @@ public class MakeFileController {
                     pkType = "String";
                 }
             }
-            sb1.append("private " + dtType + " " + dt.getField() + ";");
 
-            sb1.append("public " + dtType + " get" + getClassName(dt.getField()) + "() {");
-            sb1.append("return " + dt.getField() + ";");
-            sb1.append("}");
-
-            sb1.append(" public void set" + getClassName(dt.getField()) + "(" + dtType + " " + dt.getField() + ") {");
-            sb1.append("this." + dt.getField() + " = " + dt.getField() + ";");
-            sb1.append("}");
-
-
-            sb2.append("     sb.append(\", " + dt.getField() + "=\").append(" + dt.getField() + ");");
-
-
-            sb3.append(" result.set" + getClassName(dt.getField()) + "(item.get" + getClassName(dt.getField()) + "()); ");
         }
         String tableClass = getClassName(table);
         String tableClassInstance = getClassNameInstance(table);
@@ -263,16 +237,32 @@ public class MakeFileController {
 
         HashMap<String, String> maps = new HashMap<>();
         maps.putIfAbsent("#WorkSpace#", workSpace);
+        maps.putIfAbsent("#HomeLink#", "dashboard");
+
+
         maps.putIfAbsent("#TableClass#", tableClass);
-        maps.putIfAbsent("#Columns1#", sb1.toString());
-        maps.putIfAbsent("#Columns2#", sb2.toString());
         maps.putIfAbsent("#Columns#", sb3.toString());
         maps.putIfAbsent("#PrimaryKeyType#", pkType);
         maps.putIfAbsent("#PrimaryKey#", pk);
         maps.putIfAbsent("#TableClassInStance#", tableClassInstance);
 
+        /**
+         *  static detail
+         */
 
-        return "this is a test : "+workSpace;
+        String configPaht7 = "/config/staticfile/common/Detail.ftl";
+        String outputpath7 = basePath + "/" + projectName + "-controller" + resourcesPath + "/templates/views/"+tableClass+"/Detail.ftl";
+        files(configPaht7, outputpath7, maps);
+
+
+        /**
+         * static list
+         */
+        String configPaht8 = "/config/staticfile/common/List.ftl";
+        String outputpath8 = basePath + "/" + projectName + "-controller" + resourcesPath + "/templates/views/"+tableClass+"/List.ftl";
+        files(configPaht8, outputpath8, maps);
+
+        return "this is a test : " + workSpace;
     }
 
     //private method
@@ -294,6 +284,7 @@ public class MakeFileController {
         maps.putIfAbsent("#ProjectName#", projectName);
         maps.putIfAbsent("#WorkSpace#", workSpace);
         maps.putIfAbsent("#GroupId#", groupId);
+        maps.putIfAbsent("#Database#", dataBasename);
         /*parent*/
         String configPath = "/config/pom/pom-parent.template";
         String outputpath = basePath + "/pom.xml";
@@ -509,8 +500,6 @@ public class MakeFileController {
         };
         strList.add("varchar");
         strList.add("char");
-        strList.add("blob");
-        strList.add("longblob");
         strList.add("longtext");
         for (String sl : strList) {
             if (type.startsWith(sl)) {
@@ -525,20 +514,34 @@ public class MakeFileController {
         if (type.startsWith("double"))
             return "double";
         if (type.startsWith("decimal"))
-            return "BigDecimal";
+            return "long";
         if (type.startsWith("int"))
             return "int";
-        if (type.startsWith("tinyint"))
-            return "int";
+        if (type.startsWith("tinyint(4)"))
+            return "byte";
+        if (type.startsWith("tinyint(1)"))
+            return "Boolean";
         if (type.startsWith("bigint"))
             return "long";
         if (type.startsWith("smallint"))
             return "int";
-
+        if (type.startsWith("mediumint"))
+            return "int";
+        if (type.startsWith("bit"))
+            return "Boolean";
         /* switch */
         switch (type) {
             case "text":
                 str = "String";
+                break;
+            case "mediumblob":
+                str = "byte[]";
+                break;
+            case "blob":
+                str = "byte[]";
+                break;
+            case "longblob":
+                str = "byte[]";
                 break;
             case "date":
                 str = "Date";
@@ -616,6 +619,11 @@ public class MakeFileController {
 
     private void files(String configPath, String outputPath, HashMap<String, String> items) {
 
+      String outDir  =outputPath.substring(0,outputPath.lastIndexOf("/"));
+        System.out.println("=========>"+outputPath);
+        if (!new File(outDir).exists()) {
+            new File(outDir).mkdirs();
+        }
         //read
         String content = readFile(configPath);
 

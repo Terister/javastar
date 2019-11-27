@@ -78,7 +78,7 @@
                         </td>
                     </tr>
                    {{for dtInfo}}
-                            <tr class="content" id="columns">
+                            <tr class="content" id="columns_{{:#index}}">
                                 <td width="100px" class="td-01 c-name">
                                     {{:field}}
                                 </td>
@@ -86,53 +86,49 @@
                                    {{:type}}
                                 </td>
                                  <td width="30px" class="td-01 c-name">
-                                <input type="txt" id="{{:field}}_isShow" value="false" style="display:none;"/>
-                                      <img src="../static/images/right.gif" value="true" />
+                                      <img src="../static/images/right.gif" value="true" data="isShow" key="{{:field}}" />
                                 </td>
                                    <td width="30px" class="td-01 c-name">
-                                        <img src="../static/images/wrong.gif" value="false" />
+                                        <img src="../static/images/wrong.gif" value="false" data="isSelect" key="{{:field}}"  />
                                 </td>
                                 <td width="30px" class="td-01 c-name">
-                                      <img src="../static/images/wrong.gif" value="false" />
+                                      <img src="../static/images/wrong.gif" value="false"  data="isPic" key="{{:field}}" />
                                 </td>
                                <td width="30px" class="td-01 c-name">
-                                       <img src="../static/images/wrong.gif" value="false" />
+                                       <img src="../static/images/wrong.gif" value="false"  data="isText" key="{{:field}}" />
                                 </td>
                                 <td width="30px" class="td-01 c-name">
-                                         <img src="../static/images/wrong.gif" value="false" />
+                                         <img src="../static/images/wrong.gif" value="false"  data="isTextArea" key="{{:field}}" />
                                 </td>
                                     <td width="30px" class="td-01 c-name">
-                                        <img src="../static/images/wrong.gif" value="false" />
+                                        <img src="../static/images/wrong.gif" value="false"  data="isLink" key="{{:field}}" />
                                 </td>
                                     <td width="30px" class="td-01 c-name">
-                                         <img src="../static/images/wrong.gif" value="false" />
+                                         <img src="../static/images/wrong.gif" value="false" data="isEdit" key="{{:field}}"  />
                                 </td>
                                     <td width="30px" class="td-01 c-name">
-                                      <img src="../static/images/right.gif" value="false" />
+                                      <img src="../static/images/wrong.gif" value="false"  data="isPri" key="{{:field}}" />
                                 </td>
                                     <td width="30px" class="td-01 c-name">
-                                      <img src="../static/images/wrong.gif" value="false" />
+                                      <img src="../static/images/wrong.gif" value="false"  data="isNull" key="{{:field}}" />
                                 </td>
                             </tr>
                     {{/for}}
                     </tbody>
                 </table>
 
+
+
                 </script>
                 <script type="text/javascript">
 
-                   $( function () {
-                       $("#columns td").each(function (index) {
-                           $("#columns td").eq(index).on("click",function () {
-                               alert('123');
-                           });
-                       });
-                    });
-
+                    var count = 0;
                     $.get("/getTableList", {key: ''}, function (data) {
                         var obj = JSON.parse(data);
                         var content = [];
+
                         for (var i = 0; i < obj.length; i++) {
+
                             content.push("<option value=\"" + obj[i].dtName.tABLE_NAME + "\">" + obj[i].dtName.tABLE_NAME + "</option>")
                         }
                         $("#selTable").html(content.join(''));
@@ -142,14 +138,44 @@
                     function showSel() {
                         $.get("/getTable", {key: $("#selTable").find("option:selected").val()}, function (data) {
                             var obj = JSON.parse(data);
+                            count = 0;
                             for (var i = 0; i < obj.length; i++) {
+
                                 var tableInfos = obj[i].dtInfo;
                                 for (var j = 0; j < tableInfos.length; j++) {
                                     /* jsrender中特殊支付无法识别 可提前转换 */
                                     obj[i].dtInfo[j].shownull = obj[i].dtInfo[j].null;
+                                    count++;
                                 }
                             }
                             $("#divContent").html($("#tableTemplate").render(obj));
+
+                            for (var i = 0; i < count; i++)
+                            {
+
+                                $("#columns_" + i + " td").each(function (index) {
+                                    var that = $(this);
+                                    if (index > 1) {
+
+                                        $(this).on("click",function () {
+
+                                            var va = $(that).find("img").attr("value");
+                                            var sr = $(that).find("img").attr("src");
+                                            if (va === "true") {
+                                                $(that).find("img").attr("value", "false");
+                                                $(that).find("img").attr("src", "../static/images/wrong.gif");
+                                            }
+                                            if (va === "false") {
+                                                $(that).find("img").attr("value", "true");
+                                                $(that).find("img").attr("src", "../static/images/right.gif");
+                                            }
+                                        });
+
+                                    }
+
+                                });
+
+                            }
 
                         });
                     }
@@ -159,16 +185,59 @@
                     });
 
 
-
                     $("#btnCreate").bind("click", {}, function () {
 
-                        //var op = [];
-                        // $("#columns td").each(function (index) {
-                        //     op.push(index + "-")
-                        // });
-                        //alert(op.join(''));
+                        var op = [];
+                        for (var i = 0; i < count; i++)
+                        {
+                            var datas = {};
+                            $("#columns_" + i + " td").each(function (index) {
+                                var that = $(this);
+                                if (index > 1) {
+                                    var va = $(that).find("img").attr("value");
+                                    var sr = $(that).find("img").attr("src");
 
-                        $.get("/html", {table: $("#selTable").find("option:selected").val()}, function (data) {
+                                    datas.key = $(that).find("img").attr("key");
+                                    if ("isShow" == $(that).find("img").attr("data")) {
+                                        datas.isShow = $(that).find("img").attr("value")
+                                    }
+                                    if ("isSelect" == $(that).find("img").attr("data")) {
+                                        datas.isSelect = $(that).find("img").attr("value")
+                                    }
+                                    if ("isPic" == $(that).find("img").attr("data")) {
+                                        datas.isPic = $(that).find("img").attr("value")
+                                    }
+                                    if ("isText" == $(that).find("img").attr("data")) {
+                                        datas.isText = $(that).find("img").attr("value")
+                                    }
+                                    if ("isTextArea" == $(that).find("img").attr("data")) {
+                                        datas.isTextArea = $(that).find("img").attr("value")
+                                    }
+                                    if ("isLink" == $(that).find("img").attr("data")) {
+                                        datas.isLink = $(that).find("img").attr("value")
+                                    }
+                                    if ("isShow" == $(that).find("img").attr("data")) {
+                                        datas.isShow = $(that).find("img").attr("value")
+                                    }
+                                    if ("isEdit" == $(that).find("img").attr("data")) {
+                                        datas.isEdit = $(that).find("img").attr("value")
+                                    }
+                                    if ("isPri" == $(that).find("img").attr("data")) {
+                                        datas.isPri = $(that).find("img").attr("value")
+                                    }
+                                    if ("isNull" == $(that).find("img").attr("data")) {
+                                        datas.isNull = $(that).find("img").attr("value")
+                                    }
+                                }
+
+                            });
+                            op.push(JSON.stringify(datas));
+                        }
+
+                        $.get("/html", {
+                            table: $("#selTable").find("option:selected").val(),
+                            datas: "[" + op.join(",") + "]"
+                        }, function (data) {
                             alert(data);
                         });
 

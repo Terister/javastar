@@ -1,4 +1,4 @@
-﻿<#include 'tags/header.ftl'/>
+﻿<#include '../tags/header.ftl'/>
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span12">
@@ -46,7 +46,7 @@
     <!--/span-->
 </div>
 
-<#include 'tags/footer.ftl'/>
+<#include '../tags/footer.ftl'/>
     <script type="text/js-render" id="#TableClassInstance#Template">
         <tr>
             <td style="background-color:{{:ColorInfo}};"></td>

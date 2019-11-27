@@ -1,4 +1,4 @@
-﻿<#include 'tags/header.ftl'/>
+﻿<#include '../tags/header.ftl'/>
 <div id="bodyContaner"></div>
 <div class="container-fluid">
     <div class="row-fluid">
@@ -142,7 +142,7 @@
     </form>
 </div>
 
-<#include 'tags/footer.ftl'/>
+<#include '../tags/footer.ftl'/>
 
     <script type="text/javascript">
         var parentId = '@(Model!=null?Model.ParentId:0)';
