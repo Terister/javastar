@@ -134,8 +134,7 @@
     </div>
 </div>
 <div class="none">
-    <form id="frmAttachment" action="@(Url.Content(" ~
-    /Upload/File"))" enctype="multipart/form-data"
+    <form id="frmAttachment" action=" /Upload/File"" enctype="multipart/form-data"
     method="post" name="frmAttachment" target="uploadTarget">
     <input type="file" style="position: absolute; left: -999em; top: -999em;" id="attachFile" name="attachFile"/>
     <iframe id="uploadTarget" name="uploadTarget" style="position: absolute; left: -999em; top: -999em;"></iframe>

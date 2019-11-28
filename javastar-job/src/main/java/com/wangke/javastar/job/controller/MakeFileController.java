@@ -169,17 +169,17 @@ public class MakeFileController {
              * home model
              */
 
-            sbModel.append("@RequestMapping(value = \"/" + tableClass + "/Detail\")\n");
-            sbModel.append(" public String " + tableClass + "Detail(Model model) throws Exception {\n");
+            sbModel.append("@RequestMapping(value = \"/" + tableClass.toLowerCase() + "/detail\")\n");
+            sbModel.append(" public String " + tableClass.toLowerCase() + "Detail(Model model) throws Exception {\n");
             sbModel.append("                String str = null;\n");
             sbModel.append("                model.addAttribute(\"name\", \"this is a test!\");\n");
-            sbModel.append("                return \"" + tableClass + "/Detail\";\n");
+            sbModel.append("                return \"" + tableClass + "/detail\";\n");
             sbModel.append("}");
-            sbModel.append("@RequestMapping(value = \"/" + tableClass + "/List\")\n");
-            sbModel.append(" public String " + tableClass + "List(Model model) throws Exception {\n");
+            sbModel.append("@RequestMapping(value = \"/" + tableClass.toLowerCase() + "/list\")\n");
+            sbModel.append(" public String " + tableClass.toLowerCase() + "List(Model model) throws Exception {\n");
             sbModel.append("                String str = null;\n");
             sbModel.append("                model.addAttribute(\"name\", \"this is a test!\");\n");
-            sbModel.append("                return \"" + tableClass + "/List\";\n");
+            sbModel.append("                return \"" + tableClass.toLowerCase() + "/list\";\n");
             sbModel.append("}");
 
         }
@@ -202,15 +202,35 @@ public class MakeFileController {
     public String html(String table, String datas) throws Exception {
 
 
-
         List<ColumnsInfo> ccList = JSON.parseArray(datas, ColumnsInfo.class);
 
         System.out.println("cc:" + JSON.toJSONString(ccList));
-
         List<DtInfo> dtinfo = mybatisHelper.getTableInfo(table);
-
         StringBuilder sb1 = new StringBuilder();
-        StringBuilder sb2 = new StringBuilder();
+        String contentColumns = "";
+        String templateRender = "<tr>\n";
+        for (ColumnsInfo cc : ccList) {
+            if ("true".equals(cc.getIsShow())) {
+                sb1.append("'<th >" + cc.getKey() + "</th>'+\n");
+
+                if ("true".equals(cc.getIsPic())) {
+                    templateRender += "<td><img src=\"{{:" + getJsonColumn(cc.getKey()) + "}}\" alt=\"\" style=\"height:50px;\" class=\"plus-cursor\" data-image=\"{{:" + getJsonColumn(cc.getKey()) + "}}\" data-title=\"\" data-caption=\"\" /></td>\n";
+                } else if ("true".equals(cc.getIsLink())) {
+                    templateRender += "            <td><a href=\"\">{{:" + getJsonColumn(cc.getKey()) + "}}</a></td>\n";
+                } else {
+
+                    templateRender += "            <td>{{:" + getJsonColumn(cc.getKey()) + "}}</td>\n";
+                }
+            }
+
+//
+//            String abc = "   obj.Items[i].IsDelete = '<label class=\"checkbox\"><input type=\"checkbox\"' + (obj.Items[i].IsDelete ? '' : ' checked=\"checked\"') + ' onclick=\"#TableClassInStance#Object.remove(' + obj.Items[i].Id + ')\" /></label>';\n" +
+//                    "                        obj.Items[i].Ar = '<span class=\"isAr\" data-id=\"' + obj.Items[i].Id + '\" id=\"ar' + obj.Items[i].Id + '\">' + obj.Items[i].Ar + '</span>';\n";
+
+
+        }
+        templateRender += "                <td> <span class=\"label label-info\"><a href=\"//detail?id={{:id}}\" onclick=\"\">编辑</a></span> </td></tr>";
+
         StringBuilder sb3 = new StringBuilder();
         String pkType = "int";
         String pk = "";
@@ -246,12 +266,30 @@ public class MakeFileController {
         maps.putIfAbsent("#PrimaryKey#", pk);
         maps.putIfAbsent("#TableClassInStance#", tableClassInstance);
 
+
+
+        /* list page */
+        String contentHeader = " listHeader: '<thead>' +\n" +
+                "                '<tr role=\"row\">' +\n" +
+                sb1.toString() +
+                "                '<th>操作</th>' +\n" +
+                "                '</tr>' +\n" +
+                "                '</thead>'";
+
+
+        maps.putIfAbsent("#ListHeader#", contentHeader.toString());
+        maps.putIfAbsent("#ColumnsList#", contentColumns.toString());
+        maps.putIfAbsent("#TemplateRender#", templateRender.toString());
+
+
+        System.out.println("======>" + contentHeader.toString());
+        System.out.println("======>" + templateRender.toString());
         /**
          *  static detail
          */
 
         String configPaht7 = "/config/staticfile/common/Detail.ftl";
-        String outputpath7 = basePath + "/" + projectName + "-controller" + resourcesPath + "/templates/views/"+tableClass+"/Detail.ftl";
+        String outputpath7 = basePath + "/" + projectName + "-controller" + resourcesPath + "/templates/views/" + tableClass.toLowerCase() + "/detail.ftl";
         files(configPaht7, outputpath7, maps);
 
 
@@ -259,7 +297,7 @@ public class MakeFileController {
          * static list
          */
         String configPaht8 = "/config/staticfile/common/List.ftl";
-        String outputpath8 = basePath + "/" + projectName + "-controller" + resourcesPath + "/templates/views/"+tableClass+"/List.ftl";
+        String outputpath8 = basePath + "/" + projectName + "-controller" + resourcesPath + "/templates/views/" + tableClass.toLowerCase() + "/list.ftl";
         files(configPaht8, outputpath8, maps);
 
         return "this is a test : " + workSpace;
@@ -582,6 +620,29 @@ public class MakeFileController {
 
     }
 
+    private static String getJsonColumn(String column) {
+
+
+        if (!column.contains("_")) {
+
+            return column.substring(0, 1).toLowerCase() + column.substring(1).toLowerCase();
+        }
+
+        String[] strList = column.split("_");
+
+        StringBuilder sb = new StringBuilder();
+
+        for (String s : strList) {
+            if (s.length() > 1) {
+                sb.append(s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase());
+            } else {
+                sb.append(s);
+            }
+        }
+        String res = sb.toString();
+        return res.substring(0, 1).toLowerCase() + res.substring(1);
+    }
+
     private static String getClassName(String tableName) {
 
 
@@ -619,8 +680,8 @@ public class MakeFileController {
 
     private void files(String configPath, String outputPath, HashMap<String, String> items) {
 
-      String outDir  =outputPath.substring(0,outputPath.lastIndexOf("/"));
-        System.out.println("=========>"+outputPath);
+        String outDir = outputPath.substring(0, outputPath.lastIndexOf("/"));
+        System.out.println("=========>" + outputPath);
         if (!new File(outDir).exists()) {
             new File(outDir).mkdirs();
         }

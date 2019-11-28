@@ -47,89 +47,69 @@
 </div>
 
 <#include '../tags/footer.ftl'/>
-    <script type="text/js-render" id="#TableClassInstance#Template">
-        <tr>
-            <td style="background-color:{{:ColorInfo}};"></td>
-            <td>{{:Name}}</td>
-            <td><img src="{{:IconUrl}}" alt="" style="height:50px;" class="plus-cursor" data-image="{{:IconUrl}}" data-title="" data-caption="" /></td>
-            @*<td><img src="{{:LogoUrl}}" alt="" style="height:50px;" class="plus-cursor" data-image="{{:LogoUrl}}" data-title="" data-caption="" /></td>*@
-            <td>{{:Ar}}</td>
-            <td>{{:IsDelete}}</td>
-            <td>
-                <span class="label label-info"><a href="/store/category/detail?id={{:Id}}" onclick="">编辑</a></span>
-            </td>
-        </tr>
+    <script type="text/js-render" id="#TableClassInStance#Template">
+        #TemplateRender#
+
 
     </script>
     <script type="text/javascript">
 
-        var #
-        TableClassInstance#Object = {
+        var #TableClassInStance#Object = {
             option: {
                 pageIndex: 1,
                 pageSize: 15,
                 pageCount: 0,
                 count: 0,
-                loading: '<tr><td colspan="6"><div><img src="/content/images/loading.gif" alt="Loading" /></div></td></tr>',
-                listHeader: '<thead>' +
-                '<tr role="row">' +
-                '<th >配色</th>' +
-                '<th >名字</th>' +
-                '<th >分类图标</th>' +
-                /*'<th >广告图</th>' +*/
-                '<th >权重</th>' +
-                '<th >是否有效</th>' +
-                '<th >操作</th>' +
-                '</tr>' +
-                '</thead>',
+                loading: '<tr><td colspan="6"><div><img src="../static/content/images/loading.gif" alt="Loading" /></div></td></tr>',
+              #ListHeader#
             },
             bindMethod: function () {
                 $("#btnSearch").click(function () {
-                #TableClassInstance#Object.option.pageIndex = 1;
-                    #TableClassInstance#Object.loadData();
+                #TableClassInStance#Object.option.pageIndex = 1;
+                    #TableClassInStance#Object.loadData();
                 });
 
             },
             remove: function (id) {
-                //  if (confirm('确认 改变角色状态吗？')) {
-                $.post("/#TableClass#/changeStatues", {id: id}, function (data) {
-                    if (data.Code == 0) {
-                        //      #TableClassInstance#Object.loadData();
-                    } else {
-                        alert('操作失败!');
-                    }
-                });
-                //  }
+                if (confirm('确认 改变角色状态吗？')) {
+                    $.post("/#TableClass#/changeStatues", {id: id}, function (data) {
+                        if (data.Code == 0) {
+                             #TableClassInStance#Object.loadData();
+                        } else {
+                            alert('操作失败!');
+                        }
+                    });
+                }
             },
             changeAr: function (id, obj) {
                 $.post("/#TableClass#/changeAr", {id: id, ar: obj}, function (data) {
                     if (data.Code == 0) {
-                        //     applicationObject.loadData();
+                        #TableClassInStance#Object.loadData();
                     }
                 });
 
             },
             loadData: function () {
                 var keyword = $("#txtKeyword").val();
-                $("#gvResult").html(#TableClassInstance#Object.option.loading
+                $("#gvResult").html(#TableClassInStance#Object.option.loading
             )
                 ;
-                $.getJSON("/#TableClass#/getPageList", {pageIndex: #TableClassInstance#Object.option.pageIndex, pageSize
-            : #TableClassInstance#Object.option.pageSize
+                $.getJSON("/#TableClass#/getPageList", {pageIndex: #TableClassInStance#Object.option.pageIndex, pageSize
+            : #TableClassInStance#Object.option.pageSize
             },
 
                 function (data) {
                     var obj = data, content = [];
-                    $("#gvResult").html(#TableClassInstance#Object.option.listHeader
+                    $("#gvResult").html(#TableClassInStance#Object.option.listHeader
                 )
                     ;
-                    #TableClassInstance#Object.option.count = obj.Count;
-                    for (var i = 0; i < obj.Items.length; i++) {
-                        obj.Items[i].IsDelete = '<label class="checkbox"><input type="checkbox"' + (obj.Items[i].IsDelete ? '' : ' checked="checked"') + ' onclick="#TableClassInstance#Object.remove(' + obj.Items[i].Id + ')" /></label>';
-                        obj.Items[i].Ar = '<span class="isAr" data-id="' + obj.Items[i].Id + '" id="ar' + obj.Items[i].Id + '">' + obj.Items[i].Ar + '</span>';
+                    #TableClassInStance#Object.option.count = obj.Count;
+                    for (var i = 0; i < obj.data.length; i++) {
+
+                        #ColumnsList#
 
                     }
-                    $("#gvResult").append($("#TableClassInstance#Template").render(obj.Items));
+                    $("#gvResult").append($("##TableClassInStance#Template").render(obj.data));
                     $.each($('.isAr'), function () {
                         new Medium({
                             element: document.getElementById(this.id),
@@ -139,17 +119,17 @@
                         });
                     });
                     $('.isAr').on('blur', function () {
-                    #TableClassInstance#Object.changeAr($(this).attr('data-id'), $(this).html());
+                    #TableClassInStance#Object.changeAr($(this).attr('data-id'), $(this).html());
                     });
                     App.handleUniform();
-                    //pager
+                    <!--pager-->
                     var pager = new pagination.init('Pager');
-                    pager.itemCount = #TableClassInstance#Object.option.count;
-                    pager.size = #TableClassInstance#Object.option.pageSize;
-                    pager.index = #TableClassInstance#Object.option.pageIndex;
+                    pager.itemCount = #TableClassInStance#Object.option.count;
+                    pager.size = #TableClassInStance#Object.option.pageSize;
+                    pager.index = #TableClassInStance#Object.option.pageIndex;
                     pager.onclick = function (indexs) {
-                    #TableClassInstance#Object.option.pageIndex = indexs;
-                        #TableClassInstance#Object.loadData();
+                    #TableClassInStance#Object.option.pageIndex = indexs;
+                        #TableClassInStance#Object.loadData();
                     };
                     pager.render();
 
@@ -164,6 +144,6 @@
 
         $(function () {
 
-        #TableClassInstance#Object.loadData();
+        #TableClassInStance#Object.loadData();
         });
     </script>
