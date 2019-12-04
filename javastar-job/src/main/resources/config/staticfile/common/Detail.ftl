@@ -41,7 +41,7 @@
                                     <label class="control-label" for="typeahead">分类编号： </label>
                                     <div class="controls">
                                         <input id="txtId" type="text" class="m-wrap medium typeahead"
-                                               value="@(Model != null ? Model.Id : 0)" data-provide="typeahead"
+                                               value="" data-provide="typeahead"
                                                data-items="4" readonly="readonly"/>
                                     </div>
                                 </div>
@@ -50,11 +50,7 @@
                                     <div class="controls">
                                         <select id="selCategory" class="m-wrap medium">
                                             <option value="0">顶级分类</option>
-                                            @foreach (var item in (List
-                                            <SelectListItem>)ViewBag.Category)
-                                                {
-                                                <option value="@(item.Value)">@(item.Text)</option>
-                                                }
+
                                         </select>
                                     </div>
                                 </div>
@@ -78,7 +74,7 @@
                                     <label class="control-label" for="typeahead">分类颜色： </label>
                                     <div class="controls">
                                         <input id="txtColor" type="text" class="m-wrap  medium typeahead"
-                                               style="background-color:@(Model != null ? Model.ColorInfo : "");"
+                                               style="background-color:;"
                                         value="" data-provide="typeahead"
                                         data-items="4" />
                                     </div>
@@ -134,7 +130,7 @@
     </div>
 </div>
 <div class="none">
-    <form id="frmAttachment" action=" /Upload/File"" enctype="multipart/form-data"
+    <form id="frmAttachment" action="/file/upload" enctype="multipart/form-data"
     method="post" name="frmAttachment" target="uploadTarget">
     <input type="file" style="position: absolute; left: -999em; top: -999em;" id="attachFile" name="attachFile"/>
     <iframe id="uploadTarget" name="uploadTarget" style="position: absolute; left: -999em; top: -999em;"></iframe>
@@ -144,8 +140,7 @@
 <#include '../tags/footer.ftl'/>
 
     <script type="text/javascript">
-        var parentId = '@(Model!=null?Model.ParentId:0)';
-        var domain = '@(ViewBag.Domain)';
+
 
         var uploadAttachment = {
             position: 0,
@@ -212,22 +207,13 @@
             //add data
             $("#btnSave").click(function () {
                 var id = $("#txtId").val();
-                var parentId = parseInt($("#selCategory").find("option:selected").val());
-                var name = $("#txtName").val();
-                var describe = $("#txtDescribe").val();
-                var logo = $("#imgLogo").attr("src");
-                var icon = $("#imgIcon").attr("src");
-                var eName = $("#txtEnglishName").val();
-                var color = $("#txtColor").val();
+                 #DetailScripts#
+                var data={};
+                data.id=$("#txtId").val();
+                data.id=$("#txtId").val($("#selCategory").find("option:selected").val());
+                data.logo = $("#imgLogo").attr("src");
                 $.post("/#TableClass#/save", {
-                    id: id,
-                    name: name,
-                    parentId: parentId,
-                    describe: describe,
-                    logo: logo,
-                    icon: icon,
-                    eName: eName,
-                    color: color
+                    datas:data
                 }, function (data) {
                     if (data === 0) {
                         alert('操作成功!');

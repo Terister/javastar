@@ -188,11 +188,16 @@ public class MakeFileController {
          * */
 
         HashMap<String, String> maps = new HashMap<>();
+         maps.put("#ModelContent#", sbModel.toString());
+        maps.putIfAbsent("#WorkSpace#", workSpace);
         String configPaht9 = "/config/controller/HomeController.template";
         String outputpath9 = basePath + "/" + projectName + "-controller" + projectPath + "/controller/HomeController.java";
-        maps.put("#ModelContent#", sbModel.toString());
-        maps.putIfAbsent("#WorkSpace#", workSpace);
         files(configPaht9, outputpath9, maps);
+
+
+        String configPaht10 = "/config/controller/Files.template";
+        String outputpath10 = basePath + "/" + projectName + "-controller" + projectPath + "/controller/FileController.java";
+        files(configPaht10, outputpath10, maps);
 
 
         return "0";
@@ -209,7 +214,10 @@ public class MakeFileController {
         StringBuilder sb1 = new StringBuilder();
         String contentColumns = "";
         String templateRender = "<tr>\n";
+        //detail
+        String DetailScripts="";
         for (ColumnsInfo cc : ccList) {
+         /*list*/
             if ("true".equals(cc.getIsShow())) {
                 sb1.append("'<th >" + cc.getKey() + "</th>'+\n");
 
@@ -227,6 +235,21 @@ public class MakeFileController {
 //            String abc = "   obj.Items[i].IsDelete = '<label class=\"checkbox\"><input type=\"checkbox\"' + (obj.Items[i].IsDelete ? '' : ' checked=\"checked\"') + ' onclick=\"#TableClassInStance#Object.remove(' + obj.Items[i].Id + ')\" /></label>';\n" +
 //                    "                        obj.Items[i].Ar = '<span class=\"isAr\" data-id=\"' + obj.Items[i].Id + '\" id=\"ar' + obj.Items[i].Id + '\">' + obj.Items[i].Ar + '</span>';\n";
 
+            /*detail*/
+
+
+            String detailColuns="  <div class=\"control-group\">\n" +
+                    "                                    <label class=\"control-label\" for=\"typeahead\">分类编号： </label>\n" +
+                    "                                    <div class=\"controls\">\n" +
+                    "                                        <input id=\"txtId\" type=\"text\" class=\"m-wrap medium typeahead\"\n" +
+                    "                                               value=\"@(Model != null ? Model.Id : 0)\" data-provide=\"typeahead\"\n" +
+                    "                                               data-items=\"4\" readonly=\"readonly\"/>\n" +
+                    "                                    </div>\n" +
+                    "                                </div>";
+
+              DetailScripts="data.id=$(\"#txtId\").val();\n" +
+                      "                data.id=$(\"#txtId\").val($(\"#selCategory\").find(\"option:selected\").val());\n" +
+                      "                data.logo = $(\"#imgLogo\").attr(\"src\");";
 
         }
         templateRender += "                <td> <span class=\"label label-info\"><a href=\"//detail?id={{:id}}\" onclick=\"\">编辑</a></span> </td></tr>";
@@ -235,10 +258,7 @@ public class MakeFileController {
         String pkType = "int";
         String pk = "";
         for (DtInfo dt : dtinfo) {
-
-
             String dtType = getDataType(dt.getType());
-
             if ("PRI".equals(dt.getKey())) {
                 pk = getClassName(dt.getField());
                 if ("long".equals(dtType)) {
@@ -296,6 +316,10 @@ public class MakeFileController {
         /**
          * static list
          */
+        maps.putIfAbsent("#DetailScripts#", DetailScripts);
+
+
+
         String configPaht8 = "/config/staticfile/common/List.ftl";
         String outputpath8 = basePath + "/" + projectName + "-controller" + resourcesPath + "/templates/views/" + tableClass.toLowerCase() + "/list.ftl";
         files(configPaht8, outputpath8, maps);
@@ -465,6 +489,11 @@ public class MakeFileController {
         String outputpath16 = basePath + "/" + projectName + "-utils" + projectPath + "/utils/mybatis/ResponseData.java";
 
         files(configPath16, outputpath16, maps);
+
+        String configPath116 = "/config/utils/paganation.template";
+        String outputpath116 = basePath + "/" + projectName + "-utils" + projectPath + "/utils/mybatis/Pagination.java";
+
+        files(configPath116, outputpath116, maps);
 
         File file17 = new File(basePath + "/" + projectName + "-controller" + projectPath + "/controller");
         if (!file17.exists()) {

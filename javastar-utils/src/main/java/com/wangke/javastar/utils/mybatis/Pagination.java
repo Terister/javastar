@@ -1,4 +1,4 @@
-package #WorkSpace#.utils.mybatis;
+package com.wangke.javastar.utils.mybatis;
 
 import java.io.Serializable;
 import java.util.List;

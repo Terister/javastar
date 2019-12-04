@@ -13,7 +13,6 @@
                     <a href="#ListLink#">列表</a>
                     <i class="icon-angle-right"></i>
                 </li>
-                <li><a href="#">列表</a></li>
             </ul>
         </div>
     </div>
