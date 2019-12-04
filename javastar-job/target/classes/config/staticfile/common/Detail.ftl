@@ -204,7 +204,7 @@
             $('#txtColor').on('keyup', function () {
                 $(this).css("background-color", $(this).val());
             });
-            //add data
+
             $("#btnSave").click(function () {
                 var id = $("#txtId").val();
                  #DetailScripts#

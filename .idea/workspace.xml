@@ -2,23 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="68f6c762-c12a-4ee5-a9e3-5b51bc84529b" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/javastar-biz/src/main/java/com/wangke/javastar/biz/agent/CephAgent.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/javastar-biz/src/main/java/com/wangke/javastar/biz/agent/RedisAgent.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/javastar-controller/src/main/java/com/wangke/javastar/controller/FileUpload.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/javastar-controller/src/main/java/com/wangke/javastar/filter/AuthorFilter.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/javastar-controller/src/main/java/com/wangke/javastar/utils/UserProfile.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/javastar-job/src/main/resources/config/controller/Files.template" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/javastar-utils/src/main/java/com/wangke/javastar/utils/mybatis/Pagination.java" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/javastar-job/src/main/java/com/wangke/javastar/job/controller/MakeFileController.java" afterPath="$PROJECT_DIR$/javastar-job/src/main/java/com/wangke/javastar/job/controller/MakeFileController.java" />
       <change beforePath="$PROJECT_DIR$/javastar-job/src/main/resources/config/staticfile/common/Detail.ftl" afterPath="$PROJECT_DIR$/javastar-job/src/main/resources/config/staticfile/common/Detail.ftl" />
-      <change beforePath="$PROJECT_DIR$/javastar-job/src/main/resources/config/staticfile/common/List.ftl" afterPath="$PROJECT_DIR$/javastar-job/src/main/resources/config/staticfile/common/List.ftl" />
-      <change beforePath="$PROJECT_DIR$/javastar-job/src/main/resources/config/utils/paganation.template" afterPath="$PROJECT_DIR$/javastar-job/src/main/resources/config/utils/paganation.template" />
-      <change beforePath="$PROJECT_DIR$/javastar-job/target/classes/com/wangke/javastar/job/controller/MakeFileController$1.class" afterPath="$PROJECT_DIR$/javastar-job/target/classes/com/wangke/javastar/job/controller/MakeFileController$1.class" />
-      <change beforePath="$PROJECT_DIR$/javastar-job/target/classes/com/wangke/javastar/job/controller/MakeFileController.class" afterPath="$PROJECT_DIR$/javastar-job/target/classes/com/wangke/javastar/job/controller/MakeFileController.class" />
-      <change beforePath="$PROJECT_DIR$/javastar-job/target/classes/config/staticfile/common/Detail.ftl" afterPath="$PROJECT_DIR$/javastar-job/target/classes/config/staticfile/common/Detail.ftl" />
-      <change beforePath="$PROJECT_DIR$/javastar-job/target/classes/config/staticfile/common/List.ftl" afterPath="$PROJECT_DIR$/javastar-job/target/classes/config/staticfile/common/List.ftl" />
-      <change beforePath="$PROJECT_DIR$/javastar-job/target/classes/config/utils/paganation.template" afterPath="$PROJECT_DIR$/javastar-job/target/classes/config/utils/paganation.template" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -49,31 +33,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="HomeController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/javastar-job/src/main/java/com/wangke/javastar/job/controller/HomeController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="34" column="35" lean-forward="false" selection-start-line="34" selection-start-column="30" selection-end-line="34" selection-end-column="35" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="response.template" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/javastar-job/src/main/resources/config/utils/response.template">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="List.ftl" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/javastar-job/src/main/resources/config/staticfile/common/List.ftl">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" column="21" lean-forward="false" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -117,11 +81,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Detail.ftl" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Detail.ftl" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/javastar-job/src/main/resources/config/staticfile/common/Detail.ftl">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="417">
-              <caret line="129" column="10" lean-forward="false" selection-start-line="129" selection-start-column="10" selection-end-line="129" selection-end-column="10" />
+            <state relative-caret-position="-1920">
+              <caret line="78" column="45" lean-forward="false" selection-start-line="78" selection-start-column="45" selection-end-line="78" selection-end-column="45" />
               <folding />
             </state>
           </provider>
@@ -140,8 +104,8 @@
       <file leaf-file-name="MakeFileController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/javastar-job/src/main/java/com/wangke/javastar/job/controller/MakeFileController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="488" column="97" lean-forward="false" selection-start-line="488" selection-start-column="97" selection-end-line="488" selection-end-column="97" />
+            <state relative-caret-position="65">
+              <caret line="29" column="55" lean-forward="true" selection-start-line="29" selection-start-column="30" selection-end-line="29" selection-end-column="55" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1863#1871#0" expanded="true" />
@@ -169,11 +133,33 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserProfile.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="UserProfile.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/javastar-controller/src/main/java/com/wangke/javastar/utils/UserProfile.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="45">
               <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FileUpload.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/javastar-controller/src/main/java/com/wangke/javastar/controller/FileUpload.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="141">
+              <caret line="20" column="33" lean-forward="false" selection-start-line="20" selection-start-column="33" selection-end-line="20" selection-end-column="33" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UsersController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/javastar-controller/src/main/java/com/wangke/javastar/controller/UsersController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="780">
+              <caret line="60" column="0" lean-forward="false" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -298,11 +284,11 @@
         <option value="$PROJECT_DIR$/javastar-controller/src/main/java/com/wangke/javastar/controller/FileDownload.java" />
         <option value="$PROJECT_DIR$/javastar-controller/src/main/java/com/wangke/javastar/controller/FileUpload.java" />
         <option value="$PROJECT_DIR$/javastar-job/src/main/resources/config/controller/Upload.template" />
-        <option value="$PROJECT_DIR$/javastar-job/src/main/resources/config/staticfile/common/Detail.ftl" />
         <option value="$PROJECT_DIR$/javastar-job/src/main/java/com/wangke/javastar/job/controller/MakeFileController.java" />
         <option value="$PROJECT_DIR$/javastar-job/src/main/resources/config/utils/paganation.template" />
         <option value="$PROJECT_DIR$/javastar-job/src/main/resources/config/controller/Files.template" />
         <option value="$PROJECT_DIR$/javastar-controller/src/main/java/com/wangke/javastar/utils/UserProfile.java" />
+        <option value="$PROJECT_DIR$/javastar-job/src/main/resources/config/staticfile/common/Detail.ftl" />
       </list>
     </option>
   </component>
@@ -757,12 +743,12 @@
       <workItem from="1574656120252" duration="8222000" />
       <workItem from="1574769052724" duration="15547000" />
       <workItem from="1575015948790" duration="2395000" />
-      <workItem from="1575465381120" duration="2338000" />
+      <workItem from="1575465381120" duration="2868000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="131827000" />
+    <option name="totallyTimeSpent" value="132357000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -775,6 +761,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -793,10 +780,10 @@
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32889965" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43168077" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.43168077" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32889965" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32889965" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32889965" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32889965" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28540772" sideWeight="0.49576783" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28755364" sideWeight="0.50423217" order="5" side_tool="true" content_ui="tabs" />
@@ -997,13 +984,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/javastar-controller/src/main/java/com/wangke/javastar/controller/UsersController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="334">
-          <caret line="60" column="0" lean-forward="false" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/javastar-job/src/main/resources/config/pom/pom-parent.template">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="262">
@@ -1155,28 +1135,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/javastar-controller/src/main/java/com/wangke/javastar/controller/FileUpload.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" column="33" lean-forward="false" selection-start-line="20" selection-start-column="33" selection-end-line="20" selection-end-column="33" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/javastar-job/src/main/java/com/wangke/javastar/job/controller/HomeController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
           <caret line="34" column="35" lean-forward="false" selection-start-line="34" selection-start-column="30" selection-end-line="34" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/javastar-job/src/main/resources/config/staticfile/common/Detail.ftl">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="417">
-          <caret line="129" column="10" lean-forward="false" selection-start-line="129" selection-start-column="10" selection-end-line="129" selection-end-column="10" />
           <folding />
         </state>
       </provider>
@@ -1239,10 +1201,44 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/javastar-job/src/main/resources/config/controller/Files.template">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-245">
+          <caret line="70" column="95" lean-forward="false" selection-start-line="70" selection-start-column="95" selection-end-line="70" selection-end-column="95" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/javastar-controller/src/main/java/com/wangke/javastar/utils/UserProfile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/javastar-controller/src/main/java/com/wangke/javastar/controller/FileUpload.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="141">
+          <caret line="20" column="33" lean-forward="false" selection-start-line="20" selection-start-column="33" selection-end-line="20" selection-end-column="33" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/javastar-controller/src/main/java/com/wangke/javastar/controller/UsersController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="780">
+          <caret line="60" column="0" lean-forward="false" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/javastar-job/src/main/java/com/wangke/javastar/job/controller/MakeFileController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="488" column="97" lean-forward="false" selection-start-line="488" selection-start-column="97" selection-end-line="488" selection-end-column="97" />
+        <state relative-caret-position="65">
+          <caret line="29" column="55" lean-forward="true" selection-start-line="29" selection-start-column="30" selection-end-line="29" selection-end-column="55" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1863#1871#0" expanded="true" />
@@ -1259,18 +1255,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/javastar-job/src/main/resources/config/controller/Files.template">
+    <entry file="file://$PROJECT_DIR$/javastar-job/src/main/resources/config/staticfile/common/Detail.ftl">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-245">
-          <caret line="70" column="95" lean-forward="false" selection-start-line="70" selection-start-column="95" selection-end-line="70" selection-end-column="95" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/javastar-controller/src/main/java/com/wangke/javastar/utils/UserProfile.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+        <state relative-caret-position="-1920">
+          <caret line="78" column="45" lean-forward="false" selection-start-line="78" selection-start-column="45" selection-end-line="78" selection-end-column="45" />
           <folding />
         </state>
       </provider>

@@ -198,13 +198,13 @@
                 $("#attachFile").click();
             });
 
-            if (parseInt(parentId) > 0) {
+         /*   if (parseInt(parentId) > 0) {
                 $("#selCategory").val(parentId);
-            }
+            }*/
             $('#txtColor').on('keyup', function () {
                 $(this).css("background-color", $(this).val());
             });
-            //add data
+
             $("#btnSave").click(function () {
                 var id = $("#txtId").val();
                  #DetailScripts#
