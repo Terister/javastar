@@ -20,7 +20,7 @@ import java.util.List;
 
     private static final String class_name = Default#TableClass#Dao.class.getName();
 
-    private static final String order_desc_where = " id desc";
+    private static final String order_desc_where = " #PrimaryKey# desc";
 
 
     @Autowired

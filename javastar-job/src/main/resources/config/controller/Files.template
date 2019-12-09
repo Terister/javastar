@@ -62,13 +62,15 @@ public class FileController extends HttpServlet {
 
     @GetMapping("/download")
     public String downloadFile(HttpServletRequest request, HttpServletResponse response) {
-        String fileName = "2019092715213111122.png";// 文件名
+        String fileName = "2019092715213111122.png";/* 文件名*/
         if (fileName != null) {
             /*设置文件路径*/
             File file = new File("D://Downloads/2019092715213111122.png");
             if (file.exists()) {
-                response.setContentType("application/force-download");/* 设置强制下载不打开*/
-                response.addHeader("Content-Disposition", "attachment;fileName=" + fileName);/* 设置文件名*/
+                response.setContentType("application/force-download");
+                /* 设置强制下载不打开*/
+                response.addHeader("Content-Disposition", "attachment;fileName=" + fileName);
+                /* 设置文件名*/
                 byte[] buffer = new byte[1024];
                 FileInputStream fis = null;
                 BufferedInputStream bis = null;

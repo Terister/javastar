@@ -24,11 +24,11 @@ public class MakeFileController {
     /**
      * project config
      */
-    private String groupId = "com.pab.framework";
-    private String workSpace = "com.pab.framework.sagittar";
     private String projectName = "sagittar";
-    private String basePath = "/Users/wolf/Root/Codes";
-    private String projectPath = "/src/main/java/com/pab/framework/sagittar";
+    private String groupId = "com.pab.framework";
+    private String workSpace = groupId + "." + projectName;
+    private String basePath = "/Users/wolf/Root/Upload";
+    private String projectPath = "/src/main/java/" + workSpace.replace(".", "/");
     private String resourcesPath = "/src/main/resources";
 
 
@@ -36,7 +36,7 @@ public class MakeFileController {
      * static resource switch
      * ture: create false:none
      */
-    private boolean createStaticResource = true;
+    private boolean createStaticResource = false;
 
     /**
      * db config
@@ -75,8 +75,9 @@ public class MakeFileController {
             StringBuilder sb1 = new StringBuilder();
             StringBuilder sb2 = new StringBuilder();
             StringBuilder sb3 = new StringBuilder();
-            String pkType = "int";
+            String pkType = "Integer";
             String pk = "";
+            String saveContent = "";
             for (DtInfo dt : dtinfo) {
 
 
@@ -84,19 +85,26 @@ public class MakeFileController {
 
                 if ("PRI".equals(dt.getKey())) {
                     pk = getClassName(dt.getField());
-                    if ("long".equals(dtType)) {
-                        pkType = "long";
+                    if ("long".equals(dtType.toLowerCase())) {
+                        pkType = "Long";
                     }
                     if ("String".equals(dtType)) {
                         pkType = "String";
                     }
-                }
-                sb1.append("private " + dtType + " " + dt.getField() + ";");
 
+
+                    saveContent = ("String".equals(pkType) ? " if (\"\".equals(model.get" + pk + "() ))\n" : " if (model.get" + pk + "() > 0)\n") +
+                            "            {\n" +
+                            "                " + getClassNameInstance(dr.getTABLE_NAME()) + "Biz.update(item);\n" +
+                            "            } else {\n" +
+                            "                " + getClassNameInstance(dr.getTABLE_NAME()) + "Biz.add(item);\n" +
+                            "            }";
+                }
+
+                sb1.append("private " + dtType + " " + dt.getField() + ";");
                 sb1.append("public " + dtType + " get" + getClassName(dt.getField()) + "() {");
                 sb1.append("return " + dt.getField() + ";");
                 sb1.append("}");
-
                 sb1.append(" public void set" + getClassName(dt.getField()) + "(" + dtType + " " + dt.getField() + ") {");
                 sb1.append("this." + dt.getField() + " = " + dt.getField() + ";");
                 sb1.append("}");
@@ -106,6 +114,8 @@ public class MakeFileController {
 
 
                 sb3.append(" result.set" + getClassName(dt.getField()) + "(item.get" + getClassName(dt.getField()) + "()); ");
+
+
             }
             String tableClass = getClassName(dr.getTABLE_NAME());
             String tableClassInstance = getClassNameInstance(dr.getTABLE_NAME());
@@ -122,7 +132,7 @@ public class MakeFileController {
             maps.putIfAbsent("#PrimaryKeyType#", pkType);
             maps.putIfAbsent("#PrimaryKey#", pk);
             maps.putIfAbsent("#TableClassInStance#", tableClassInstance);
-
+            maps.putIfAbsent("#ControllerSave#", saveContent);
 
             /**
              * model
@@ -188,7 +198,7 @@ public class MakeFileController {
          * */
 
         HashMap<String, String> maps = new HashMap<>();
-         maps.put("#ModelContent#", sbModel.toString());
+        maps.put("#ModelContent#", sbModel.toString());
         maps.putIfAbsent("#WorkSpace#", workSpace);
         String configPaht9 = "/config/controller/HomeController.template";
         String outputpath9 = basePath + "/" + projectName + "-controller" + projectPath + "/controller/HomeController.java";
@@ -215,9 +225,9 @@ public class MakeFileController {
         String contentColumns = "";
         String templateRender = "<tr>\n";
         //detail
-        String DetailScripts="";
+        String DetailScripts = "";
         for (ColumnsInfo cc : ccList) {
-         /*list*/
+            /*list*/
             if ("true".equals(cc.getIsShow())) {
                 sb1.append("'<th >" + cc.getKey() + "</th>'+\n");
 
@@ -238,7 +248,7 @@ public class MakeFileController {
             /*detail*/
 
 
-            String detailColuns="  <div class=\"control-group\">\n" +
+            String detailColuns = "  <div class=\"control-group\">\n" +
                     "                                    <label class=\"control-label\" for=\"typeahead\">分类编号： </label>\n" +
                     "                                    <div class=\"controls\">\n" +
                     "                                        <input id=\"txtId\" type=\"text\" class=\"m-wrap medium typeahead\"\n" +
@@ -247,9 +257,9 @@ public class MakeFileController {
                     "                                    </div>\n" +
                     "                                </div>";
 
-              DetailScripts="data.id=$(\"#txtId\").val();\n" +
-                      "                data.id=$(\"#txtId\").val($(\"#selCategory\").find(\"option:selected\").val());\n" +
-                      "                data.logo = $(\"#imgLogo\").attr(\"src\");";
+            DetailScripts = "data.id=$(\"#txtId\").val();\n" +
+                    "                data.id=$(\"#txtId\").val($(\"#selCategory\").find(\"option:selected\").val());\n" +
+                    "                data.logo = $(\"#imgLogo\").attr(\"src\");";
 
         }
         templateRender += "                <td> <span class=\"label label-info\"><a href=\"//detail?id={{:id}}\" onclick=\"\">编辑</a></span> </td></tr>";
@@ -317,7 +327,6 @@ public class MakeFileController {
          * static list
          */
         maps.putIfAbsent("#DetailScripts#", DetailScripts);
-
 
 
         String configPaht8 = "/config/staticfile/common/List.ftl";
@@ -577,23 +586,23 @@ public class MakeFileController {
         /* starWith */
 
         if (type.startsWith("float"))
-            return "float";
+            return "Float";
         if (type.startsWith("double"))
-            return "double";
+            return "Double";
         if (type.startsWith("decimal"))
-            return "long";
+            return "Long";
         if (type.startsWith("int"))
-            return "int";
+            return "Integer";
         if (type.startsWith("tinyint(4)"))
             return "byte";
         if (type.startsWith("tinyint(1)"))
             return "Boolean";
         if (type.startsWith("bigint"))
-            return "long";
+            return "Long";
         if (type.startsWith("smallint"))
             return "int";
         if (type.startsWith("mediumint"))
-            return "int";
+            return "Integer";
         if (type.startsWith("bit"))
             return "Boolean";
         /* switch */
@@ -624,12 +633,6 @@ public class MakeFileController {
                 break;
             case "timestamp":
                 str = "Date";
-                break;
-            case "integer":
-                str = "Long";
-                break;
-            case "mediumint":
-                str = "int";
                 break;
             case "boolean":
                 str = "int";

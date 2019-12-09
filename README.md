@@ -1,6 +1,6 @@
 # Javastar 目的
 
-`本项目目的是根据mysql数据库自动创建代码
+本项目目的是根据mysql数据库自动创建代码
 
 快速搭建常规java springboot 项目`
 
@@ -41,3 +41,26 @@ step 3:
     至此 全部文件生成
     
     项目根目录下面  执行 mvn clean package
+    
+    
+    
+    
+gitlab  3c6g * 1    2-6
+
+jenkins 2c4g * 3   6-12
+
+apollo  2c4g * 3	6-12
+
+cat 	2c4g * 3	6-12
+
+sonar   2c4g * 3		
+
+rocketmq 2c4g * 3	6-12
+
+redis   2c4g * 3	6-12
+
+mogoDB  2c4g * 3    
+
+weedfs  2c4g * 3 	6-12
+
+app 	2c4g * 10 	20-40  redmine   passport  movie  book comic sns  cms lotus engine agent

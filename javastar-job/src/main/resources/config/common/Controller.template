@@ -48,12 +48,8 @@ public class #TableClass#Controller {
             responseData.setCode(0);
             responseData.setMsg("success");
 
-            if (model.get#PrimaryKey#() > 0)
-            {
-                #TableClassInStance#Biz.update(item);
-            } else {
-                #TableClassInStance#Biz.add(item);
-            }
+            #ControllerSave#
+
             responseData.setData(item);
         } catch (Exception e) {
             e.printStackTrace();
