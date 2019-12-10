@@ -57,8 +57,8 @@ public class MakeFileController {
         List<DtList> list = new ArrayList<DtList>();
 
         String dbName = dataBasename;
-        List<DtName> items = mybatisHelper.getTableName(dbName);
 
+        List<DtName> items = mybatisHelper.getTableName(dbName);
 
         int columns = 0;
 
@@ -78,11 +78,18 @@ public class MakeFileController {
             String pkType = "Integer";
             String pk = "";
             String saveContent = "";
+            String blobContent = "";
+            String blobContent2 = "";
+            String blobBizContent = "";
+            String blobController = "";
+            Boolean hasBlob = false;
             for (DtInfo dt : dtinfo) {
 
 
                 String dtType = getDataType(dt.getType());
-
+                if ("blob".equals(dt.getType()) || "mediumblob".equals(dt.getType())) {
+                    hasBlob = true;
+                }
                 if ("PRI".equals(dt.getKey())) {
                     pk = getClassName(dt.getField());
                     if ("long".equals(dtType.toLowerCase())) {
@@ -100,12 +107,13 @@ public class MakeFileController {
                             "                " + getClassNameInstance(dr.getTABLE_NAME()) + "Biz.add(item);\n" +
                             "            }";
                 }
+                String className = getClassName(dt.getField());
 
                 sb1.append("private " + dtType + " " + dt.getField() + ";");
-                sb1.append("public " + dtType + " get" + getClassName(dt.getField()) + "() {");
+                sb1.append("public " + dtType + " get" + className + "() {");
                 sb1.append("return " + dt.getField() + ";");
                 sb1.append("}");
-                sb1.append(" public void set" + getClassName(dt.getField()) + "(" + dtType + " " + dt.getField() + ") {");
+                sb1.append(" public void set" + className + "(" + dtType + " " + dt.getField() + ") {");
                 sb1.append("this." + dt.getField() + " = " + dt.getField() + ";");
                 sb1.append("}");
 
@@ -113,14 +121,60 @@ public class MakeFileController {
                 sb2.append("     sb.append(\", " + dt.getField() + "=\").append(" + dt.getField() + ");");
 
 
-                sb3.append(" result.set" + getClassName(dt.getField()) + "(item.get" + getClassName(dt.getField()) + "()); ");
+                sb3.append(" result.set" + className + "(item.get" + className + "()); ");
 
 
             }
             String tableClass = getClassName(dr.getTABLE_NAME());
             String tableClassInstance = getClassNameInstance(dr.getTABLE_NAME());
 
+            if (hasBlob) {
+                blobContent = " /**\n" +
+                        "     * get model     \n" +
+                        "     * * @param id     \n" +
+                        "     * * @return\n" +
+                        "     */\n" +
+                        "    @Override\n" +
+                        "    public " + tableClass + "Model getModelWithBlobById(String id) {\n" +
+                        "\n" +
+                        "        " + tableClass + "Example " + tableClassInstance + "Example = new " + tableClass + "Example();\n" +
+                        "        " + tableClass + "Example.Criteria criteria = " + tableClassInstance + "Example.createCriteria();          \n" +
+                        "        criteria.and" + pk + "EqualTo(id);\n" +
+                        "        List<" + tableClass + "> item = " + tableClassInstance + "ReadMapper.selectByExampleWithBLOBs(" + tableClassInstance + "Example);\n" +
+                        "        if (null != item && item.size() > 0) {\n" +
+                        "            return modelConvert(item.get(0));\n" +
+                        "        }\n" +
+                        "        return null;\n" +
+                        "    }";
 
+                blobContent2 = tableClass + "Model getModelWithBlobById(" + pkType + " id);";
+
+
+                blobBizContent = "  @Override\n" +
+                        "    public " + tableClass + "Model getModelWithBlobById(" + pkType + " id) {\n" +
+                        "        return " + tableClassInstance + "Dao.getModelWithBlobById(id);\n" +
+                        "    }";
+
+                blobController = " @RequestMapping(value = \"/getModel\")\n" +
+                        "    public ResponseData<" + tableClass + "Model> getModel(" + pkType + " id) {\n" +
+                        "\n" +
+                        "        ResponseData<" + tableClass + "Model> responseData = new ResponseData<>();\n" +
+                        "\n" +
+                        "        try {\n" +
+                        "            responseData.setCode(0);\n" +
+                        "            responseData.setMsg(\"success\");\n" +
+                        "            responseData.setData(" + tableClassInstance + "Biz.getModelWithBlobById(id));\n" +
+                        "        } catch (Exception e) {\n" +
+                        "            e.printStackTrace();\n" +
+                        "            responseData.setCode(1);\n" +
+                        "            responseData.setMsg(e.getMessage());\n" +
+                        "        }\n" +
+                        "\n" +
+                        "        return responseData;\n" +
+                        "    }";
+
+
+            }
             //create file
 
             HashMap<String, String> maps = new HashMap<>();
@@ -133,6 +187,12 @@ public class MakeFileController {
             maps.putIfAbsent("#PrimaryKey#", pk);
             maps.putIfAbsent("#TableClassInStance#", tableClassInstance);
             maps.putIfAbsent("#ControllerSave#", saveContent);
+            maps.putIfAbsent("#BlobContentDaoDefault#", blobContent);
+            maps.putIfAbsent("#BlobContentDao#", blobContent2);
+            maps.putIfAbsent("#BlobContentBiz#", blobContent2);
+            maps.putIfAbsent("#BlobContentBizDefault#", blobBizContent);
+            maps.putIfAbsent("#BlobController#", blobController);
+
 
             /**
              * model

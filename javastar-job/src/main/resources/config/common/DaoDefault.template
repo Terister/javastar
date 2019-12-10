@@ -75,6 +75,8 @@ import java.util.List;
         return modelConvert(item);
     }
 
+    #BlobContentDaoDefault#
+
     /**
      * get list
      *

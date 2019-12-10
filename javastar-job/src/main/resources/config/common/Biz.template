@@ -12,6 +12,8 @@ public interface #TableClass#Biz {
 
     #TableClass#Model getModelById(#PrimaryKeyType# id);
 
+    #BlobContentBiz#
+
     List<#TableClass#Model> getAllList();
 
     List<#TableClass#Model> getPageList(int pageIndex, int pageSize);

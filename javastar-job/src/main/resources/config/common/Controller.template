@@ -37,6 +37,8 @@ public class #TableClass#Controller {
         return responseData;
     }
 
+    #BlobController#
+
     @RequestMapping(value = "/save")
     public ResponseData<#TableClass#Model> save(#TableClass#Model model) {
 
