@@ -99,11 +99,13 @@ import java.util.List;
      * @return
      */
     @Override
-    public List<#TableClass#Model> getPageList(int pageIndex, int pageSize) {
+    public List<#TableClass#Model> getPageList(int pageIndex, int pageSize,String key) {
 
         #TableClass#Example #TableClassInStance#Example = new #TableClass#Example();
         #TableClass#Example.Criteria criteria = #TableClassInStance#Example.createCriteria();
-       /*add any condition*/
+
+       if(!"".equals(key))
+       {/*add any condition*/  }
         criteria.and#PrimaryKey#IsNotNull();
         #TableClassInStance#Example.setPageIndex(pageIndex);
         #TableClassInStance#Example.setPageCount(pageSize);
@@ -118,11 +120,13 @@ import java.util.List;
      * @return
      */
     @Override
-    public int getCount() {
+    public int getCount(String key) {
 
         #TableClass#Example #TableClassInStance#Example = new #TableClass#Example();
         #TableClass#Example.Criteria criteria = #TableClassInStance#Example.createCriteria();
-        /*add any condition*/
+
+       if(!"".equals(key))
+       {/*add any condition*/  }
         criteria.and#PrimaryKey#IsNotNull();
         return #TableClassInStance#ReadMapper.countByExample(#TableClassInStance#Example);
 

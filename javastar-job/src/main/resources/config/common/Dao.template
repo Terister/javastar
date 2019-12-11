@@ -16,7 +16,7 @@ public interface #TableClass#Dao {
 
     List<#TableClass#Model> getAllList();
 
-    List<#TableClass#Model> getPageList(int pageIndex, int pageSize);
+    List<#TableClass#Model> getPageList(int pageIndex, int pageSize,String key);
 
-    int getCount();
+    int getCount(String key);
 }

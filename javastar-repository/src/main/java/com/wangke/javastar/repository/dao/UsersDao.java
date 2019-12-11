@@ -14,7 +14,7 @@ public interface UsersDao {
 
     List<UsersModel> getAllList();
 
-    List<UsersModel> getPageList(int pageIndex, int pageSize);
+    List<UsersModel> getPageList(int pageIndex, int pageSize,String key);
 
-    int getCount();
+    int getCount(String key);
 }

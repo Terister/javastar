@@ -3,6 +3,7 @@ package #WorkSpace#.biz.internal;
 import #WorkSpace#.biz.#TableClass#Biz;
 import #WorkSpace#.models.#TableClass#Model;
 import #WorkSpace#.repository.dao.#TableClass#Dao;
+import #WorkSpace#.utils.mybatis.Pagination;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -42,16 +43,17 @@ import java.util.List;
     }
 
 
-    @Override
-    public List<#TableClass#Model> getPageList(int pageIndex, int pageSize) {
-        return #TableClassInStance#Dao.getPageList(pageIndex, pageSize);
-    }
-
 
     @Override
-    public int getCount() {
-        return #TableClassInStance#Dao.getCount();
+    public Pagination<#TableClass#Model> getPageList(int pageIndex, int pageSize,String key) {
+
+        return new Pagination(pageIndex, pageSize, #TableClassInStance#Dao.getPageList(pageIndex, pageSize,key), #TableClassInStance#Dao.getCount(key));
+
     }
 
+    @Override
+    public int getCount(String key) {
+        return #TableClassInStance#Dao.getCount(key);
+    }
 
 }

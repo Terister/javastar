@@ -1,6 +1,7 @@
 package com.wangke.javastar.biz;
 
 import com.wangke.javastar.models.UsersModel;
+import com.wangke.javastar.utils.mybatis.Pagination;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ public interface UsersBiz {
 
     List<UsersModel> getAllList();
 
-    List<UsersModel> getPageList(int pageIndex, int pageSize);
+    Pagination getPageList(int pageIndex, int pageSize,String key);
 
-    int getCount();
+    int getCount(String key);
 }

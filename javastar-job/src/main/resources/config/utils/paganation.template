@@ -10,7 +10,7 @@ public class Pagination<T> implements Serializable {
     private int pageIndex;
     private int pageSize;
 
-    public Pagination(int count, int pageIndex, int pageSize, List<T> items) {
+    public Pagination( int pageIndex, int pageSize, List<T> items,int count) {
         this.setCount(count);
         this.setItems(items);
         this.setPageIndex(pageIndex);

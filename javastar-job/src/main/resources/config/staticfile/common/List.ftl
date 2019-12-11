@@ -94,21 +94,19 @@
             )
                 ;
                 $.getJSON("/#TableClass#/getPageList", {pageIndex: #TableClassInStance#Object.option.pageIndex, pageSize
-            : #TableClassInStance#Object.option.pageSize
+            : #TableClassInStance#Object.option.pageSize,key:""
             },
 
                 function (data) {
-                    var obj = data, content = [];
-                    $("#gvResult").html(#TableClassInStance#Object.option.listHeader
-                )
-                    ;
-                    #TableClassInStance#Object.option.count = obj.Count;
-                    for (var i = 0; i < obj.data.length; i++) {
+                    var obj = data.data, content = [];
+                    $("#gvResult").html(#TableClassInStance#Object.option.listHeader);
+                    #TableClassInStance#Object.option.count = obj.count;
+                    for (var i = 0; i < obj.items.length; i++) {
 
                         #ColumnsList#
 
                     }
-                    $("#gvResult").append($("##TableClassInStance#Template").render(obj.data));
+                    $("#gvResult").append($("##TableClassInStance#Template").render(obj.items));
                     $.each($('.isAr'), function () {
                         new Medium({
                             element: document.getElementById(this.id),

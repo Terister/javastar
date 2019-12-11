@@ -20,24 +20,6 @@ import java.util.List;
 @RestController
 public class MakeFileController {
 
-
-    /**
-     * project config
-     */
-    private String projectName = "sagittar";
-    private String groupId = "com.pab.framework";
-    private String workSpace = groupId + "." + projectName;
-    private String basePath = "/Users/wolf/Root/Upload";
-    private String projectPath = "/src/main/java/" + workSpace.replace(".", "/");
-    private String resourcesPath = "/src/main/resources";
-
-
-    /**
-     * static resource switch
-     * ture: create false:none
-     */
-    private boolean createStaticResource = false;
-
     /**
      * db config
      */
@@ -46,6 +28,26 @@ public class MakeFileController {
     private String jdbcUrl = "jdbc:mysql://localhost:3306/DataCenter?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false";
     private String jdbcUsername = "root";
     private String jdbcPassword = "850123";
+
+    /**
+     * project config
+     */
+    private String projectName = "sagittar";
+    private String groupId = "com.pab.framework";
+    private String basePath = "/Users/wolf/Root/Codes";
+
+    /**
+     * static resource switch
+     * ture: create
+     * false:none
+     */
+    private boolean createStaticResource = true;
+
+
+    private String workSpace = groupId + "." + projectName;
+    private String projectPath = "/src/main/java/" + workSpace.replace(".", "/");
+    private String resourcesPath = "/src/main/resources";
+
     @Autowired
     private MybatisHelper mybatisHelper;
 

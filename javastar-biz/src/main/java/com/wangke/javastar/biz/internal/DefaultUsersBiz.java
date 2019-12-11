@@ -3,6 +3,7 @@ package com.wangke.javastar.biz.internal;
 import com.wangke.javastar.biz.UsersBiz;
 import com.wangke.javastar.models.UsersModel;
 import com.wangke.javastar.repository.dao.UsersDao;
+import com.wangke.javastar.utils.mybatis.Pagination;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -39,14 +40,15 @@ public class DefaultUsersBiz implements UsersBiz {
 
 
     @Override
-    public List<UsersModel> getPageList(int pageIndex, int pageSize) {
-        return usersDao.getPageList(pageIndex, pageSize);
+    public Pagination<UsersModel> getPageList(int pageIndex, int pageSize,String key) {
+
+        return new Pagination(pageIndex, pageSize, usersDao.getPageList(pageIndex, pageSize,key), usersDao.getCount(key));
+
     }
 
-
     @Override
-    public int getCount() {
-        return usersDao.getCount();
+    public int getCount(String key) {
+        return usersDao.getCount(key);
     }
 
 

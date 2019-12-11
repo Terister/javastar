@@ -3,6 +3,7 @@ package com.wangke.javastar.controller;
 
 import com.wangke.javastar.biz.UsersBiz;
 import com.wangke.javastar.models.UsersModel;
+import com.wangke.javastar.utils.mybatis.Pagination;
 import com.wangke.javastar.utils.mybatis.ResponseData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,15 +65,17 @@ public class UsersController {
 
 
     @RequestMapping(value = "/getPageList")
-    public ResponseData<List<UsersModel>> getPageList(@RequestParam(value = "pageIndex", required = true) int pageIndex, @RequestParam(value = "pageSize", required = true) int pageSize) {
+    public ResponseData<Pagination> getPageList(@RequestParam(value = "pageIndex", required = true) int pageIndex,
+                                                @RequestParam(value = "pageSize", required = true) int pageSize,
+                                                @RequestParam(value = "key", required = false) String key) {
 
 
-        ResponseData<List<UsersModel>> responseData = new ResponseData<>();
+        ResponseData<Pagination> responseData = new ResponseData<>();
 
         try {
             responseData.setCode(0);
             responseData.setMsg("success");
-            responseData.setData(usersBiz.getPageList(pageIndex, pageSize));
+            responseData.setData(usersBiz.getPageList(pageIndex, pageSize,key));
         } catch (Exception e) {
             e.printStackTrace();
             responseData.setCode(1);
