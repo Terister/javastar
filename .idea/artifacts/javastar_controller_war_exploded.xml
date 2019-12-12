@@ -49,6 +49,18 @@
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.9.0" />
           <element id="library" level="project" name="Maven: com.alibaba:druid:1.1.5" />
           <element id="library" level="project" name="Maven: org.springframework:spring-context:5.0.4.RELEASE" />
+          <element id="library" level="project" name="Maven: com.amazonaws:aws-java-sdk-s3:1.11.347" />
+          <element id="library" level="project" name="Maven: com.amazonaws:aws-java-sdk-kms:1.11.347" />
+          <element id="library" level="project" name="Maven: com.amazonaws:aws-java-sdk-core:1.11.347" />
+          <element id="library" level="project" name="Maven: software.amazon.ion:ion-java:1.0.2" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.dataformat:jackson-dataformat-cbor:2.9.4" />
+          <element id="library" level="project" name="Maven: com.amazonaws:jmespath-java:1.11.347" />
+          <element id="library" level="project" name="Maven: com.amazonaws:aws-java-sdk:1.7.4" />
+          <element id="library" level="project" name="Maven: commons-logging:commons-logging:1.1.1" />
+          <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpclient:4.5.5" />
+          <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpcore:4.4.9" />
+          <element id="library" level="project" name="Maven: commons-codec:commons-codec:1.11" />
+          <element id="library" level="project" name="Maven: joda-time:joda-time:2.9.9" />
           <element id="archive" name="javastar-models-1.0-SNAPSHOT.jar">
             <element id="module-output" name="javastar-models" />
           </element>

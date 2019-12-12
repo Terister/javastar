@@ -4,7 +4,8 @@ import org.springframework.boot.context.event.ApplicationPreparedEvent;
 import org.springframework.context.ApplicationListener;
 
 /**
- * Created by wolf
+ * @author wang.ke
+ * @date 2017年10月25日
  */
 public class ApplicationStartup implements ApplicationListener<ApplicationPreparedEvent> {
 
