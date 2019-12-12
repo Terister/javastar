@@ -196,21 +196,13 @@ public class MakeFileController {
             maps.putIfAbsent("#BlobController#", blobController);
 
 
-
-
             HashMap<String, String> config = new HashMap<>();
             config.putIfAbsent("/config/common/Model.template", basePath + "/" + projectName + "-models" + projectPath + "/models/" + tableClass + "Model.java");
-
             config.putIfAbsent("/config/common/DaoDefault.template", basePath + "/" + projectName + "-repository" + projectPath + "/repository/dao/internal/Default" + tableClass + "Dao.java");
-
-            config.putIfAbsent("/config/common/Dao.template",basePath + "/" + projectName + "-repository" + projectPath + "/repository/dao/" + tableClass + "Dao.java");
-
+            config.putIfAbsent("/config/common/Dao.template", basePath + "/" + projectName + "-repository" + projectPath + "/repository/dao/" + tableClass + "Dao.java");
             config.putIfAbsent("/config/common/Biz.template", basePath + "/" + projectName + "-biz" + projectPath + "/biz/" + tableClass + "Biz.java");
-
-            config.putIfAbsent("/config/common/BizDefault.template",  basePath + "/" + projectName + "-biz" + projectPath + "/biz/internal/Default" + tableClass + "Biz.java");
-
-            config.putIfAbsent("/config/common/Controller.template",  basePath + "/" + projectName + "-controller" + projectPath + "/controller/" + tableClass + "Controller.java");
-
+            config.putIfAbsent("/config/common/BizDefault.template", basePath + "/" + projectName + "-biz" + projectPath + "/biz/internal/Default" + tableClass + "Biz.java");
+            config.putIfAbsent("/config/common/Controller.template", basePath + "/" + projectName + "-controller" + projectPath + "/controller/" + tableClass + "Controller.java");
             for (String key : config.keySet()) {
                 files(key, config.get(key), maps);
             }
@@ -233,6 +225,7 @@ public class MakeFileController {
             sbModel.append("}");
 
         }
+
         /**
          * homecontroller
          * */
@@ -242,14 +235,12 @@ public class MakeFileController {
         maps.putIfAbsent("#WorkSpace#", workSpace);
 
 
-        String configPaht9 = "/config/controller/HomeController.template";
-        String outputpath9 = basePath + "/" + projectName + "-controller" + projectPath + "/controller/HomeController.java";
-        files(configPaht9, outputpath9, maps);
-
-
-        String configPaht10 = "/config/controller/Files.template";
-        String outputpath10 = basePath + "/" + projectName + "-controller" + projectPath + "/controller/FileController.java";
-        files(configPaht10, outputpath10, maps);
+        HashMap<String, String> config = new HashMap<>();
+        config.putIfAbsent("/config/controller/HomeController.template", basePath + "/" + projectName + "-controller" + projectPath + "/controller/HomeController.java");
+        config.putIfAbsent("/config/controller/Files.template", basePath + "/" + projectName + "-controller" + projectPath + "/controller/FileController.java");
+        for (String key : config.keySet()) {
+            files(key, config.get(key), maps);
+        }
 
 
         return "0";
