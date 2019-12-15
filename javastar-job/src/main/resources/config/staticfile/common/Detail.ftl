@@ -11,9 +11,7 @@
 <!-- BEGIN HEADER -->
 
 <div class="header navbar navbar-inverse navbar-fixed-top">
-
     <!-- BEGIN TOP NAVIGATION BAR -->
-
     <div class="navbar-inner">
 
         <div class="container-fluid">
@@ -70,12 +68,11 @@
             <!-- END TOP NAVIGATION MENU -->
         </div>
     </div>
-
     <!-- END TOP NAVIGATION BAR -->
 </div>
-
 <!-- END HEADER -->
-<div id="bodyContaner"></div>
+
+<div id="bodyContaner">
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span12">
@@ -212,7 +209,7 @@
     <iframe id="uploadTarget" name="uploadTarget" style="position: absolute; left: -999em; top: -999em;"></iframe>
     </form>
 </div>
-
+</div>
 <#include '../tags/footer.ftl'/>
 
     <script type="text/javascript">
@@ -274,16 +271,9 @@
                 $("#attachFile").click();
             });
 
-         /*   if (parseInt(parentId) > 0) {
-                $("#selCategory").val(parentId);
-            }*/
-            $('#txtColor').on('keyup', function () {
-                $(this).css("background-color", $(this).val());
-            });
-
             $("#btnSave").click(function () {
                 var id = $("#txtId").val();
-                 #DetailScripts#
+                #DetailScripts#
                 var data={};
                 data.id=$("#txtId").val();
                 data.id=$("#txtId").val($("#selCategory").find("option:selected").val());

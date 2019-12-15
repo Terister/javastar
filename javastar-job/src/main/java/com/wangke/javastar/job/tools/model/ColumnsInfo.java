@@ -2,7 +2,7 @@ package com.wangke.javastar.job.tools.model;
 
 public class ColumnsInfo {
     String key;
-
+    String header;
     String isShow;
 
     String isSelect;
@@ -14,6 +14,13 @@ public class ColumnsInfo {
     String isNull;
     String isLink;
 
+    public String getHeader() {
+        return header;
+    }
+
+    public void setHeader(String header) {
+        this.header = header;
+    }
 
     public String getKey() {
         return key;

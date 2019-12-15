@@ -54,13 +54,15 @@
                     </thead>
                     <tbody id="t{{:dtName.tABLE_NAME}}">
                     <tr>
-                        <td width="220px" class="td-00">代码
+                        <td width="120px" class="td-00">代码
                         </td>
-                        <td width="40px" class="td-00">类型
+                        <td width="30px" class="td-00">类型
+                        </td>
+                          <td width="50px" class="td-00">列描述
                         </td>
                         <td width="30px" class="td-00">列显示
                         </td>
-                         <td width="30px" class="td-00">下啦框
+                         <td width="30px" class="td-00">下拉框
                         </td>
                         <td width="30px" class="td-00">图片
                         </td>
@@ -84,6 +86,9 @@
                                 </td>
                                 <td width="100px" class="td-01 c-type">
                                    {{:type}}
+                                </td>
+                                 <td width="60px" class="td-01 c-name">
+                                     <input type="text" value="{{:field}}" data="header"  />
                                 </td>
                                  <td width="30px" class="td-01 c-name">
                                       <img src="../static/images/right.gif" value="true" data="isShow" key="{{:field}}" />
@@ -119,6 +124,8 @@
 
 
 
+
+
                 </script>
                 <script type="text/javascript">
 
@@ -150,14 +157,13 @@
                             }
                             $("#divContent").html($("#tableTemplate").render(obj));
 
-                            for (var i = 0; i < count; i++)
-                            {
+                            for (var i = 0; i < count; i++) {
 
                                 $("#columns_" + i + " td").each(function (index) {
                                     var that = $(this);
                                     if (index > 1) {
 
-                                        $(this).on("click",function () {
+                                        $(this).on("click", function () {
 
                                             var va = $(that).find("img").attr("value");
                                             var sr = $(that).find("img").attr("src");
@@ -188,15 +194,16 @@
                     $("#btnCreate").bind("click", {}, function () {
 
                         var op = [];
-                        for (var i = 0; i < count; i++)
-                        {
+                        for (var i = 0; i < count; i++) {
                             var datas = {};
                             $("#columns_" + i + " td").each(function (index) {
                                 var that = $(this);
                                 if (index > 1) {
                                     var va = $(that).find("img").attr("value");
                                     var sr = $(that).find("img").attr("src");
-
+                                    if ($(that).find("input[type='text']").val() != undefined) {
+                                        datas.header = $(that).find("input[type='text']").val();
+                                    }
                                     datas.key = $(that).find("img").attr("key");
                                     if ("isShow" == $(that).find("img").attr("data")) {
                                         datas.isShow = $(that).find("img").attr("value")

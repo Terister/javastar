@@ -9,6 +9,7 @@ import com.wangke.javastar.job.tools.model.DtInfo;
 import com.wangke.javastar.job.tools.model.DtList;
 import com.wangke.javastar.job.tools.model.DtName;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,29 +22,37 @@ import java.util.List;
 public class MakeFileController {
 
     /**
-     * db config
+     * db name
      */
     private String dataBasename = "DataCenter";
-    private String jdbcDriver = "com.mysql.jdbc.Driver";
-    private String jdbcUrl = "jdbc:mysql://localhost:3306/DataCenter?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false";
-    private String jdbcUsername = "root";
-    private String jdbcPassword = "850123";
-
     /**
      * project config
      */
     private String projectName = "sagittar";
     private String groupId = "com.pab.framework";
+    /**
+     * 生成项目路径
+     */
     private String basePath = "/Users/wolf/Root/Codes";
 
     /**
-     * static resource switch
+     * 是否生成静态资源
      * ture: create
      * false:none
      */
     private boolean createStaticResource = true;
 
-
+    /*
+     * 基本配置
+     * */
+    @Value("${spring.datasource.driver-class-name}")
+    private String jdbcDriver;
+    @Value("${spring.datasource.url}")
+    private String jdbcUrl;
+    @Value("${spring.datasource.username}")
+    private String jdbcUsername;
+    @Value("${spring.datasource.password}")
+    private String jdbcPassword;
     private String workSpace = groupId + "." + projectName;
     private String projectPath = "/src/main/java/" + workSpace.replace(".", "/");
     private String resourcesPath = "/src/main/resources";
@@ -262,7 +271,7 @@ public class MakeFileController {
         for (ColumnsInfo cc : ccList) {
             /*list*/
             if ("true".equals(cc.getIsShow())) {
-                sb1.append("'<th >" + cc.getKey() + "</th>'+\n");
+                sb1.append("'<th >" + cc.getHeader() + "</th>'+\n");
 
                 if ("true".equals(cc.getIsPic())) {
                     templateRender += "<td><img src=\"{{:" + getJsonColumn(cc.getKey()) + "}}\" alt=\"\" style=\"height:50px;\" class=\"plus-cursor\" data-image=\"{{:" + getJsonColumn(cc.getKey()) + "}}\" data-title=\"\" data-caption=\"\" /></td>\n";
@@ -282,20 +291,29 @@ public class MakeFileController {
 
 
             String detailColuns = "  <div class=\"control-group\">\n" +
-                    "                                    <label class=\"control-label\" for=\"typeahead\">分类编号： </label>\n" +
+                    "                                    <label class=\"control-label\" for=\"typeahead\">" + cc.getHeader() + "： </label>\n" +
                     "                                    <div class=\"controls\">\n" +
-                    "                                        <input id=\"txtId\" type=\"text\" class=\"m-wrap medium typeahead\"\n" +
-                    "                                               value=\"@(Model != null ? Model.Id : 0)\" data-provide=\"typeahead\"\n" +
+                    "                                        <input id=\"txt"+cc.getKey()+"\" type=\"text\" class=\"m-wrap medium typeahead\"\n" +
+                    "                                               value=\"\" data-provide=\"typeahead\"\n" +
                     "                                               data-items=\"4\" readonly=\"readonly\"/>\n" +
                     "                                    </div>\n" +
-                    "                                </div>";
+                    "                  </div>";
 
-            DetailScripts = "data.id=$(\"#txtId\").val();\n" +
-                    "                data.id=$(\"#txtId\").val($(\"#selCategory\").find(\"option:selected\").val());\n" +
-                    "                data.logo = $(\"#imgLogo\").attr(\"src\");";
+            if ("true".equals(cc.getIsSelect())) {
+                DetailScripts += "  data." + cc.getKey() + "= $(\"#selCategory\").find(\"option:selected\").val();\n";
+            } else if ("true".equals(cc.getIsPic())) {
+                DetailScripts += "  data." + cc.getKey() + " = $(\"#img" + cc.getKey() + "\").attr(\"src\");";
+            } else {
+                DetailScripts += "  data." + cc.getKey() + "= $(\"#txt"+cc.getKey()+"\").val();\n";
+            }
 
         }
-        templateRender += "                <td> <span class=\"label label-info\"><a href=\"//detail?id={{:id}}\" onclick=\"\">编辑</a></span> </td></tr>";
+
+
+        String tableClass = getClassName(table);
+        String tableClassInstance = getClassNameInstance(table);
+
+        templateRender += "                <td> <span class=\"label label-info\"><a href=\"/" + tableClass.toLowerCase() + "/detail?id={{:id}}\" onclick=\"\">编辑</a></span> </td></tr>";
 
         StringBuilder sb3 = new StringBuilder();
         String pkType = "int";
@@ -313,16 +331,13 @@ public class MakeFileController {
             }
 
         }
-        String tableClass = getClassName(table);
-        String tableClassInstance = getClassNameInstance(table);
 
         //create file
 
         HashMap<String, String> maps = new HashMap<>();
         maps.putIfAbsent("#WorkSpace#", workSpace);
         maps.putIfAbsent("#HomeLink#", "dashboard");
-
-
+        maps.putIfAbsent("#ProjectName#", projectName);
         maps.putIfAbsent("#TableClass#", tableClass);
         maps.putIfAbsent("#Columns#", sb3.toString());
         maps.putIfAbsent("#PrimaryKeyType#", pkType);
@@ -350,6 +365,7 @@ public class MakeFileController {
         /**
          *  static detail
          */
+        maps.putIfAbsent("#DetailScripts#", DetailScripts);
 
         String configPaht7 = "/config/staticfile/common/Detail.ftl";
         String outputpath7 = basePath + "/" + projectName + "-controller" + resourcesPath + "/templates/views/" + tableClass.toLowerCase() + "/detail.ftl";
@@ -359,7 +375,6 @@ public class MakeFileController {
         /**
          * static list
          */
-        maps.putIfAbsent("#DetailScripts#", DetailScripts);
 
 
         String configPaht8 = "/config/staticfile/common/List.ftl";
@@ -561,12 +576,12 @@ public class MakeFileController {
         if (!file21.exists()) {
             file21.mkdirs();
         }
-        String configPaht18 = "/config/controller/SpringWebMvc.template";
+        String configPaht18 = "/config/controller/config/SpringWebMvc.template";
         String outputpath18 = basePath + "/" + projectName + "-controller" + projectPath + "/config/SpringWebMvcConfig.java";
 
         files(configPaht18, outputpath18, maps);
 
-        String configPaht19 = "/config/controller/SwaggerConfig.template";
+        String configPaht19 = "/config/controller/config/SwaggerConfig.template";
         String outputpath19 = basePath + "/" + projectName + "-controller" + projectPath + "/config/SwaggerConfig.java";
 
         HashMap<String, String> maps19 = new HashMap<>();
@@ -574,12 +589,15 @@ public class MakeFileController {
         maps19.putIfAbsent("#WorkSpace#", workSpace);
         files(configPaht19, outputpath19, maps19);
 
-        String configPaht20 = "/config/controller/ApplicationStartup.template";
+        String configPaht20 = "/config/controller/config/ApplicationStartup.template";
         String outputpath20 = basePath + "/" + projectName + "-controller" + projectPath + "/config/ApplicationStartup.java";
 
         files(configPaht20, outputpath20, maps);
     }
 
+    /**
+     * private method
+     * */
     private void unzipStaticResource() {
 
         try {
@@ -622,8 +640,13 @@ public class MakeFileController {
             return "Float";
         if (type.startsWith("double"))
             return "Double";
-        if (type.startsWith("decimal"))
-            return "Long";
+        if (type.startsWith("decimal")) {
+            if (type.contains(",0)")) {
+                return "Long";
+            }
+            return "BigDecimal";
+        }
+
         if (type.startsWith("datetime"))
             return "Date";
         if (type.startsWith("int"))

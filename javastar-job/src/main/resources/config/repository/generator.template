@@ -33,7 +33,7 @@
 
         <!-- javaClientGenerator是应用接口的生成信息 -->
         <javaClientGenerator type="ANNOTATEDMAPPER"
-                             targetPackage="#WorkSpace#.repository.persistence.mybatis.provider.lotus.autogenerate.write"
+                             targetPackage="#WorkSpace#.repository.persistence.mybatis.provider.#ProjectName#.autogenerate.write"
                              targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
