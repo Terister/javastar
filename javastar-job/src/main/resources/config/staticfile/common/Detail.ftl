@@ -251,11 +251,8 @@
             });
 
             $("#btnSave").click(function () {
-                #DetailScripts#
                 var data={};
-                data.id=$("#txtId").val();
-                data.id=$("#txtId").val($("#selCategory").find("option:selected").val());
-                data.logo = $("#imgLogo").attr("src");
+                 #DetailScripts#
                 $.post("/#TableClass#/save", {
                     datas:data
                 }, function (data) {

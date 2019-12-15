@@ -309,7 +309,7 @@ public class MakeFileController {
                 DetailPageModel += "    <div class=\"control-group\">\n" +
                         "                                    <label class=\"control-label\" for=\"typeahead\">" + cc.getHeader() + "： </label>\n" +
                         "                                    <div class=\"controls\">\n" +
-                        "                                        <button type=\"button\" id=\"btnUp" + cc.getKey() + "\" class=\"btn  green\"><i class=\"icon-ok\"></i>上传" + cc.getKey() + "\n" +
+                        "                                        <button type=\"button\" id=\"btnUpLogo\" class=\"btn  green\"><i class=\"icon-ok\"></i>上传" + cc.getKey() + "\n" +
                         "                                        </button>\n" +
                         "                                    </div>\n" +
                         "                                </div>" +
@@ -368,7 +368,7 @@ public class MakeFileController {
 
         }
 
-        templateRender += " <td> <span class=\"label label-info\"><a href=\"/" + tableClass.toLowerCase() + "/detail?id={:" + pk.toLowerCase() + "}\" onclick=\"\">编辑</a></span> </td></tr>";
+        templateRender += " <td> <span class=\"label label-info\"><a href=\"/" + tableClass.toLowerCase() + "/detail?id={{:" + pk.toLowerCase() + "}}\" onclick=\"\">编辑</a></span> </td></tr>";
 
         //create file
 
