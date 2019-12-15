@@ -13,58 +13,37 @@
 <div class="header navbar navbar-inverse navbar-fixed-top">
     <!-- BEGIN TOP NAVIGATION BAR -->
     <div class="navbar-inner">
-
         <div class="container-fluid">
-
             <!-- BEGIN LOGO -->
-
             <a class="brand" href="/">
-
                 <img src="../static/content/media/image/m-logo.png" alt="logo"/>
             </a>
-
             <!-- END LOGO -->
             <!-- BEGIN RESPONSIVE MENU TOGGLER -->
-
             <a href="javascript:;" class="btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">
 
                 <img src="../static/content/media/image/menu-toggler.png" alt=""/>
             </a>
-
             <!-- END RESPONSIVE MENU TOGGLER -->
             <!-- BEGIN TOP NAVIGATION MENU -->
-
             <ul class="nav pull-right">
-
                 <!-- BEGIN NOTIFICATION DROPDOWN -->
-
                 <!-- END TODO DROPDOWN -->
                 <!-- BEGIN USER LOGIN DROPDOWN -->
-
                 <li class="dropdown user">
-
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-
                         <img alt="" src="../static/content/media/image/avatar.png"
                              style="height:29px; vertical-align:middle;"/>
-
                         <span class="username">admin</span>
-
                         <i class="icon-angle-down"></i>
                     </a>
-
                     <ul class="dropdown-menu">
-
                         <li><a href="/api/admin/changepwd"><i class="icon-user"></i> 修改密码</a></li>
-
-
                         <li><a href="/api/logout"><i class="icon-key"></i> 退出</a></li>
                     </ul>
                 </li>
-
                 <!-- END USER LOGIN DROPDOWN -->
             </ul>
-
             <!-- END TOP NAVIGATION MENU -->
         </div>
     </div>
@@ -110,76 +89,76 @@
                         <div class="box-content">
 
                             <div class="form-horizontal">
-                                <div class="control-group">
-                                    <label class="control-label" for="typeahead">分类编号： </label>
-                                    <div class="controls">
-                                        <input id="txtId" type="text" class="m-wrap medium typeahead"
-                                               value="" data-provide="typeahead"
-                                               data-items="4" readonly="readonly"/>
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <label class="control-label" for="typeahead">父级分类： </label>
-                                    <div class="controls">
-                                        <select id="selCategory" class="m-wrap medium">
-                                            <option value="0">顶级分类</option>
 
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <label class="control-label" for="typeahead">分类名称： </label>
-                                    <div class="controls">
-                                        <input id="txtName" type="text" class="span6  medium typeahead"
-                                               value="" data-provide="typeahead"
-                                        data-items="4" />
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <label class="control-label" for="typeahead">英文名称： </label>
-                                    <div class="controls">
-                                        <input id="txtEnglishName" type="text" class="span6  medium typeahead"
-                                               value="" data-provide="typeahead"
-                                        data-items="4" />
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <label class="control-label" for="typeahead">分类颜色： </label>
-                                    <div class="controls">
-                                        <input id="txtColor" type="text" class="m-wrap  medium typeahead"
-                                               style="background-color:;"
-                                        value="" data-provide="typeahead"
-                                        data-items="4" />
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <label class="control-label" for="typeahead">广告图： </label>
-                                    <div class="controls">
-                                        <button type="button" id="btnUpLogo" class="btn  green"><i class="icon-ok"></i>上传Logo
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <label class="control-label" for="typeahead"> </label>
-                                    <div class="controls">
-                                        <img src="" id="imgLogo"
-                                        style="height:120px;" />
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <label class="control-label" for="typeahead">分类图标： </label>
-                                    <div class="controls">
-                                        <button type="button" id="btnIcon" class="btn  green"><i class="icon-ok"></i>上传Icon
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="control-group">
-                                    <label class="control-label" for="typeahead"> </label>
-                                    <div class="controls">
-                                        <img src="" id="imgIcon"
-                                        style="width:80px;" />
-                                    </div>
-                                </div>
+                                <#--<div class="control-group">-->
+                                    <#--<label class="control-label" for="typeahead">分类编号： </label>-->
+                                    <#--<div class="controls">-->
+                                        <#--<input id="txtId" type="text" class="m-wrap medium typeahead"-->
+                                               <#--value="" data-provide="typeahead"-->
+                                               <#--data-items="4" readonly="readonly"/>-->
+                                    <#--</div>-->
+                                <#--</div>-->
+                                <#--<div class="control-group">-->
+                                    <#--<label class="control-label" for="typeahead">父级分类： </label>-->
+                                    <#--<div class="controls">-->
+                                        <#--<select id="selCategory" class="m-wrap medium">-->
+                                            <#--<option value="0">顶级分类</option>-->
+                                        <#--</select>-->
+                                    <#--</div>-->
+                                <#--</div>-->
+                                <#--<div class="control-group">-->
+                                    <#--<label class="control-label" for="typeahead">分类名称： </label>-->
+                                    <#--<div class="controls">-->
+                                        <#--<input id="txtName" type="text" class="span6  medium typeahead"-->
+                                               <#--value="" data-provide="typeahead"-->
+                                        <#--data-items="4" />-->
+                                    <#--</div>-->
+                                <#--</div>-->
+                                <#--<div class="control-group">-->
+                                    <#--<label class="control-label" for="typeahead">英文名称： </label>-->
+                                    <#--<div class="controls">-->
+                                        <#--<input id="txtEnglishName" type="text" class="span6  medium typeahead"-->
+                                               <#--value="" data-provide="typeahead"-->
+                                        <#--data-items="4" />-->
+                                    <#--</div>-->
+                                <#--</div>-->
+                                <#--<div class="control-group">-->
+                                    <#--<label class="control-label" for="typeahead">分类颜色： </label>-->
+                                    <#--<div class="controls">-->
+                                        <#--<input id="txtColor" type="text" class="m-wrap  medium typeahead"-->
+                                               <#--style="background-color:;"-->
+                                        <#--value="" data-provide="typeahead"-->
+                                        <#--data-items="4" />-->
+                                    <#--</div>-->
+                                <#--</div>-->
+                                <#--<div class="control-group">-->
+                                    <#--<label class="control-label" for="typeahead">广告图： </label>-->
+                                    <#--<div class="controls">-->
+                                        <#--<button type="button" id="btnUpLogo" class="btn  green"><i class="icon-ok"></i>上传Logo-->
+                                        <#--</button>-->
+                                    <#--</div>-->
+                                <#--</div>-->
+                                <#--<div class="control-group">-->
+                                    <#--<label class="control-label" for="typeahead"> </label>-->
+                                    <#--<div class="controls">-->
+                                        <#--<img src="" id="imgLogo"-->
+                                        <#--style="height:120px;" />-->
+                                    <#--</div>-->
+                                <#--</div>-->
+                                <#--<div class="control-group">-->
+                                    <#--<label class="control-label" for="typeahead">分类图标： </label>-->
+                                    <#--<div class="controls">-->
+                                        <#--<button type="button" id="btnIcon" class="btn  green"><i class="icon-ok"></i>上传Icon-->
+                                        <#--</button>-->
+                                    <#--</div>-->
+                                <#--</div>-->
+                                <#--<div class="control-group">-->
+                                    <#--<label class="control-label" for="typeahead"> </label>-->
+                                    <#--<div class="controls">-->
+                                        <#--<img src="" id="imgIcon"-->
+                                        <#--style="width:80px;" />-->
+                                    <#--</div>-->
+                                <#--</div>-->
                                 <div class="control-group">
                                     <label class="control-label" for="typeahead">描述： </label>
                                     <div class="controls">
@@ -282,7 +261,7 @@
                 }, function (data) {
                     if (data === 0) {
                         alert('操作成功!');
-                        window.location.href = '/#TableClass#List';
+                        window.location.href = '/#TableClass#/List';
                     } else {
                         alert('操作失败!');
                     }

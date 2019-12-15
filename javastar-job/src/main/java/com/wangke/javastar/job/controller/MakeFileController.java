@@ -40,7 +40,7 @@ public class MakeFileController {
      * ture: create
      * false:none
      */
-    private boolean createStaticResource = false;
+    private boolean createStaticResource = true;
 
     /*
      * 基本配置
@@ -268,8 +268,10 @@ public class MakeFileController {
         String contentColumns = "";
         String templateRender = "<tr>\n";
         //detail
-        String DetailScripts = "";
-        String DetailPageModel="";
+        String DetailScripts = "";/**/
+        String DetailPageModel = "";/**/
+        // String detailColuns = "";/**/
+
         for (ColumnsInfo cc : ccList) {
             /*list*/
             if ("true".equals(cc.getIsShow())) {
@@ -287,26 +289,59 @@ public class MakeFileController {
 
 //
 //            String abc = "   obj.Items[i].IsDelete = '<label class=\"checkbox\"><input type=\"checkbox\"' + (obj.Items[i].IsDelete ? '' : ' checked=\"checked\"') + ' onclick=\"#TableClassInStance#Object.remove(' + obj.Items[i].Id + ')\" /></label>';\n" +
-//                    "                        obj.Items[i].Ar = '<span class=\"isAr\" data-id=\"' + obj.Items[i].Id + '\" id=\"ar' + obj.Items[i].Id + '\">' + obj.Items[i].Ar + '</span>';\n";
+//                    "      obj.Items[i].Ar = '<span class=\"isAr\" data-id=\"' + obj.Items[i].Id + '\" id=\"ar' + obj.Items[i].Id + '\">' + obj.Items[i].Ar + '</span>';\n";
 
             /*detail*/
 
 
-            String detailColuns = "  <div class=\"control-group\">\n" +
-                    "                                    <label class=\"control-label\" for=\"typeahead\">" + cc.getHeader() + "： </label>\n" +
-                    "                                    <div class=\"controls\">\n" +
-                    "                                        <input id=\"txt"+cc.getKey()+"\" type=\"text\" class=\"m-wrap medium typeahead\"\n" +
-                    "                                               value=\"\" data-provide=\"typeahead\"\n" +
-                    "                                               data-items=\"4\" readonly=\"readonly\"/>\n" +
-                    "                                    </div>\n" +
-                    "                  </div>";
-
             if ("true".equals(cc.getIsSelect())) {
+                DetailPageModel += "  <div class=\"control-group\">\n" +
+                        "                                    <label class=\"control-label\" for=\"typeahead\">" + cc.getHeader() + "： </label>\n" +
+                        "                                    <div class=\"controls\">\n" +
+                        "                                         <select id=\"selCategory\" class=\"m-wrap medium\">\n" +
+                        "                                            <option value=\"0\">顶级分类</option>\n" +
+                        "                                        </select>" +
+                        "                                    </div>\n" +
+                        "                  </div>";
                 DetailScripts += "  data." + cc.getKey() + "= $(\"#selCategory\").find(\"option:selected\").val();\n";
             } else if ("true".equals(cc.getIsPic())) {
+
+                DetailPageModel += "    <div class=\"control-group\">\n" +
+                        "                                    <label class=\"control-label\" for=\"typeahead\">" + cc.getHeader() + "： </label>\n" +
+                        "                                    <div class=\"controls\">\n" +
+                        "                                        <button type=\"button\" id=\"btnUp" + cc.getKey() + "\" class=\"btn  green\"><i class=\"icon-ok\"></i>上传" + cc.getKey() + "\n" +
+                        "                                        </button>\n" +
+                        "                                    </div>\n" +
+                        "                                </div>" +
+                        "             <div class=\"control-group\">\n" +
+                        "                                    <label class=\"control-label\" for=\"typeahead\"> </label>\n" +
+                        "                                    <div class=\"controls\">\n" +
+                        "                                        <img src=\"\" id=\"img" + cc.getKey() + "\"\n" +
+                        "                                        style=\"height:120px;\" />\n" +
+                        "                                    </div>\n" +
+                        "                                </div>";
                 DetailScripts += "  data." + cc.getKey() + " = $(\"#img" + cc.getKey() + "\").attr(\"src\");";
             } else {
-                DetailScripts += "  data." + cc.getKey() + "= $(\"#txt"+cc.getKey()+"\").val();\n";
+
+                if ("true".equals(cc.getIsText())) {
+                    DetailPageModel += " <div class=\"control-group\">\n" +
+                            "                                    <label class=\"control-label\" for=\"typeahead\">" + cc.getKey() + "： </label>\n" +
+                            "                                    <div class=\"controls\">\n" +
+                            "                                        <textarea id=\"txt" + cc.getKey() + "\" class=\"span6  medium \"></textarea>\n" +
+                            "                                    </div>\n" +
+                            "                                </div>";
+
+                } else {
+                    DetailPageModel += "  <div class=\"control-group\">\n" +
+                            "                                    <label class=\"control-label\" for=\"typeahead\">" + cc.getHeader() + "： </label>\n" +
+                            "                                    <div class=\"controls\">\n" +
+                            "                                        <input id=\"txt" + cc.getKey() + "\" type=\"text\" class=\"m-wrap medium typeahead\"\n" +
+                            "                                               value=\"\" data-provide=\"typeahead\"\n" +
+                            "                                               data-items=\"4\" />\n" +
+                            "                                    </div>\n" +
+                            "                  </div>";
+                }
+                DetailScripts += "  data." + cc.getKey() + "= $(\"#txt" + cc.getKey() + "\").val();\n";
             }
 
         }
@@ -315,7 +350,6 @@ public class MakeFileController {
         String tableClass = getClassName(table);
         String tableClassInstance = getClassNameInstance(table);
 
-        templateRender += "                <td> <span class=\"label label-info\"><a href=\"/" + tableClass.toLowerCase() + "/detail?id={{:id}}\" onclick=\"\">编辑</a></span> </td></tr>";
 
         StringBuilder sb3 = new StringBuilder();
         String pkType = "int";
@@ -333,6 +367,8 @@ public class MakeFileController {
             }
 
         }
+
+        templateRender += " <td> <span class=\"label label-info\"><a href=\"/" + tableClass.toLowerCase() + "/detail?id={:" + pk.toLowerCase() + "}\" onclick=\"\">编辑</a></span> </td></tr>";
 
         //create file
 
@@ -361,28 +397,22 @@ public class MakeFileController {
         maps.putIfAbsent("#ColumnsList#", contentColumns.toString());
         maps.putIfAbsent("#TemplateRender#", templateRender.toString());
 
-
-        System.out.println("======>" + contentHeader.toString());
-        System.out.println("======>" + templateRender.toString());
         /**
          *  static detail
          */
         maps.putIfAbsent("#DetailScripts#", DetailScripts);
         maps.putIfAbsent("#DetailPageModel#", DetailPageModel);
 
-        String configPaht7 = "/config/staticfile/common/Detail.ftl";
-        String outputpath7 = basePath + "/" + projectName + "-controller" + resourcesPath + "/templates/views/" + tableClass.toLowerCase() + "/detail.ftl";
-        files(configPaht7, outputpath7, maps);
-
 
         /**
-         * static list
-         */
-
-
-        String configPaht8 = "/config/staticfile/common/List.ftl";
-        String outputpath8 = basePath + "/" + projectName + "-controller" + resourcesPath + "/templates/views/" + tableClass.toLowerCase() + "/list.ftl";
-        files(configPaht8, outputpath8, maps);
+         * createfile
+         * */
+        HashMap<String, String> config = new HashMap<>();
+        config.putIfAbsent("/config/staticfile/common/List.ftl", basePath + "/" + projectName + "-controller" + resourcesPath + "/templates/views/" + tableClass.toLowerCase() + "/list.ftl");
+        config.putIfAbsent("/config/staticfile/common/Detail.ftl", basePath + "/" + projectName + "-controller" + resourcesPath + "/templates/views/" + tableClass.toLowerCase() + "/detail.ftl");
+        for (String key : config.keySet()) {
+            files(key, config.get(key), maps);
+        }
 
         return "this is a test : " + workSpace;
     }
@@ -390,179 +420,48 @@ public class MakeFileController {
     //private method
     private void mkdir() {
 
-
-
-        /*
-         * create director and file
-         * */
-
-        String configPaht1 = "/config/pom/pom-models.template";
-        String outputpath1 = basePath + "/" + projectName + "-models/pom.xml";
-        File file4 = new File(basePath + "/" + projectName + "-models" + projectPath + "/models");
-        if (!file4.exists()) {
-            file4.mkdirs();
-        }
         HashMap<String, String> maps = new HashMap<>();
         maps.putIfAbsent("#ProjectName#", projectName);
         maps.putIfAbsent("#WorkSpace#", workSpace);
         maps.putIfAbsent("#GroupId#", groupId);
         maps.putIfAbsent("#Database#", dataBasename);
-        /*parent*/
-        String configPath = "/config/pom/pom-parent.template";
-        String outputpath = basePath + "/pom.xml";
-
-        files(configPath, outputpath, maps);
-
-        /*models*/
-        File file2 = new File(basePath + "/" + projectName + "-models" + projectPath + "/models");
-        if (!file2.exists()) {
-            file2.mkdirs();
-        }
-        HashMap<String, String> maps1 = new HashMap<>();
-        maps1.putIfAbsent("#ProjectName#", projectName);
-        maps1.putIfAbsent("#WorkSpace#", workSpace);
-        files(configPaht1, outputpath1, maps);
-
-        /*repository*/
-        File file5 = new File(basePath + "/" + projectName + "-repository" + projectPath + "/repository/dao/internal");
-        if (!file5.exists()) {
-            file5.mkdirs();
-        }
-
-        String configPaht2 = "/config/pom/pom-repository.template";
-        String outputpath2 = basePath + "/" + projectName + "-repository/pom.xml";
 
 
-        files(configPaht2, outputpath2, maps);
-
-        /*biz*/
-        File file6 = new File(basePath + "/" + projectName + "-biz" + projectPath + "/biz/internal");
-        if (!file6.exists()) {
-            file6.mkdirs();
-        }
-
-        String configPaht3 = "/config/pom/pom-biz.template";
-        String outputpath3 = basePath + "/" + projectName + "-biz/pom.xml";
-
-
-        files(configPaht3, outputpath3, maps);
-
-        /*controller*/
-        File file7 = new File(basePath + "/" + projectName + "-controller" + projectPath + "/controller");
-        if (!file7.exists()) {
-            file7.mkdirs();
-        }
-        String configPaht4 = "/config/pom/pom-controller.template";
-        String outputpath4 = basePath + "/" + projectName + "-controller/pom.xml";
-
-        files(configPaht4, outputpath4, maps);
+        HashMap<String, String> config = new HashMap<>();
+        config.putIfAbsent("/config/pom/pom-models.template", basePath + "/" + projectName + "-models/pom.xml");
+        config.putIfAbsent("/config/pom/pom-parent.template", basePath + "/pom.xml");
+        config.putIfAbsent("/config/pom/pom-repository.template", basePath + "/" + projectName + "-repository/pom.xml");
+        config.putIfAbsent("/config/pom/pom-biz.template", basePath + "/" + projectName + "-biz/pom.xml");
+        config.putIfAbsent("/config/pom/pom-controller.template", basePath + "/" + projectName + "-controller/pom.xml");
+        config.putIfAbsent("/config/controller/SpringBootApplication.template", basePath + "/" + projectName + "-controller" + projectPath + "/SpringApplications.java");
+        config.putIfAbsent("/config/controller/mysql/mybatis.template", basePath + "/" + projectName + "-controller" + resourcesPath + "/mysql/spring-mybatis.xml");
+        config.putIfAbsent("/config/controller/mysql/datasource.template", basePath + "/" + projectName + "-controller" + resourcesPath + "/mysql/spring-datasource-master.xml");
+        config.putIfAbsent("/config/controller/ApplicationContext.template", basePath + "/" + projectName + "-controller" + resourcesPath + "/applicationContext.xml");
+        config.putIfAbsent("/config/repository/generator.template", basePath + "/" + projectName + "-repository" + resourcesPath + "/generatorConfig.xml");
+        config.putIfAbsent("/config/utils/generatorplugin.template", basePath + "/" + projectName + "-utils" + projectPath + "/utils/mybatis/ExtendJavaGeneratorPlugin.java");
+        config.putIfAbsent("/config/utils/response.template", basePath + "/" + projectName + "-utils" + projectPath + "/utils/mybatis/ResponseData.java");
+        config.putIfAbsent("/config/utils/paganation.template", basePath + "/" + projectName + "-utils" + projectPath + "/utils/mybatis/Pagination.java");
+        config.putIfAbsent("/config/pom/pom-utils.template", basePath + "/" + projectName + "-utils/pom.xml");
 
 
-        /* controller app file */
-
-        File file8 = new File(basePath + "/" + projectName + "-controller" + projectPath + "/controller");
-        if (!file8.exists()) {
-            file8.mkdirs();
-        }
-        String configPaht5 = "/config/controller/SpringBootApplication.template";
-        String outputpath5 = basePath + "/" + projectName + "-controller" + projectPath + "/SpringApplications.java";
-
-        files(configPaht5, outputpath5, maps);
-
-
-        File file9 = new File(basePath + "/" + projectName + "-controller" + resourcesPath);
-        if (!file9.exists()) {
-            file9.mkdirs();
-        }
-        String outputpath6 = basePath + "/" + projectName + "-controller" + resourcesPath + "/application.properties";
-
-        propertiesFile(outputpath6);
-
-
-        /**
-         * controller config
-         */
-        File file12 = new File(basePath + "/" + projectName + "-controller" + resourcesPath + "/mysql");
-        if (!file12.exists()) {
-            file12.mkdirs();
-        }
-        String configPath12 = "/config/controller/mysql/mybatis.template";
-        String outputpath12 = basePath + "/" + projectName + "-controller" + resourcesPath + "/mysql/spring-mybatis.xml";
-
-
-        files(configPath12, outputpath12, maps);
-
-
-        String configPath13 = "/config/controller/mysql/datasource.template";
-        String outputpath13 = basePath + "/" + projectName + "-controller" + resourcesPath + "/mysql/spring-datasource-master.xml";
-
-
-        files(configPath13, outputpath13, maps);
-
-
-        String configPath14 = "/config/controller/ApplicationContext.template";
-        String outputpath14 = basePath + "/" + projectName + "-controller" + resourcesPath + "/applicationContext.xml";
-
-
-        files(configPath14, outputpath14, maps);
 
         /*
          * repository config
          * */
-
+        File file9 = new File(basePath + "/" + projectName + "-controller" + resourcesPath);
+        if (!file9.exists()) {
+            file9.mkdirs();
+        }
 
         File file10 = new File(basePath + "/" + projectName + "-repository" + resourcesPath);
         if (!file10.exists()) {
             file10.mkdirs();
         }
+        String outputpath6 = basePath + "/" + projectName + "-controller" + resourcesPath + "/application.properties";
+        propertiesFile(outputpath6);
         String outputpath7 = basePath + "/" + projectName + "-repository" + resourcesPath + "/application.properties";
-
         propertiesFile(outputpath7);
 
-        File file11 = new File(basePath + "/" + projectName + "-repository" + resourcesPath);
-        if (!file11.exists()) {
-            file11.mkdirs();
-        }
-        String configPath8 = "/config/repository/generator.template";
-        String outputpath8 = basePath + "/" + projectName + "-repository" + resourcesPath + "/generatorConfig.xml";
-
-
-        files(configPath8, outputpath8, maps);
-
-
-        /**
-         * utils
-         */
-
-        File file15 = new File(basePath + "/" + projectName + "-utils" + projectPath + "/utils/mybatis");
-        if (!file15.exists()) {
-            file15.mkdirs();
-        }
-
-        String configPath15 = "/config/utils/generatorplugin.template";
-        String outputpath15 = basePath + "/" + projectName + "-utils" + projectPath + "/utils/mybatis/ExtendJavaGeneratorPlugin.java";
-
-        files(configPath15, outputpath15, maps);
-
-
-        String configPath16 = "/config/utils/response.template";
-        String outputpath16 = basePath + "/" + projectName + "-utils" + projectPath + "/utils/mybatis/ResponseData.java";
-
-        files(configPath16, outputpath16, maps);
-
-        String configPath116 = "/config/utils/paganation.template";
-        String outputpath116 = basePath + "/" + projectName + "-utils" + projectPath + "/utils/mybatis/Pagination.java";
-
-        files(configPath116, outputpath116, maps);
-
-        File file17 = new File(basePath + "/" + projectName + "-controller" + projectPath + "/controller");
-        if (!file17.exists()) {
-            file17.mkdirs();
-        }
-        String configPaht17 = "/config/pom/pom-utils.template";
-        String outputpath17 = basePath + "/" + projectName + "-utils/pom.xml";
-
-        files(configPaht17, outputpath17, maps);
 
         /**
          * unzip static files
@@ -571,36 +470,18 @@ public class MakeFileController {
             unzipStaticResource();
         }
 
+        config.putIfAbsent("/config/controller/config/SpringWebMvc.template", basePath + "/" + projectName + "-controller" + projectPath + "/config/SpringWebMvcConfig.java");
+        config.putIfAbsent("/config/controller/config/SwaggerConfig.template", basePath + "/" + projectName + "-controller" + projectPath + "/config/SwaggerConfig.java");
+        config.putIfAbsent("/config/controller/config/ApplicationStartup.template", basePath + "/" + projectName + "-controller" + projectPath + "/config/ApplicationStartup.java");
 
-        /**
-         * controller   web  swagger
-         */
-        File file21 = new File(basePath + "/" + projectName + "-controller" + projectPath + "/config");
-        if (!file21.exists()) {
-            file21.mkdirs();
+        for (String key : config.keySet()) {
+            files(key, config.get(key), maps);
         }
-        String configPaht18 = "/config/controller/config/SpringWebMvc.template";
-        String outputpath18 = basePath + "/" + projectName + "-controller" + projectPath + "/config/SpringWebMvcConfig.java";
-
-        files(configPaht18, outputpath18, maps);
-
-        String configPaht19 = "/config/controller/config/SwaggerConfig.template";
-        String outputpath19 = basePath + "/" + projectName + "-controller" + projectPath + "/config/SwaggerConfig.java";
-
-        HashMap<String, String> maps19 = new HashMap<>();
-        maps19.putIfAbsent("#ProjectName#", projectName);
-        maps19.putIfAbsent("#WorkSpace#", workSpace);
-        files(configPaht19, outputpath19, maps19);
-
-        String configPaht20 = "/config/controller/config/ApplicationStartup.template";
-        String outputpath20 = basePath + "/" + projectName + "-controller" + projectPath + "/config/ApplicationStartup.java";
-
-        files(configPaht20, outputpath20, maps);
     }
 
     /**
      * private method
-     * */
+     */
     private void unzipStaticResource() {
 
         try {
@@ -787,7 +668,9 @@ public class MakeFileController {
         //replace
         content = content.replaceAll("#WorkSpace#", workSpace);
         for (String key : items.keySet()) {
-            content = content.replaceAll(key, items.get(key));
+            // java.util.regex.Matcher.quoteReplacement  特殊字符转义
+            content = content.replaceAll(key, java.util.regex.Matcher.quoteReplacement(items.get(key)));
+
         }
 
         //write
