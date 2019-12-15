@@ -269,6 +269,7 @@ public class MakeFileController {
         String templateRender = "<tr>\n";
         //detail
         String DetailScripts = "";
+        String DetailPageModel="";
         for (ColumnsInfo cc : ccList) {
             /*list*/
             if ("true".equals(cc.getIsShow())) {
@@ -367,6 +368,7 @@ public class MakeFileController {
          *  static detail
          */
         maps.putIfAbsent("#DetailScripts#", DetailScripts);
+        maps.putIfAbsent("#DetailPageModel#", DetailPageModel);
 
         String configPaht7 = "/config/staticfile/common/Detail.ftl";
         String outputpath7 = basePath + "/" + projectName + "-controller" + resourcesPath + "/templates/views/" + tableClass.toLowerCase() + "/detail.ftl";

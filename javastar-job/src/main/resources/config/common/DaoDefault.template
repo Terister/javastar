@@ -2,8 +2,8 @@ package #WorkSpace#.repository.dao.internal;
 
 import #WorkSpace#.models.#TableClass#Model;
 import #WorkSpace#.repository.dao.#TableClass#Dao;
-import #WorkSpace#.repository.persistence.mybatis.entity.lotus.#TableClass#;
-import #WorkSpace#.repository.persistence.mybatis.entity.lotus.#TableClass#Example;
+import #WorkSpace#.repository.persistence.mybatis.entity.#ProjectName#.#TableClass#;
+import #WorkSpace#.repository.persistence.mybatis.entity.#ProjectName#.#TableClass#Example;
 import #WorkSpace#.repository.persistence.mybatis.provider.#ProjectName#.autogenerate.read.#TableClass#Mapper;
 import #WorkSpace#.repository.persistence.mybatis.provider.#ProjectName#.handwrite.read.#TableClass#ReadMapper;
 import #WorkSpace#.repository.persistence.mybatis.provider.#ProjectName#.handwrite.write.#TableClass#WriteMapper;

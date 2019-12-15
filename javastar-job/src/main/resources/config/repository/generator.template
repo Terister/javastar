@@ -25,7 +25,7 @@
         </jdbcConnection>
 
         <!-- javaModelGenerator是模型的生成信息，这里将指定这些Java model类的生成路径 -->
-        <javaModelGenerator targetPackage="#WorkSpace#.repository.persistence.mybatis.entity.lotus"
+        <javaModelGenerator targetPackage="#WorkSpace#.repository.persistence.mybatis.entity.#ProjectName#"
                             targetProject="src/main/java">
             <property name="trimStrings" value="true"/>
             <property name="enableSubPackages" value="true"/>
@@ -73,7 +73,7 @@
         </jdbcConnection>
 
         <!-- javaModelGenerator是模型的生成信息，这里将指定这些Java model类的生成路径 -->
-        <javaModelGenerator targetPackage="#WorkSpace#.repository.persistence.mybatis.entity.lotus"
+        <javaModelGenerator targetPackage="#WorkSpace#.repository.persistence.mybatis.entity.#ProjectName#"
                             targetProject="src/main/java">
             <property name="trimStrings" value="true"/>
             <property name="enableSubPackages" value="true"/>
@@ -81,7 +81,7 @@
 
         <!-- javaClientGenerator是应用接口的生成信息 -->
         <javaClientGenerator type="ANNOTATEDMAPPER"
-                             targetPackage="#WorkSpace#.repository.persistence.mybatis.provider.lotus.autogenerate.read"
+                             targetPackage="#WorkSpace#.repository.persistence.mybatis.provider.#ProjectName#.autogenerate.read"
                              targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>

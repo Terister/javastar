@@ -186,7 +186,7 @@
                                         <textarea id="txtDescribe" class="span6  medium "></textarea>
                                     </div>
                                 </div>
-
+                                #DetailPageModel#
                                 <div class="control-group">
                                     <label class="control-label" for="typeahead"></label>
                                     <div class="controls">
@@ -272,7 +272,6 @@
             });
 
             $("#btnSave").click(function () {
-                var id = $("#txtId").val();
                 #DetailScripts#
                 var data={};
                 data.id=$("#txtId").val();

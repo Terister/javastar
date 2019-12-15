@@ -32,7 +32,7 @@
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer" id="masterScanner">
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory1"/>
         <property name="basePackage"
-                  value="#WorkSpace#.repository.persistence.mybatis.provider.lotus.handwrite"/>
+                  value="#WorkSpace#.repository.persistence.mybatis.provider.#ProjectName#.handwrite"/>
     </bean>
 
 
