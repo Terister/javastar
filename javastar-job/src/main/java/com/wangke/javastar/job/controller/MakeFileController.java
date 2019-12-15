@@ -111,7 +111,7 @@ public class MakeFileController {
                     }
 
 
-                    saveContent = ("String".equals(pkType) ? " if (\"\".equals(model.get" + pk + "() ))\n" : " if (model.get" + pk + "() > 0)\n") +
+                    saveContent = ("String".equals(pkType) ? " if (\"\".equals(item.get" + pk + "() ))\n" : " if (item.get" + pk + "() > 0)\n") +
                             "            {\n" +
                             "                " + getClassNameInstance(dr.getTABLE_NAME()) + "Biz.update(item);\n" +
                             "            } else {\n" +

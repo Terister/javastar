@@ -41,10 +41,10 @@ public class #TableClass#Controller {
 
     #BlobController#
 
-    @RequestMapping(value = "/save")
-    public ResponseData<#TableClass#Model> save(#TableClass#Model model) {
+    @PostMapping(value = "/save")
+    public ResponseData<#TableClass#Model> save(String datas) {
 
-        #TableClass#Model item = new #TableClass#Model();
+        #TableClass#Model item =JSON.parseObject(datas,#TableClass#Model.class);;
         ResponseData<#TableClass#Model> responseData = new ResponseData<>();
 
 
