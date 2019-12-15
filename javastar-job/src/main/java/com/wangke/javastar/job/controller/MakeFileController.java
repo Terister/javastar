@@ -40,7 +40,7 @@ public class MakeFileController {
      * ture: create
      * false:none
      */
-    private boolean createStaticResource = true;
+    private boolean createStaticResource = false;
 
     /*
      * 基本配置
@@ -190,6 +190,7 @@ public class MakeFileController {
 
             HashMap<String, String> maps = new HashMap<>();
             maps.putIfAbsent("#WorkSpace#", workSpace);
+            maps.putIfAbsent("#ProjectName#", projectName);
             maps.putIfAbsent("#TableClass#", tableClass);
             maps.putIfAbsent("#Columns1#", sb1.toString());
             maps.putIfAbsent("#Columns2#", sb2.toString());
