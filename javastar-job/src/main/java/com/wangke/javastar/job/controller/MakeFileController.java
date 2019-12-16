@@ -270,7 +270,7 @@ public class MakeFileController {
         //detail
         String DetailScripts = "";/**/
         String DetailPageModel = "";/**/
-        // String detailColuns = "";/**/
+        String editorContent = "";/**/
 
         for (ColumnsInfo cc : ccList) {
             /*list*/
@@ -321,6 +321,18 @@ public class MakeFileController {
                         "                                    </div>\n" +
                         "                                </div>";
                 DetailScripts += "  data." + cc.getKey() + " = $(\"#img" + cc.getKey() + "\").attr(\"src\");";
+            } else if ("true".equals(cc.getIsTextArea())) {
+
+                editorContent = " var ue = UE.getEditor('txtContent', { initialFrameHeight: 320 });";
+
+                DetailPageModel += "    <div class=\"control-group\">\n" +
+                        "                                    <label class=\"control-label\" for=\"typeahead\">" + cc.getHeader() + "： </label>\n" +
+                        "                                    <div class=\"controls\">\n" +
+                        "                                   <!--这里的富文本div标签要换script-->  <div id=\"txtContent\" name=\"txtContent\" type=\"text/plain\" style=\"width:100%;\"></div>\n" +
+                        "                                    </div>\n" +
+                        "                                </div>";
+
+                DetailScripts += "  data." + cc.getKey() + " = ue.getContent();";
             } else {
 
                 if ("true".equals(cc.getIsText())) {
@@ -381,6 +393,7 @@ public class MakeFileController {
         maps.putIfAbsent("#PrimaryKeyType#", pkType);
         maps.putIfAbsent("#PrimaryKey#", pk);
         maps.putIfAbsent("#TableClassInStance#", tableClassInstance);
+        maps.putIfAbsent("#EditorContent#", editorContent);
 
 
 

@@ -90,81 +90,7 @@
 
                                 <div class="form-horizontal">
 
-                                <#--<div class="control-group">-->
-                                <#--<label class="control-label" for="typeahead">分类编号： </label>-->
-                                <#--<div class="controls">-->
-                                <#--<input id="txtId" type="text" class="m-wrap medium typeahead"-->
-                                <#--value="" data-provide="typeahead"-->
-                                <#--data-items="4" readonly="readonly"/>-->
-                                <#--</div>-->
-                                <#--</div>-->
-                                <#--<div class="control-group">-->
-                                <#--<label class="control-label" for="typeahead">父级分类： </label>-->
-                                <#--<div class="controls">-->
-                                <#--<select id="selCategory" class="m-wrap medium">-->
-                                <#--<option value="0">顶级分类</option>-->
-                                <#--</select>-->
-                                <#--</div>-->
-                                <#--</div>-->
-                                <#--<div class="control-group">-->
-                                <#--<label class="control-label" for="typeahead">分类名称： </label>-->
-                                <#--<div class="controls">-->
-                                <#--<input id="txtName" type="text" class="span6  medium typeahead"-->
-                                <#--value="" data-provide="typeahead"-->
-                                <#--data-items="4" />-->
-                                <#--</div>-->
-                                <#--</div>-->
-                                <#--<div class="control-group">-->
-                                <#--<label class="control-label" for="typeahead">英文名称： </label>-->
-                                <#--<div class="controls">-->
-                                <#--<input id="txtEnglishName" type="text" class="span6  medium typeahead"-->
-                                <#--value="" data-provide="typeahead"-->
-                                <#--data-items="4" />-->
-                                <#--</div>-->
-                                <#--</div>-->
-                                <#--<div class="control-group">-->
-                                <#--<label class="control-label" for="typeahead">分类颜色： </label>-->
-                                <#--<div class="controls">-->
-                                <#--<input id="txtColor" type="text" class="m-wrap  medium typeahead"-->
-                                <#--style="background-color:;"-->
-                                <#--value="" data-provide="typeahead"-->
-                                <#--data-items="4" />-->
-                                <#--</div>-->
-                                <#--</div>-->
-                                <#--<div class="control-group">-->
-                                <#--<label class="control-label" for="typeahead">广告图： </label>-->
-                                <#--<div class="controls">-->
-                                <#--<button type="button" id="btnUpLogo" class="btn  green"><i class="icon-ok"></i>上传Logo-->
-                                <#--</button>-->
-                                <#--</div>-->
-                                <#--</div>-->
-                                <#--<div class="control-group">-->
-                                <#--<label class="control-label" for="typeahead"> </label>-->
-                                <#--<div class="controls">-->
-                                <#--<img src="" id="imgLogo"-->
-                                <#--style="height:120px;" />-->
-                                <#--</div>-->
-                                <#--</div>-->
-                                <#--<div class="control-group">-->
-                                <#--<label class="control-label" for="typeahead">分类图标： </label>-->
-                                <#--<div class="controls">-->
-                                <#--<button type="button" id="btnIcon" class="btn  green"><i class="icon-ok"></i>上传Icon-->
-                                <#--</button>-->
-                                <#--</div>-->
-                                <#--</div>-->
-                                <#--<div class="control-group">-->
-                                <#--<label class="control-label" for="typeahead"> </label>-->
-                                <#--<div class="controls">-->
-                                <#--<img src="" id="imgIcon"-->
-                                <#--style="width:80px;" />-->
-                                <#--</div>-->
-                                <#--</div>-->
-                                    <div class="control-group">
-                                        <label class="control-label" for="typeahead">描述： </label>
-                                        <div class="controls">
-                                            <textarea id="txtDescribe" class="span6  medium "></textarea>
-                                        </div>
-                                    </div>
+
                                     #DetailPageModel#
                                     <div class="control-group">
                                         <label class="control-label" for="typeahead"></label>
@@ -192,7 +118,9 @@
     </div>
 </div>
 <#include '../tags/footer.ftl'/>
-
+<script src="../static/scripts/ueditor/ueditor.config.js"></script>
+<script src="../static/scripts/ueditor/ueditor.all.min.js"></script>
+<script src="../static/scripts/jquery.datetimepicker.js"></script>
 <script type="text/javascript">
 
 
@@ -242,6 +170,7 @@
     };
 
     $(document).ready(function () {
+        #EditorContent#
         uploadAttachment.init();
         $("#btnUpLogo").click(function () {
             uploadAttachment.position = 0;
