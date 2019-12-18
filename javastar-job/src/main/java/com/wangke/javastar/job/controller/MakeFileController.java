@@ -74,6 +74,9 @@ public class MakeFileController {
         int columns = 0;
 
         StringBuilder sbModel = new StringBuilder();
+        StringBuilder sbHeader = new StringBuilder();
+        StringBuilder sbImport = new StringBuilder();
+
         for (DtName dr : items) {
             columns++;
             DtList tmp = new DtList();
@@ -220,11 +223,15 @@ public class MakeFileController {
             /**
              * home model
              */
+            sbImport.append("import " + workSpace + ".biz." + tableClass + "Biz;\n");
+
+            sbHeader.append("@Autowired\n" +
+                    "    " + tableClass + "Biz " + tableClassInstance + "Biz;");
 
             sbModel.append("@RequestMapping(value = \"/" + tableClass.toLowerCase() + "/detail\")\n");
-            sbModel.append(" public String " + tableClass.toLowerCase() + "Detail(Model model) throws Exception {\n");
-            sbModel.append("                String str = null;\n");
-            sbModel.append("                model.addAttribute(\"name\", \"this is a test!\");\n");
+            sbModel.append(" public String " + tableClass.toLowerCase() + "Detail(Model model," + pkType + " id) throws Exception {\n");
+            sbModel.append("                model.addAttribute(\"item\", " + tableClassInstance + "Biz.getModelById(id));\n");
+            // sbModel.append("               System.out.println(JSON.toJSONString(" + tableClassInstance + "Biz.getModelById(id)));\n");
             sbModel.append("                return \"" + tableClass + "/detail\";\n");
             sbModel.append("}");
             sbModel.append("@RequestMapping(value = \"/" + tableClass.toLowerCase() + "/list\")\n");
@@ -241,7 +248,9 @@ public class MakeFileController {
          * */
 
         HashMap<String, String> maps = new HashMap<>();
+        maps.put("#ModelHeader#", sbHeader.toString());
         maps.put("#ModelContent#", sbModel.toString());
+        maps.put("#modelImport#", sbImport.toString());
         maps.putIfAbsent("#WorkSpace#", workSpace);
 
 
@@ -299,7 +308,7 @@ public class MakeFileController {
                         "                                    <label class=\"control-label\" for=\"typeahead\">" + cc.getHeader() + "： </label>\n" +
                         "                                    <div class=\"controls\">\n" +
                         "                                         <select id=\"selCategory\" class=\"m-wrap medium\">\n" +
-                        "                                            <option value=\"0\">顶级分类</option>\n" +
+                        "                                            <option value=\"0\">请选择</option>\n" +
                         "                                        </select>" +
                         "                                    </div>\n" +
                         "                  </div>";
@@ -316,7 +325,7 @@ public class MakeFileController {
                         "             <div class=\"control-group\">\n" +
                         "                                    <label class=\"control-label\" for=\"typeahead\"> </label>\n" +
                         "                                    <div class=\"controls\">\n" +
-                        "                                        <img src=\"\" id=\"img" + cc.getKey() + "\"\n" +
+                        "                                        <img src=\"<#if item??>${item." + getFreemakerFiled(cc.getKey()) + "!}</#if>\" id=\"img" + cc.getKey() + "\"\n" +
                         "                                        style=\"height:120px;\" />\n" +
                         "                                    </div>\n" +
                         "                                </div>";
@@ -328,7 +337,7 @@ public class MakeFileController {
                 DetailPageModel += "    <div class=\"control-group\">\n" +
                         "                                    <label class=\"control-label\" for=\"typeahead\">" + cc.getHeader() + "： </label>\n" +
                         "                                    <div class=\"controls\">\n" +
-                        "                                   <!--这里的富文本div标签要换script-->  <div id=\"txtContent\" name=\"txtContent\" type=\"text/plain\" style=\"width:100%;\"></div>\n" +
+                        "                                   <!--这里的富文本div标签要换script-->  <div id=\"txtContent\" name=\"txtContent\" type=\"text/plain\" style=\"width:100%;\"><#if item??>${item." + getFreemakerFiled(cc.getKey()) + "!}</#if></div>\n" +
                         "                                    </div>\n" +
                         "                                </div>";
 
@@ -339,7 +348,7 @@ public class MakeFileController {
                     DetailPageModel += " <div class=\"control-group\">\n" +
                             "                                    <label class=\"control-label\" for=\"typeahead\">" + cc.getKey() + "： </label>\n" +
                             "                                    <div class=\"controls\">\n" +
-                            "                                        <textarea id=\"txt" + cc.getKey() + "\" class=\"span6  medium \"></textarea>\n" +
+                            "                                        <textarea id=\"txt" + cc.getKey() + "\" class=\"span6  medium \"><#if item??>${item." + getFreemakerFiled(cc.getKey()) + "!}</#if></textarea>\n" +
                             "                                    </div>\n" +
                             "                                </div>";
 
@@ -348,7 +357,7 @@ public class MakeFileController {
                             "                                    <label class=\"control-label\" for=\"typeahead\">" + cc.getHeader() + "： </label>\n" +
                             "                                    <div class=\"controls\">\n" +
                             "                                        <input id=\"txt" + cc.getKey() + "\" type=\"text\" class=\"m-wrap medium typeahead\"\n" +
-                            "                                               value=\"\" data-provide=\"typeahead\"\n" +
+                            "                                               value=\"<#if item??>${item." + getFreemakerFiled(cc.getKey()) + "!}</#if>\" data-provide=\"typeahead\"\n" +
                             "                                               data-items=\"4\" />\n" +
                             "                                    </div>\n" +
                             "                  </div>";
@@ -389,11 +398,13 @@ public class MakeFileController {
         maps.putIfAbsent("#HomeLink#", "dashboard");
         maps.putIfAbsent("#ProjectName#", projectName);
         maps.putIfAbsent("#TableClass#", tableClass);
+        maps.putIfAbsent("#TableClassToLower#", tableClass.toLowerCase());
         maps.putIfAbsent("#Columns#", sb3.toString());
         maps.putIfAbsent("#PrimaryKeyType#", pkType);
         maps.putIfAbsent("#PrimaryKey#", pk);
         maps.putIfAbsent("#TableClassInStance#", tableClassInstance);
         maps.putIfAbsent("#EditorContent#", editorContent);
+
 
 
 
@@ -511,6 +522,33 @@ public class MakeFileController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private static String getFreemakerFiled(String field) {
+
+        if (!field.contains("_")) {
+            return field.toLowerCase();
+        } else {
+            String[] strList = field.split("_");
+
+            StringBuilder sb = new StringBuilder();
+            int index = 0;
+            for (String s : strList) {
+                if (s.length() > 1) {
+                    if (index < 1) {
+                        sb.append(s.substring(0, 1).toLowerCase() + s.substring(1).toLowerCase());
+                    } else {
+                        sb.append(s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase());
+                    }
+                } else {
+                    sb.append(s);
+                }
+                index++;
+            }
+
+            return sb.toString();
+        }
+
     }
 
     private static String getDataType(String type) {

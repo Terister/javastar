@@ -189,7 +189,7 @@
                 }, function (data) {
                     if (data.code === 0) {
                         alert('操作成功!');
-                        window.location.href = '/#TableClass#/List';
+                        window.location.href = '/#TableClassToLower#/list';
                     } else {
                         alert('操作失败!' + data.message);
                     }

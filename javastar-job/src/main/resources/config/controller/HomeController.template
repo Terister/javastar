@@ -1,5 +1,9 @@
 package    #WorkSpace#.controller;
 
+
+
+#modelImport#
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping; 
@@ -7,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @SuppressWarnings("SpringJavaAutowiringInspection")
 @Controller
  public class HomeController {
+
+#ModelHeader#
 
  @RequestMapping(value = "/dashboard")
     public String dashboard(Model model) throws Exception {
