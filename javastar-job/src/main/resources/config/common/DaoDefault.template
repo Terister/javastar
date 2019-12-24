@@ -17,6 +17,7 @@ import java.util.List;
 
  public class Default#TableClass#Dao implements #TableClass#Dao {
 
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Default#TableClass#Dao.class);
 
     private static final String class_name = Default#TableClass#Dao.class.getName();
 
@@ -42,7 +43,11 @@ import java.util.List;
     public #PrimaryKeyType# add(#TableClass#Model item) {
 
         #TableClass# #TableClassInStance# = modelConvert(item);
+        try{
         int id = #TableClassInStance#WriteMapper.insertSelective(#TableClassInStance#);
+        } catch (Exception e) {
+                    log.error( #TableClass#Dao.class.getName(), e.getStackTrace());
+                }
         return #TableClassInStance#.get#PrimaryKey#();
     }
 
@@ -56,8 +61,13 @@ import java.util.List;
     public #TableClass#Model update(#TableClass#Model item) {
 
         #TableClass# #TableClassInStance# = modelConvert(item);
+        try{
         int id = #TableClassInStance#WriteMapper.updateByPrimaryKey(#TableClassInStance#);
         return id > 0 ? item : null;
+        } catch (Exception e) {
+                    log.error( #TableClass#Dao.class.getName(), e.getStackTrace());
+                }
+                  return null;
     }
 
     /**
@@ -68,11 +78,15 @@ import java.util.List;
      */
     @Override
     public #TableClass#Model getModelById(#PrimaryKeyType# id) {
-
+try{
         #TableClass# item = #TableClassInStance#ReadMapper.selectByPrimaryKey((#PrimaryKeyType#) id);
         if (null == item)
             return null;
         return modelConvert(item);
+        } catch (Exception e) {
+                    log.error( #TableClass#Dao.class.getName(), e.getStackTrace());
+                }
+                return null;
     }
 
     #BlobContentDaoDefault#
@@ -153,7 +167,7 @@ import java.util.List;
 
          #TableClass#Model result = new #TableClass#Model();
 
-        #Columns#
+         #Columns#
 
          return result;
 

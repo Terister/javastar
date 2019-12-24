@@ -10,6 +10,7 @@ import static org.springframework.util.StreamUtils.BUFFER_SIZE;
 
 public class FileUtils {
 
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FileUtils.class);
 
     /**
      * 移动 文件或者文件夹
@@ -20,7 +21,13 @@ public class FileUtils {
      */
     public static void moveTo(String oldPath, String newPath) throws IOException {
         copyFile(oldPath, newPath);
-        deleteFile(oldPath);
+        try {
+            deleteFile(oldPath);
+        } catch (Exception e) {
+            log.error( FileUtils.class.getName(), e.getStackTrace());
+        }
+
+
     }
 
     /**
@@ -31,6 +38,7 @@ public class FileUtils {
     public static void deleteFile(String filePath) {
         File file = new File(filePath);
         if (!file.exists()) {
+            log.error(  "文件不存在");
             return;
         }
         if (file.isDirectory()) {
@@ -109,6 +117,8 @@ public class FileUtils {
             }
         } catch (Exception e) {
             e.printStackTrace();
+
+            log.error( FileUtils.class.getName(), e.getStackTrace());
         } finally {
             try {
                 bo.close();

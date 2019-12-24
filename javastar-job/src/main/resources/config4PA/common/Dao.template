@@ -1,0 +1,22 @@
+package #WorkSpace#.repository.dao;
+
+import #WorkSpace#.models.#TableClass#Model;
+
+import java.util.List;
+
+public interface #TableClass#Dao {
+
+    #PrimaryKeyType# add(#TableClass#Model item);
+
+    #TableClass#Model update(#TableClass#Model item);
+
+    #TableClass#Model getModelById(#PrimaryKeyType# id);
+
+    #BlobContentDao#
+
+    List<#TableClass#Model> getAllList();
+
+    List<#TableClass#Model> getPageList(int pageIndex, int pageSize,String key);
+
+    int getCount(String key);
+}

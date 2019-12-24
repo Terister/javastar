@@ -1,0 +1,59 @@
+package #WorkSpace#.biz.internal;
+
+import #WorkSpace#.biz.#TableClass#Biz;
+import #WorkSpace#.models.#TableClass#Model;
+import #WorkSpace#.repository.dao.#TableClass#Dao;
+import #WorkSpace#.utils.mybatis.Pagination;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+
+@Component
+
+ public class Default#TableClass#Biz implements #TableClass#Biz {
+
+    @Autowired
+    private #TableClass#Dao #TableClassInStance#Dao;
+
+    private static final String className = Default#TableClass#Biz.class.getName();
+
+
+    @Override
+    public #PrimaryKeyType# add(#TableClass#Model item) {
+        return #TableClassInStance#Dao.add(item);
+    }
+
+
+    @Override
+    public #TableClass#Model update(#TableClass#Model item) {
+        return #TableClassInStance#Dao.update(item);
+    }
+
+    @Override
+    public #TableClass#Model getModelById(#PrimaryKeyType# id) {
+        return #TableClassInStance#Dao.getModelById(id);
+    }
+
+    #BlobContentBizDefault#
+
+    @Override
+    public List<#TableClass#Model> getAllList() {
+        return #TableClassInStance#Dao.getAllList();
+    }
+
+
+
+    @Override
+    public Pagination<#TableClass#Model> getPageList(int pageIndex, int pageSize,String key) {
+
+        return new Pagination(pageIndex, pageSize, #TableClassInStance#Dao.getPageList(pageIndex, pageSize,key), #TableClassInStance#Dao.getCount(key));
+
+    }
+
+    @Override
+    public int getCount(String key) {
+        return #TableClassInStance#Dao.getCount(key);
+    }
+
+}

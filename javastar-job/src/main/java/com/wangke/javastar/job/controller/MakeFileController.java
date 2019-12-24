@@ -21,6 +21,8 @@ import java.util.List;
 @RestController
 public class MakeFileController {
 
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MakeFileController.class);
+
     /**
      * db name
      */
@@ -40,7 +42,7 @@ public class MakeFileController {
      * ture: create
      * false:none
      */
-    private boolean createStaticResource = true;
+    private boolean createStaticResource = false;
 
     /*
      * 基本配置
@@ -231,7 +233,7 @@ public class MakeFileController {
             sbModel.append("@RequestMapping(value = \"/" + tableClass.toLowerCase() + "/detail\")\n");
             sbModel.append(" public String " + tableClass.toLowerCase() + "Detail(Model model," + pkType + " id) throws Exception {\n");
             sbModel.append("                model.addAttribute(\"item\", " + tableClassInstance + "Biz.getModelById(id));\n");
-            // sbModel.append("               System.out.println(JSON.toJSONString(" + tableClassInstance + "Biz.getModelById(id)));\n");
+            sbModel.append("               System.out.println(JSON.toJSONString(" + tableClassInstance + "Biz.getModelById(id)));\n");
             sbModel.append("                return \"" + tableClass + "/detail\";\n");
             sbModel.append("}");
             sbModel.append("@RequestMapping(value = \"/" + tableClass.toLowerCase() + "/list\")\n");
@@ -251,12 +253,15 @@ public class MakeFileController {
         maps.put("#ModelHeader#", sbHeader.toString());
         maps.put("#ModelContent#", sbModel.toString());
         maps.put("#modelImport#", sbImport.toString());
-        maps.putIfAbsent("#WorkSpace#", workSpace);
+        maps.put("#BasePath#", basePath);
+        maps.put("#WorkSpace#", workSpace);
 
 
         HashMap<String, String> config = new HashMap<>();
         config.putIfAbsent("/config/controller/HomeController.template", basePath + "/" + projectName + "-controller" + projectPath + "/controller/HomeController.java");
         config.putIfAbsent("/config/controller/Files.template", basePath + "/" + projectName + "-controller" + projectPath + "/controller/FileController.java");
+        config.putIfAbsent("/config/controller/Log.template", basePath + "/" + projectName + "-controller" + resourcesPath + "/logback-spring.xml");
+
         for (String key : config.keySet()) {
             files(key, config.get(key), maps);
         }
@@ -527,6 +532,7 @@ public class MakeFileController {
     private static String getFreemakerFiled(String field) {
 
         if (!field.contains("_")) {
+            System.out.println("====+>" + field.toLowerCase());
             return field.toLowerCase();
         } else {
             String[] strList = field.split("_");
@@ -536,16 +542,18 @@ public class MakeFileController {
             for (String s : strList) {
                 if (s.length() > 1) {
                     if (index < 1) {
-                        sb.append(s.substring(0, 1).toLowerCase() + s.substring(1).toLowerCase());
+                        sb.append(s.toLowerCase());
                     } else {
-                        sb.append(s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase());
+
+                        //首字母小转大  大转晓
+                        sb.append((s.substring(0, 1).matches("[a-z]") ? s.substring(0, 1).toUpperCase() : s.substring(0, 1).toLowerCase()) + s.substring(1).toLowerCase());
                     }
                 } else {
                     sb.append(s);
                 }
                 index++;
             }
-
+            System.out.println("====+>" + sb.toString());
             return sb.toString();
         }
 
@@ -708,25 +716,32 @@ public class MakeFileController {
 
     private void files(String configPath, String outputPath, HashMap<String, String> items) {
 
-        String outDir = outputPath.substring(0, outputPath.lastIndexOf("/"));
-        System.out.println("=========>" + outputPath);
-        if (!new File(outDir).exists()) {
-            new File(outDir).mkdirs();
+        try {
+            String outDir = outputPath.substring(0, outputPath.lastIndexOf("/"));
+            System.out.println("=========>" + outputPath);
+            if (!new File(outDir).exists()) {
+                new File(outDir).mkdirs();
+            }
+            //read
+            String content = readFile(configPath);
+
+            //replace
+            content = content.replaceAll("#WorkSpace#", workSpace);
+            for (String key : items.keySet()) {
+                // java.util.regex.Matcher.quoteReplacement  特殊字符转义
+                content = content.replaceAll(key, java.util.regex.Matcher.quoteReplacement(items.get(key)));
+
+            }
+
+            //write
+            File file = new File(outputPath);
+            writeFile(file, content, outputPath);
+
+            log.info("====》生成文件：" + outputPath);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("MakeFile", e.getStackTrace());
         }
-        //read
-        String content = readFile(configPath);
-
-        //replace
-        content = content.replaceAll("#WorkSpace#", workSpace);
-        for (String key : items.keySet()) {
-            // java.util.regex.Matcher.quoteReplacement  特殊字符转义
-            content = content.replaceAll(key, java.util.regex.Matcher.quoteReplacement(items.get(key)));
-
-        }
-
-        //write
-        File file = new File(outputPath);
-        writeFile(file, content, outputPath);
 
     }
 
