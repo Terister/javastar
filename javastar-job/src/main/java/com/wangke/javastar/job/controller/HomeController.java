@@ -35,6 +35,12 @@ public class HomeController {
     @RequestMapping(value = "/index")
     public String hello(Model model) throws Exception {
         model.addAttribute("name", "this is a test!");
+        return "index";
+    }
+
+    @RequestMapping(value = "/home")
+    public String home(Model model) throws Exception {
+        model.addAttribute("name", "this is a test!");
         return "home";
     }
 

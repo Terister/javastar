@@ -63,17 +63,17 @@
             </td>
             <td style="width: 90%" id="tbRight">
                 <a name="TOP"></a>
-                <div style="margin: 10px;display:inline-block"><a href="javascript:void(0)"
-                                                                  id="dynamicModel">创建JAVA项目</a>
-                </div>
-                <div style="margin: 10px;display:inline-block"><a href="/fm"
-                                                                  id="exportComment">创建静态资源</a>
-                </div>
-                <div id="divDynamicModel" style="display: none; margin: 10px">
-                    <textarea id="txtSql" placeholder="输入您的查询语句，根据语句的返回结果产生实体类型"></textarea>
-                    <input value="生成" type="button" id="btnCreateDynamicModel" style="margin-top: 5px;"/>
-                    <input value="取消" type="button" id="btnCancel" style="margin-top: 5px; margin-left: 10px;"/>
-                </div>
+                <#--<div style="margin: 10px;display:inline-block"><a href="javascript:void(0)"-->
+                                                                  <#--id="dynamicModel">创建JAVA项目</a>-->
+                <#--</div>-->
+                <#--<div style="margin: 10px;display:inline-block"><a href="/fm"-->
+                                                                  <#--id="exportComment">创建静态资源</a>-->
+                <#--</div>-->
+                <#--<div id="divDynamicModel" style="display: none; margin: 10px">-->
+                    <#--<textarea id="txtSql" placeholder="输入您的查询语句，根据语句的返回结果产生实体类型"></textarea>-->
+                    <#--<input value="生成" type="button" id="btnCreateDynamicModel" style="margin-top: 5px;"/>-->
+                    <#--<input value="取消" type="button" id="btnCancel" style="margin-top: 5px; margin-left: 10px;"/>-->
+                <#--</div>-->
                 <script type="text/js-render" id="tableTemplate">
                      <a name="{{:dtName.tABLE_NAME}}"></a>
                 <table class="Table-00" cellspacing="1" cellpadding="0">

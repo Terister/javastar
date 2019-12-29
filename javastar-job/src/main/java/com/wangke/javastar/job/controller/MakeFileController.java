@@ -4,10 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.wangke.javastar.job.tools.FileUtils;
 import com.wangke.javastar.job.tools.PropertiesUtils;
 import com.wangke.javastar.job.tools.mapper.MybatisHelper;
-import com.wangke.javastar.job.tools.model.ColumnsInfo;
-import com.wangke.javastar.job.tools.model.DtInfo;
-import com.wangke.javastar.job.tools.model.DtList;
-import com.wangke.javastar.job.tools.model.DtName;
+import com.wangke.javastar.job.tools.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,25 +21,21 @@ public class MakeFileController {
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MakeFileController.class);
 
     /**
-     * db name
-     */
-    private String dataBasename = "DataCenter";
-    /**
      * project config
      */
-    private String projectName = "sagittar";
-    private String groupId = "com.pab.framework";
+    private String projectName;// = "sagittar";
+    private String groupId;// = "com.pab.framework";
     /**
      * 生成项目路径
      */
-    private String basePath = "/Users/wolf/Root/Codes";
+    private String basePath;// = "/Users/wolf/Root/Codes";
 
     /**
      * 是否生成静态资源
      * ture: create
      * false:none
      */
-    private boolean createStaticResource = false;
+    private boolean createStaticResource = true;
 
     /*
      * 基本配置
@@ -51,19 +44,30 @@ public class MakeFileController {
     private String jdbcDriver;
     @Value("${spring.datasource.url}")
     private String jdbcUrl;
+    private String dataBasename;
     @Value("${spring.datasource.username}")
     private String jdbcUsername;
     @Value("${spring.datasource.password}")
     private String jdbcPassword;
-    private String workSpace = groupId + "." + projectName;
-    private String projectPath = "/src/main/java/" + workSpace.replace(".", "/");
-    private String resourcesPath = "/src/main/resources";
+    private String workSpace ;//= groupId + "." + projectName;
+    private String projectPath ;//= "/src/main/java/" + workSpace.replace(".", "/");
+    private String resourcesPath ;//= "/src/main/resources";
 
     @Autowired
     private MybatisHelper mybatisHelper;
 
     @GetMapping(value = "/create")
-    public String create() throws Exception {
+    public String create(String data) throws Exception {
+
+        ParamInfo info = JSON.parseObject(data, ParamInfo.class);
+        this.basePath = info.getBasePath();
+        this.projectName = info.getArtifactId();
+        this.groupId = info.getGroupId();
+        this.createStaticResource = info.getHasHtml() == 1;
+        this.dataBasename = jdbcUrl.substring((jdbcUrl.indexOf("3306/") + 5), jdbcUrl.indexOf("?"));
+        this.workSpace = groupId + "." + projectName;
+        this.projectPath = "/src/main/java/" + workSpace.replace(".", "/");
+        this.resourcesPath = "/src/main/resources";
 
         mkdir();
 
@@ -93,6 +97,7 @@ public class MakeFileController {
             StringBuilder sb3 = new StringBuilder();
             String pkType = "Integer";
             String pk = "";
+            String rpk = "";
             String saveContent = "";
             String blobContent = "";
             String blobContent2 = "";
@@ -108,6 +113,7 @@ public class MakeFileController {
                 }
                 if ("PRI".equals(dt.getKey())) {
                     pk = getClassName(dt.getField());
+                    rpk = dt.getField();
                     if ("long".equals(dtType.toLowerCase())) {
                         pkType = "Long";
                     }
@@ -202,6 +208,8 @@ public class MakeFileController {
             maps.putIfAbsent("#Columns#", sb3.toString());
             maps.putIfAbsent("#PrimaryKeyType#", pkType);
             maps.putIfAbsent("#PrimaryKey#", pk);
+            maps.putIfAbsent("#RealPrimaryKey#", rpk);
+
             maps.putIfAbsent("#TableClassInStance#", tableClassInstance);
             maps.putIfAbsent("#ControllerSave#", saveContent);
             maps.putIfAbsent("#BlobContentDaoDefault#", blobContent);
