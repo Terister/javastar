@@ -1,4 +1,4 @@
-package com.wangke.javastar.utils.mybatis;
+package com.wangke.javastar.utils;
 
 import java.io.Serializable;
 

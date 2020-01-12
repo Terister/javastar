@@ -3,14 +3,12 @@ package com.wangke.javastar.controller;
 
 import com.wangke.javastar.biz.UsersBiz;
 import com.wangke.javastar.models.UsersModel;
-import com.wangke.javastar.utils.mybatis.Pagination;
-import com.wangke.javastar.utils.mybatis.ResponseData;
+import com.wangke.javastar.utils.Pagination;
+import com.wangke.javastar.utils.ResponseData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "/users")

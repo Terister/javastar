@@ -1,7 +1,7 @@
 package com.wangke.javastar.biz;
 
 import com.wangke.javastar.models.UsersModel;
-import com.wangke.javastar.utils.mybatis.Pagination;
+import com.wangke.javastar.utils.Pagination;
 
 import java.util.List;
 

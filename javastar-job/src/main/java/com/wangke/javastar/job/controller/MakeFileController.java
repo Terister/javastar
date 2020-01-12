@@ -20,6 +20,8 @@ public class MakeFileController {
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MakeFileController.class);
 
+
+    private String[] filterTableCloumns = new String[]{"create_timestamp", "last_update_timestamp"};
     /**
      * project config
      */
@@ -36,6 +38,12 @@ public class MakeFileController {
      * false:none
      */
     private boolean createStaticResource = true;
+    /**
+     * 是否生成单元测试
+     * ture: create
+     * false:none
+     */
+    private boolean createTestResource = true;
 
     /*
      * 基本配置
@@ -49,9 +57,9 @@ public class MakeFileController {
     private String jdbcUsername;
     @Value("${spring.datasource.password}")
     private String jdbcPassword;
-    private String workSpace ;//= groupId + "." + projectName;
-    private String projectPath ;//= "/src/main/java/" + workSpace.replace(".", "/");
-    private String resourcesPath ;//= "/src/main/resources";
+    private String workSpace;//= groupId + "." + projectName;
+    private String projectPath;//= "/src/main/java/" + workSpace.replace(".", "/");
+    private String resourcesPath;//= "/src/main/resources";
 
     @Autowired
     private MybatisHelper mybatisHelper;
@@ -131,16 +139,16 @@ public class MakeFileController {
                 }
                 String className = getClassName(dt.getField());
 
-                sb1.append("private " + dtType + " " + dt.getField() + ";");
+                sb1.append("private " + dtType + " " + getJsonColumn(dt.getField()) + ";");
                 sb1.append("public " + dtType + " get" + className + "() {");
-                sb1.append("return " + dt.getField() + ";");
+                sb1.append("return " + getJsonColumn(dt.getField()) + ";");
                 sb1.append("}");
-                sb1.append(" public void set" + className + "(" + dtType + " " + dt.getField() + ") {");
-                sb1.append("this." + dt.getField() + " = " + dt.getField() + ";");
+                sb1.append(" public void set" + className + "(" + dtType + " " + getJsonColumn(dt.getField()) + ") {");
+                sb1.append("this." + getJsonColumn(dt.getField()) + " = " + getJsonColumn(dt.getField()) + ";");
                 sb1.append("}");
 
 
-                sb2.append("     sb.append(\", " + dt.getField() + "=\").append(" + dt.getField() + ");");
+                sb2.append("     sb.append(\", " + getJsonColumn(dt.getField()) + "=\").append(" + getJsonColumn(dt.getField()) + ");");
 
 
                 sb3.append(" result.set" + className + "(item.get" + className + "()); ");
@@ -225,6 +233,9 @@ public class MakeFileController {
             config.putIfAbsent("/config/common/Dao.template", basePath + "/" + projectName + "-repository" + projectPath + "/repository/dao/" + tableClass + "Dao.java");
             config.putIfAbsent("/config/common/Biz.template", basePath + "/" + projectName + "-biz" + projectPath + "/biz/" + tableClass + "Biz.java");
             config.putIfAbsent("/config/common/BizDefault.template", basePath + "/" + projectName + "-biz" + projectPath + "/biz/internal/Default" + tableClass + "Biz.java");
+            if (createTestResource) {
+                config.putIfAbsent("/config/test/Biz.template", basePath + "/" + projectName + "-biz" + projectPath.replace("/main/", "/test/") + "/" + tableClass + "BizTest.java");
+            }
             config.putIfAbsent("/config/common/Controller.template", basePath + "/" + projectName + "-controller" + projectPath + "/controller/" + tableClass + "Controller.java");
             for (String key : config.keySet()) {
                 files(key, config.get(key), maps);

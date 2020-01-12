@@ -10,6 +10,15 @@ public class ParamInfo implements Serializable {
     int hasHtml;
     int hasCross;
     int hasSwagger;
+int hasTest;
+
+    public int getHasTest() {
+        return hasTest;
+    }
+
+    public void setHasTest(int hasTest) {
+        this.hasTest = hasTest;
+    }
 
     public String getBasePath() {
         return basePath;

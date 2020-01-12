@@ -70,6 +70,10 @@
                                 type="checkbox"
                                 id="ckHasCross">
                         </div>
+                        <div style="margin-right: 20px;"><label for="ckHasTest">启用跨域配置:</label><input
+                                type="checkbox"
+                                id="ckHasTest">
+                        </div>
                         <div style="margin-right: 20px;"><label for="ckHasSwagger">启用Swagger:</label><input
                                 type="checkbox" id="ckHasSwagger"></div>
                     </div>
@@ -107,6 +111,7 @@
                         data.groupId=$("#GroupId").val();
                         data.artifactId=$("#ArtifactID").val();
                         data.basePath=$("#basePath").val();
+                        data.hasTest=$('#ckHasTest').is(':checked')?1:0;
                         data.hasHtml=$('#ckHasHtml').is(':checked')?1:0;
                         data.hasCross=$('#ckHasCross').is(':checked')?1:0;
                         data.hasSwagger=$('#ckHasSwagger').is(':checked')?1:0;

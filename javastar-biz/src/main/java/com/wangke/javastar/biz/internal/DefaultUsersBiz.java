@@ -3,7 +3,7 @@ package com.wangke.javastar.biz.internal;
 import com.wangke.javastar.biz.UsersBiz;
 import com.wangke.javastar.models.UsersModel;
 import com.wangke.javastar.repository.dao.UsersDao;
-import com.wangke.javastar.utils.mybatis.Pagination;
+import com.wangke.javastar.utils.Pagination;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

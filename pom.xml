@@ -23,6 +23,7 @@
         <module>javastar-models</module>
         <module>javastar-biz</module>
         <module>javastar-controller</module>
+        <module>javastar-web</module>
     </modules>
     <packaging>pom</packaging>
 

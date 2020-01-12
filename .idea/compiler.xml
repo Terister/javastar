@@ -12,6 +12,7 @@
         <module name="javastar-models" />
         <module name="javastar-repository" />
         <module name="javastar-utils" />
+        <module name="javastar-web" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -22,6 +23,7 @@
       <module name="javastar-models" target="1.8" />
       <module name="javastar-repository" target="1.8" />
       <module name="javastar-utils" target="1.8" />
+      <module name="javastar-web" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
