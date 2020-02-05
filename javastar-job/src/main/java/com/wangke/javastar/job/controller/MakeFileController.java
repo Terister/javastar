@@ -357,11 +357,10 @@ public class MakeFileController {
             } else if ("true".equals(cc.getIsTextArea())) {
 
                 editorContent = " var ue = UE.getEditor('txtContent', { initialFrameHeight: 320 });";
-
                 DetailPageModel += "    <div class=\"control-group\">\n" +
                         "                                    <label class=\"control-label\" for=\"typeahead\">" + cc.getHeader() + "： </label>\n" +
                         "                                    <div class=\"controls\">\n" +
-                        "                                   <!--这里的富文本div标签要换script-->  <div id=\"txtContent\" name=\"txtContent\" type=\"text/plain\" style=\"width:100%;\"><#if item??>${item." + getFreemakerFiled(cc.getKey()) + "!}</#if></div>\n" +
+                                  "                                   <!--这里的富文本div标签要换script-->  <div id=\"txtContent\" name=\"txtContent\" type=\"text/plain\" style=\"width:100%;display:block;\"><#if item??>${item." + getFreemakerFiled(cc.getKey()) + "!}</#if></div>\n" +
                         "                                    </div>\n" +
                         "                                </div>";
 
@@ -376,6 +375,15 @@ public class MakeFileController {
                             "                                    </div>\n" +
                             "                                </div>";
 
+                } else if ("true".equals(cc.getIsTime())) {
+
+                    editorContent += "$(\"#txt" + cc.getKey() + "\").datetimepicker({ format: 'Y-m-d', timepicker: false });";
+                    DetailPageModel += " <div class=\"control-group\">\n" +
+                            "                                    <label class=\"control-label\" for=\"typeahead\">" + cc.getKey() + "： </label>\n" +
+                            "                                    <div class=\"controls\">\n" +
+                            "                                        <input id=\"txt" + cc.getKey() + "\" class=\"span4  medium \" value=\"<#if item??>${item." + getFreemakerFiled(cc.getKey()) + "?string('yyyy-MM-dd hh:mm:ss')}</#if>\"></input>\n" +
+                            "                                    </div>\n" +
+                            "                                </div>";
                 } else {
                     DetailPageModel += "  <div class=\"control-group\">\n" +
                             "                                    <label class=\"control-label\" for=\"typeahead\">" + cc.getHeader() + "： </label>\n" +
@@ -430,6 +438,8 @@ public class MakeFileController {
         maps.putIfAbsent("#EditorContent#", editorContent);
 
 
+        maps.putIfAbsent("#ListLink#", tableClass.toLowerCase() + "/list");
+        maps.putIfAbsent("#DetailLink#", tableClass.toLowerCase() + "/detail");
 
 
         /* list page */
@@ -462,7 +472,7 @@ public class MakeFileController {
             files(key, config.get(key), maps);
         }
 
-        return "this is a test : " + workSpace;
+        return "Success：" + workSpace;
     }
 
     //private method
@@ -520,6 +530,8 @@ public class MakeFileController {
 
         config.putIfAbsent("/config/controller/config/SpringWebMvc.template", basePath + "/" + projectName + "-controller" + projectPath + "/config/SpringWebMvcConfig.java");
         config.putIfAbsent("/config/controller/config/SwaggerConfig.template", basePath + "/" + projectName + "-controller" + projectPath + "/config/SwaggerConfig.java");
+        config.putIfAbsent("/config/controller/config/CrossConfig.template", basePath + "/" + projectName + "-controller" + projectPath + "/config/CorsConfig.java");
+        config.putIfAbsent("/config/controller/config/SecurityConfig.template", basePath + "/" + projectName + "-controller" + projectPath + "/config/SecurityConfig.java");
         config.putIfAbsent("/config/controller/config/ApplicationStartup.template", basePath + "/" + projectName + "-controller" + projectPath + "/config/ApplicationStartup.java");
 
         for (String key : config.keySet()) {

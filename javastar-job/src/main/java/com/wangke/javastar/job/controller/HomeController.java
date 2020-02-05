@@ -6,6 +6,7 @@ import com.wangke.javastar.job.tools.model.DtInfo;
 import com.wangke.javastar.job.tools.model.DtList;
 import com.wangke.javastar.job.tools.model.DtName;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,8 +27,18 @@ public class HomeController {
     /**
      * db config
      */
-    private String dataBasename = "DataCenter";
-
+    /*
+     * 基本配置
+     * */
+    @Value("${spring.datasource.driver-class-name}")
+    private String jdbcDriver;
+    @Value("${spring.datasource.url}")
+    private String jdbcUrl;
+    private String dataBasename;
+    @Value("${spring.datasource.username}")
+    private String jdbcUsername;
+    @Value("${spring.datasource.password}")
+    private String jdbcPassword;
     @Autowired
     private MybatisHelper mybatisHelper;
 
@@ -56,7 +67,7 @@ public class HomeController {
 
 
         List<DtList> list = new ArrayList<DtList>();
-
+        this.dataBasename = jdbcUrl.substring((jdbcUrl.indexOf("3306/") + 5), jdbcUrl.indexOf("?"));
         String dbName = dataBasename;
         List<DtName> items = mybatisHelper.getTableName(dbName);
 
@@ -78,7 +89,7 @@ public class HomeController {
     public String getTable(String key) throws Exception {
 
         List<DtList> list = new ArrayList<DtList>();
-
+        this.dataBasename = jdbcUrl.substring((jdbcUrl.indexOf("3306/") + 5), jdbcUrl.indexOf("?"));
         String dbName = dataBasename;
         List<DtName> items = mybatisHelper.getTableName(dbName);
 

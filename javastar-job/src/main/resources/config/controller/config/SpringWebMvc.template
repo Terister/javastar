@@ -3,14 +3,15 @@ package    #WorkSpace#.config;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import javax.servlet.ServletContext;
-
 /**
  * @author wang.ke
  * @date 2017年10月25日
@@ -35,6 +36,7 @@ public class SpringWebMvcConfig extends WebMvcConfigurerAdapter {
     }
 
 
+
     @Bean
     public FreeMarkerConfigurer viewResolver(ServletContext servletContext) {
         FreeMarkerConfigurer fm;
@@ -43,6 +45,15 @@ public class SpringWebMvcConfig extends WebMvcConfigurerAdapter {
         fm.setDefaultEncoding("UTF-8");
         return fm;
     }
+    /**
+    * 忽略url大小写
+    */
+     @Override
+        public void configurePathMatch(PathMatchConfigurer configurer) {
+            AntPathMatcher matcher = new AntPathMatcher();
+            matcher.setCaseSensitive(false);
+            configurer.setPathMatcher(matcher);
+        }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

@@ -53,7 +53,7 @@
 
 <div id="bodyContaner">
     <div class="container-fluid">
-        <div class="row-fluid">
+        <div class="row-fluid" style="margin-top:25px;">
             <div class="span12">
                 <h3 class="page-title"></h3>
                 <ul class="breadcrumb">
@@ -120,6 +120,7 @@
 <#include '../tags/footer.ftl'/>
 <script src="../static/scripts/ueditor/ueditor.config.js"></script>
 <script src="../static/scripts/ueditor/ueditor.all.min.js"></script>
+<link type="text/css" href="../static/content/jquery.datetimepicker.css" rel="stylesheet" />
 <script src="../static/scripts/jquery.datetimepicker.js"></script>
 <script type="text/javascript">
 

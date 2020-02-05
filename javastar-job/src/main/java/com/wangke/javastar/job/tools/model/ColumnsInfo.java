@@ -6,6 +6,7 @@ public class ColumnsInfo {
     String isShow;
 
     String isSelect;
+    String isTime;
     String isPic;
     String isText;
     String isTextArea;
@@ -13,6 +14,14 @@ public class ColumnsInfo {
     String isPri;
     String isNull;
     String isLink;
+
+    public String getIsTime() {
+        return isTime;
+    }
+
+    public void setIsTime(String isTime) {
+        this.isTime = isTime;
+    }
 
     public String getHeader() {
         return header;

@@ -64,6 +64,8 @@
                         </td>
                          <td width="30px" class="td-00">下拉框
                         </td>
+                         <td width="30px" class="td-00">时间
+                        </td>
                         <td width="30px" class="td-00">图片
                         </td>
                           <td width="30px" class="td-00">文本
@@ -95,6 +97,9 @@
                                 </td>
                                    <td width="30px" class="td-01 c-name">
                                         <img src="../static/images/wrong.gif" value="false" data="isSelect" key="{{:field}}"  />
+                                </td>
+                                 <td width="30px" class="td-01 c-name">
+                                        <img src="../static/images/wrong.gif" value="false" data="isTime" key="{{:field}}"  />
                                 </td>
                                 <td width="30px" class="td-01 c-name">
                                       <img src="../static/images/wrong.gif" value="false"  data="isPic" key="{{:field}}" />
@@ -210,6 +215,8 @@
                                     }
                                     if ("isSelect" == $(that).find("img").attr("data")) {
                                         datas.isSelect = $(that).find("img").attr("value")
+                                    }  if ("isTime" == $(that).find("img").attr("data")) {
+                                        datas.isTime = $(that).find("img").attr("value")
                                     }
                                     if ("isPic" == $(that).find("img").attr("data")) {
                                         datas.isPic = $(that).find("img").attr("value")

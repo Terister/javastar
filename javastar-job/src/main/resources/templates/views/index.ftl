@@ -70,7 +70,7 @@
                                 type="checkbox"
                                 id="ckHasCross">
                         </div>
-                        <div style="margin-right: 20px;"><label for="ckHasTest">启用跨域配置:</label><input
+                        <div style="margin-right: 20px;"><label for="ckHasTest">启用单元测试:</label><input
                                 type="checkbox"
                                 id="ckHasTest">
                         </div>
